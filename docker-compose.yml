@@ -1,6 +1,26 @@
 version: '3'
 
 services:
+  db:
+    container_name: mysql
+    image: mysql:5.7
+    restart: always
+    env_file: .env
+    environment:
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+    
+
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db-init/:/docker-entrypoint-initdb.d
   nodejs:
     build:
       context: .
@@ -10,11 +30,11 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=db
-      - MONGO_PORT=$MONGO_PORT
-      - MONGO_DB=$MONGO_DB
+      - DB_USERNAME=$MONGO_USERNAME
+      - DB_PASSWORD=$MONGO_PASSWORD
+      - DB_HOSTNAME=db
+      - DB_PORT=$MONGO_PORT
+      - DB_DB=$MONGO_DB
     ports:
       - "3000:3000"
     volumes:
@@ -22,6 +42,9 @@ services:
       - node_modules:/root/Documentos/WebApp/WebApp/node_modules
     networks:
       - app-network
+    
+
+
  
 networks:
   app-network:
@@ -29,4 +52,5 @@ networks:
 
 volumes:
   dbdata:
-  node_modules:  
+  node_modules:
+  mysql-data:  
