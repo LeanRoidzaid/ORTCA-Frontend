@@ -1,6 +1,31 @@
 version: '3'
 
 services:
+
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: nodefe
+    restart: always
+    env_file: .env
+    environment:
+      - DB_USERNAME=$MONGO_USERNAME
+      - DB_PASSWORD=$MONGO_PASSWORD
+      - DB_HOSTNAME=db
+      - DB_PORT=$MONGO_PORT
+      - DB_DB=$MONGO_DB
+    ports:
+      - '3000:3000'
+
+    volumes:
+      - .:/root/Documentos/WebApp/WebApp/
+      - node_modules:/root/Documentos/WebApp/WebApp/node_modules/
+    networks:
+      - app-network
+
+
   db:
     container_name: mysql
     image: mysql:5.7
@@ -21,28 +46,6 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./db-init/:/docker-entrypoint-initdb.d
-  nodejs:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: nodejs
-    container_name: nodejs
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      - DB_USERNAME=$MONGO_USERNAME
-      - DB_PASSWORD=$MONGO_PASSWORD
-      - DB_HOSTNAME=db
-      - DB_PORT=$MONGO_PORT
-      - DB_DB=$MONGO_DB
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/root/Documentos/WebApp/WebApp/
-      - node_modules:/root/Documentos/WebApp/WebApp/node_modules
-    networks:
-      - app-network
-    
 
 
  
