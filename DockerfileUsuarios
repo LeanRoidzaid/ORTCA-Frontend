@@ -4,13 +4,10 @@ RUN mkdir -p /root/Documentos/WebApp/WebApp
 
 WORKDIR /root/Documentos/WebApp/WebApp/
 
-
 COPY . .
 
 RUN npm install
 
-
-
-EXPOSE 3000
+EXPOSE 3001
 
 CMD ["npm", "run", "start"]

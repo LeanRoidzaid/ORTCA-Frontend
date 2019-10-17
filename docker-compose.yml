@@ -1,39 +1,65 @@
-version: '3'
+version: '3.7'
 
 services:
 
-  nodejs:
+
+  nodefe:
     build:
       context: .
       dockerfile: Dockerfile
-    image: nodejs
+    depends_on:
+    - nodeusu
+   
+    #  image: nodejs
     container_name: nodefe
     restart: always
-    env_file: .env
-    environment:
-      - DB_USERNAME=$MONGO_USERNAME
-      - DB_PASSWORD=$MONGO_PASSWORD
-      - DB_HOSTNAME=db
-      - DB_PORT=$MONGO_PORT
-      - DB_DB=$MONGO_DB
+    # env_file: .env
     ports:
       - '3000:3000'
 
-    volumes:
-      - .:/root/Documentos/WebApp/WebApp/
-      - node_modules:/root/Documentos/WebApp/WebApp/node_modules/
+      #    volumes:
+      #- .:/root/Documentos/WebApp/WebApp/
+      #- node_modules:/root/Documentos/WebApp/WebApp/node_modules/
     networks:
       - app-network
+ 
+
+
+
+  nodeusu:
+    build:
+      context: ./../usuarios/ORTCA-Usuarios
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    #  image: nodejs
+    container_name: nodeUsu
+    restart: always
+    # env_file: .env
+    ports:
+      - '3001:3001'
+
+      #     volumes:
+      #- .:/root/Documentos/WebApp/WebApp/
+      #- node_modules:/root/Documentos/WebApp/WebApp/node_modules/
+    networks:
+      - app-network-usuarios
+
+
+
 
 
   db:
     container_name: mysql
-    image: mysql:5.7
+    image: mysql
     restart: always
     env_file: .env
     environment:
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_USER={$MYSQL_USER}
+      - MYSQL_PASSWORD={$MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD={$MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE={$MYSQL_DATABASE}
+    
     
 
     ports:
@@ -48,9 +74,15 @@ services:
       - ./db-init/:/docker-entrypoint-initdb.d
 
 
- 
+
+
+
+
+
 networks:
   app-network:
+    driver: bridge
+  app-network-usuarios:
     driver: bridge
 
 volumes:

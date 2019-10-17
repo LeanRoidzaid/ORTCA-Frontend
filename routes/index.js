@@ -1,12 +1,14 @@
 var express = require('express');
+var auth = require('../middlewares/session');
 
 var router = express.Router();
 var jwt='asda';
 
 /* GET home page. */
-router.get('/',function(req, res, next) {
-  jwt=req.cookies.token;
-  jwt='asda';
+router.get('/',auth,function(req, res, next) {
+  jwt=req.cookies['jwt'];
+  //jwt='asda';
+  //res.cookie('jwt','123456');
 
   res.render('index', { title: 'Express' ,token: jwt,usuario: 'usuas'});
 });
@@ -49,14 +51,7 @@ router.get('/beneficiarios', function(req, res, next) {
 });
 
 // middleware function to check for logged-in users
-var sessionChecker = (req, res, next) => {
-  //if (req.session.user && req.cookies.user_sid) {
-  if (req.session.user ) {
-      res.redirect('/dashboard');
-  } else {
-      next();
-  }    
-};
+
 
 
 
