@@ -5,15 +5,34 @@
   <meta charset="UTF-8">
   <title>ELAISS</title>
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+  
   <script src="/js/jquery.min.js"></script>
   <script src="/js/jquery.js"></script>
   <script src="/js/bootstrap.min.js"></script>
-
+ 
 
 </head>
 
 <body>
   <header>
+  <%if (typeof token != 'undefined') {  %>
+    <%if (token.length > 0) { 
+      
+      
+    var DataMenu = [{NameItem: "Usuarios", url: "/usuarios",roles:"1,2,3,4"},
+                    {NameItem: "Beneficiarios", url: "/beneficiarios",roles:"1,2,3,4"},
+                    {NameItem: "Stock", url: "/stock",roles:"1,2,3,4"},
+                    {NameItem: "Ordenes", url: "/ordenes",roles:"1,2,3,4"}
+                    ];  
+    
+
+
+
+    var DataMenuReports = [{NameItem: "Reporte de Retiros", url: "/usuarios",roles:"1,2,3,4"},
+                    {NameItem: "Reporte de Ordenes", url: "/beneficiarios",roles:"1,2,3,4"},
+                    {NameItem: "Reporte Stock", url: "/stock",roles:"1,2,3,4"}
+                    ];                      
+    %>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">ELAISS </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -24,64 +43,115 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/">Principal </a>
+            <a class="nav-link" href="/">Inicio </a>
           </li>
-          <%if (typeof token != 'undefined') {  %>
-            <%if (token.length > 0) {  %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Beneficiarios
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/beneficiarios">Crear</a>
-              <a class="dropdown-item" href="#">Gestionar Autorizador</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
+          
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Usuarios
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/usuarios">Crear</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
+            
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Gestionar
+                    
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <% 
+                    var muestraItem=false;
+                    for(var j=0; j < DataMenu.length; j++) { 
+                    
+                      for (var k=0; k< DataMenu[j].roles.split(",").length; k++){
+                        for(var i=0; i < Rol.length; i++) { 
+                         if(DataMenu[j].roles.split(",")[k]==Rol[i].rol){
+                            muestraItem=true; 
+                          %>
+                      
+                        <% } %>
+                        <% } %>                        
+                      <% } 
+                      if(muestraItem==true){
+                        %>
+                        <a class="dropdown-item" href="<%= DataMenu[j].url %>" ><%=DataMenu[j].NameItem %></a>
+                        <%
+                        muestraItem=false;
+
+                      }
+                     } %>
+  <!--                  <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>-->
+                  </div>
+                </li>
+ 
+                
 
 
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Stock
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/stock">Crear</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Reportes
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/reportes">Crear</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-          <% } %>
-          <% } %>
+
+
+
+
+
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      Reportes
+                      
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <% 
+                      var muestraItemReportes=false;
+                      for(var j=0; j < DataMenuReports.length; j++) { 
+                      
+                        for (var k=0; k< DataMenuReports[j].roles.split(",").length; k++){
+                          for(var i=0; i < Rol.length; i++) { 
+                           if(DataMenuReports[j].roles.split(",")[k]==Rol[i].rol){
+                            muestraItemReportes=true; 
+                            %>
+                        
+                          <% } %>
+                          <% } %>                        
+                        <% } 
+                        if(muestraItemReportes==true){
+                          %>
+                          
+                          <a class="dropdown-item" href="<%= DataMenuReports[j].url %>" ><%=DataMenuReports[j].NameItem %></a>
+                          <%
+                          muestraItemReportes=false;
+  
+                        }
+                       } %>
+
+                    </div>
+                  </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+            
         </ul>
         <!--
                   <form class="form-inline my-2 my-lg-0">
@@ -89,8 +159,8 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                   </form>-->
                   <%if (typeof token != 'undefined') {  %>
-                    <%if (token.size > 0) {  %>       
-                       <p>Bienvenido <%=usuario%></p>
+                    <%if (token.length > 0) {  %>       
+                       <a class="nav-link" href="/">Bienvenido <%=usuario%>  </a>||<a class="nav-link" href="/usuarios/salir">Salir</a>
                     <% }else{ %>
                       <a class="nav-link" href="/login">Acceder </a>
                     <% } %>
@@ -98,6 +168,8 @@
 
       </div>
     </nav>
+    <% } %>
+  <% } %>
   </header>
 
   <main>
@@ -105,6 +177,8 @@
       <%- body %>
     </div>
   </main>
+
+
 
 
 </body>

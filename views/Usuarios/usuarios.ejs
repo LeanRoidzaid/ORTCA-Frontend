@@ -1,0 +1,274 @@
+
+<script>
+function insertarUsuario(datos){
+
+    $.ajax({
+
+            url : 'http://localhost:3000/usuarios/all',
+            type : 'POST',
+            data : {
+                'numberOfWords' : 10
+            },
+            dataType:'json',
+            success : bindData,
+            error : function(request,error)
+            {
+                alert("Request: "+JSON.stringify(request));
+            }
+        });
+    
+}
+
+function limpiarModal(){
+    $('#nombre').val('');
+    $('#apellido').val('');
+    $('#dni').val('');
+    $('#mail').val('');
+    $('#usuario').val('');
+
+
+    $('#medico').attr('checked',false);
+
+    $('#administrativo').attr('checked',false);
+
+    $('#auditor').attr('checked',false);
+
+    $('#administrador').attr('checked',false);
+
+
+}
+function editarUsuario(args){
+    limpiarModal();
+    $('#nombre').val(args.item.nombre);
+    $('#apellido').val(args.item.apellido);
+    $('#dni').val(args.item.dni);
+    $('#mail').val(args.item.mail);
+    $('#usuario').val(args.item.usuario);
+
+
+    args.item.usuario_roles.forEach(rol => {
+     
+        switch(rol.idRol){
+            case 1:
+                $('#medico').attr('checked','checked');
+                break;
+            case 2:
+                $('#administrativo').attr('checked','checked');
+                break;
+            case 3:
+                $('#auditor').attr('checked','checked');
+                break;
+            case 4:
+                $('#administrador').attr('checked','checked');
+                break;
+        }
+        
+    
+        
+    });
+
+    $('#RolesModal').modal();
+
+    //alert("Specify asdaad name of the item!");
+
+}
+
+
+function bindData(json){
+    var usuario_roles = [
+       
+        { Name: "Medico", idRol: 1 },
+        { Name: "Administrativo", idRol: 2 },
+        { Name: "Auditor", idRol: 3 },
+        { Name: "Administrador", idRol: 4 }
+    ];
+ 
+    $("#jsGrid").jsGrid({
+        width: "1600",
+        height: "1200",
+        autoload: true,
+        pageLoading: true,
+        inserting: true,
+        //editing: true,
+        rowDoubleClick: editarUsuario,
+        sorting: true,
+        paging: true,
+        selecting: true,
+        onItemInserting: function(args) {
+            insertarUsuario(args);
+            // cancel insertion of the item with empty 'name' field
+            alert("Specify the name of the item!");
+            if(args.item.Edad === "") {
+                args.cancel = true;
+                alert("Specify the name of the item!");
+            }
+        },
+        onItemUpdating: function(args) {
+        // cancel insertion of the item with empty 'name' field
+        alert("Specify the name of the item!");
+            if(args.item.Edad === "") {
+                args.cancel = true;
+                alert("Specify the name of the item!");
+            }
+        },
+        data: json ,
+        controller: {
+            loadData: function(filter) {
+                var startIndex = (filter.pageIndex - 1) * filter.pageSize;
+                //alert("asdas"+filter.usuario_roles);
+                return ;//{
+                    //data: db.clients.slice(startIndex, startIndex + filter.pageSize),
+                    //itemsCount: db.clients.length
+                //};
+            }
+        } ,
+        /*
+        fields: [
+            { name: "Usuario", type: "text", width: 150, validate: "required" },
+            { name: "Edad", type: "number", width: 50 },
+            { name: "Dir", type: "text", width: 200 },
+            { name: "CAS", type: "select", items: countries, valueField: "Id", textField: "Name" },
+            { name: "Activo", type: "checkbox", title: "Esta activo", sorting: false },
+            { type: "control" }
+        ]
+        */
+        fields: [
+            { name: "id", title:"Id" , type: "number", width: 5, validate: "required" },
+            { name: "nombre", title:"Nombre" , type: "text", width: 40, validate: "required" },
+            { name: "apellido", title: "Apellido" ,type: "text", width: 30, validate: "required" },
+            { name: "dni",title:"DNI" ,type: "text", width: 30, validate: "required" },
+            { name: "mail", title:"Mail", type: "text", width: 60, validate: "required" },
+            { name: "usuario",title:"Usuario", type: "text", width: 25, validate: "required" },
+            //{ name: "usuario_roles",visible:true, type: "select", items: usuario_roles, valueField: "idRol", textField: "Name" },
+            { name: "fh_alta",title:"Fecha Alta" ,visible:false ,type: "text", width: 50, validate: "required" },
+            { name: "fh_baja", visible:false, type: "text", width: 150},
+            //{ name: "esMedico", title: "Medico",  type: "checkbox", width: 20},
+            //{ name: "esAdministrativo", title: "Administrativo",  type: "checkbox", width: 40},
+            //{ name: "esAuditor", title: "Auditor",  type: "checkbox", width: 20},
+            //{ name: "esAdministrador", title: "Administrador",  type: "checkbox", width: 40}
+            //,
+            //{ type: "control" }
+        ]
+    });
+
+}
+$(document).ready(function() {  
+
+
+
+
+
+    $.ajax({
+
+            url : 'http://localhost:3000/usuarios/all',
+            type : 'GET',
+            data : {
+                'numberOfWords' : 10
+            },
+            dataType:'json',
+            success : bindData,
+            error : function(request,error)
+            {
+                alert("Request: "+JSON.stringify(request));
+            }
+        });
+
+    /*
+    var clients = [
+        { "Usuario": "Otto Clay", "Edad": 25, "CAS": 1, "Dir": "Av. Siempre viva 177", "Activo": false },
+        { "Usuario": "Connor Johnston", "Edad": 45, "CAS": 2, "Dir": "Ap #370-4647 Dis Av.", "Activo": true },
+        { "Usuario": "Lacey Hess", "Edad": 29, "CAS": 3, "Dir": "Ap #365-8835 Integer St.", "Activo": false },
+        { "Usuario": "Timothy Henson", "Edad": 56, "CAS": 1, "Dir": "911-5143 Luctus Ave", "Activo": true },
+        { "Usuario": "Ramona Benton", "Edad": 32, "CAS": 3, "Dir": "Ap #614-689 Vehicula Street", "Activo": false }
+    ];
+ 
+    var countries = [
+        { Name: "CAS 0", Id: 0 },
+        { Name: "CAS 1", Id: 1 },
+        { Name: "CAS 2", Id: 2 },
+        { Name: "CAS 3", Id: 3 }
+    ];
+    */
+});
+</script>
+
+
+
+
+<link type="text/css" rel="stylesheet" href="stylesheets/jsgrid.min.css" />
+<link type="text/css" rel="stylesheet" href="stylesheets/jsgrid-theme.min.css" />
+    
+<script type="text/javascript" src="javascripts/jsgrid/jsgrid.min.js"></script>
+<h2>Usuarios</h2>
+<br>
+<div id="jsGrid" ></div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <!--MODAL DE EDIT Y VER USUARIO-->                                                                                                                                                                                                                                                                                                                                   
+<div class="modal fade" id="RolesModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="RolesModalLabel">Gestionar Usuario</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Nombre:</label>
+                  <input type="text" class="form-control" id="nombre">
+                </div>
+                <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Apellido:</label>
+                        <input type="text" class="form-control" id="apellido">
+                </div>
+                <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">DNI:</label>
+                        <input type="text" class="form-control" id="dni">
+                </div>
+                <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Mail:</label>
+                        <input type="text" class="form-control" id="mail">
+                </div>
+                <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Usuario:</label>
+                        <input type="text" class="form-control" id="usuario">
+                </div>
+                <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Roles</label>
+                    <table>
+                        <tr>
+                            <td>Administrarivo</td>
+                            <td><input type="checkbox"  id="administrativo"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Medico</td>
+                            <td><input type="checkbox"  id="medico"></td>
+                        </tr>
+                        <tr>
+                            <td>Administrador</td>
+                            <td><input type="checkbox"  id="administrador"></td>
+                        </tr>
+                        <tr>
+                            <td>Auditor</td>
+                            <td><input type="checkbox"  id="auditor"></td>
+                        </tr>
+                    </table>
+                        
+
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary" onclick="actualizar();">Actualizar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<script>
+
+</script>
+

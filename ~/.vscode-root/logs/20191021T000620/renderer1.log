@@ -1,0 +1,267 @@
+[2019-10-21 02:56:24.833] [renderer1] [error] Error: [File Watcher (node.js)] Failed to watch /root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts for changes using fs.watch() (Error: ENOSPC: no space left on device, watch '/root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts')
+[2019-10-21 02:56:24.846] [renderer1] [error] [File Watcher (node.js)] Failed to watch /root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts for changes using fs.watch() (Error: ENOSPC: no space left on device, watch '/root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts')
+[2019-10-21 03:28:15.617] [renderer1] [error] Error: [File Watcher (node.js)] Failed to watch /root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts for changes using fs.watch() (Error: ENOSPC: no space left on device, watch '/root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts')
+[2019-10-21 03:28:15.644] [renderer1] [error] [File Watcher (node.js)] Failed to watch /root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts for changes using fs.watch() (Error: ENOSPC: no space left on device, watch '/root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts')
+[2019-10-21 04:29:52.863] [renderer1] [error] <semantic> TypeScript Server Error (3.6.2)
+Debug Failure. False expression: Token end is child end
+Error: Debug Failure. False expression: Token end is child end
+    at processChildNode (tsserver.js:113552:34)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17235:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17264:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17253:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17267:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17253:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17148:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17207:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17198:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17205:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17264:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17253:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17268:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17253:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17148:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17207:21)
+    at processNode (tsserver.js:113498:20)
+    at formatSpanWorker (tsserver.js:113313:17)
+    at tsserver.js:113277:140
+    at Object.getFormattingScanner (tsserver.js:112070:23)
+    at Object.formatNodeGivenIndentation (tsserver.js:113277:31)
+    at getFormattedTextOfNode (tsserver.js:115313:45)
+    at format (tsserver.js:115291:52)
+    at computeNewText (tsserver.js:115294:23)
+    at tsserver.js:115264:89
+    at Array.map (<anonymous>)
+    at tsserver.js:115263:50
+    at Array.map (<anonymous>)
+    at Object.getTextChangesFromChanges (tsserver.js:115249:86)
+    at ChangeTracker.getChanges (tsserver.js:115219:45)
+    at Function.ChangeTracker.with (tsserver.js:114754:32)
+    at Object.getCodeActions (tsserver.js:120893:64)
+    at tsserver.js:115774:121
+    at Object.flatMap (tsserver.js:583:25)
+    at Object.getFixes (tsserver.js:115774:23)
+    at tsserver.js:125788:35: Error: <semantic> TypeScript Server Error (3.6.2)
+Debug Failure. False expression: Token end is child end
+Error: Debug Failure. False expression: Token end is child end
+    at processChildNode (tsserver.js:113552:34)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17235:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17264:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17253:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17267:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17253:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17148:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17207:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17198:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17205:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17264:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17253:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17268:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17253:24)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at tsserver.js:113499:21
+    at visitNode (tsserver.js:17018:24)
+    at Object.forEachChild (tsserver.js:17148:21)
+    at processNode (tsserver.js:113498:20)
+    at processChildNode (tsserver.js:113558:21)
+    at processChildNodes (tsserver.js:113609:48)
+    at tsserver.js:113501:21
+    at visitNodes (tsserver.js:17023:24)
+    at Object.forEachChild (tsserver.js:17207:21)
+    at processNode (tsserver.js:113498:20)
+    at formatSpanWorker (tsserver.js:113313:17)
+    at tsserver.js:113277:140
+    at Object.getFormattingScanner (tsserver.js:112070:23)
+    at Object.formatNodeGivenIndentation (tsserver.js:113277:31)
+    at getFormattedTextOfNode (tsserver.js:115313:45)
+    at format (tsserver.js:115291:52)
+    at computeNewText (tsserver.js:115294:23)
+    at tsserver.js:115264:89
+    at Array.map (<anonymous>)
+    at tsserver.js:115263:50
+    at Array.map (<anonymous>)
+    at Object.getTextChangesFromChanges (tsserver.js:115249:86)
+    at ChangeTracker.getChanges (tsserver.js:115219:45)
+    at Function.ChangeTracker.with (tsserver.js:114754:32)
+    at Object.getCodeActions (tsserver.js:120893:64)
+    at tsserver.js:115774:121
+    at Object.flatMap (tsserver.js:583:25)
+    at Object.getFixes (tsserver.js:115774:23)
+    at tsserver.js:125788:35
+	at Function.create (/usr/share/code/resources/app/extensions/typescript-language-features/dist/extension.js:53:63463)
+	at h.dispatchResponse (/usr/share/code/resources/app/extensions/typescript-language-features/dist/extension.js:53:56618)
+	at h.dispatchMessage (/usr/share/code/resources/app/extensions/typescript-language-features/dist/extension.js:53:55516)
+	at constructor._reader.onData.e (/usr/share/code/resources/app/extensions/typescript-language-features/dist/extension.js:53:54992)
+	at u.fire (/usr/share/code/resources/app/out/vs/workbench/services/extensions/node/extensionHostProcess.js:50:207)
+	at t.Reader.onLengthData (/usr/share/code/resources/app/extensions/typescript-language-features/dist/extension.js:53:61683)
+	at Socket.t.Reader.constructor.e.on.e (/usr/share/code/resources/app/extensions/typescript-language-features/dist/extension.js:53:61331)
+	at Socket.emit (events.js:182:13)
+	at addChunk (_stream_readable.js:283:12)
+	at readableAddChunk (_stream_readable.js:264:11)
+	at Socket.Readable.push (_stream_readable.js:219:10)
+	at Pipe.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+[2019-10-21 04:39:54.448] [renderer1] [error] Error: [File Watcher (node.js)] Failed to watch /root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts for changes using fs.watch() (Error: ENOSPC: no space left on device, watch '/root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts')
+[2019-10-21 04:39:54.468] [renderer1] [error] [File Watcher (node.js)] Failed to watch /root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts for changes using fs.watch() (Error: ENOSPC: no space left on device, watch '/root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts')
+[2019-10-21 05:03:19.948] [renderer1] [error] Data tree node not found: datostoken
+not available: Error: Data tree node not found: datostoken
+not available
+    at X.getDataNode (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1024:594)
+    at X.rerender (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1022:347)
+    at _register.debugService.getViewModel.onDidSelectExpression.e (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5064:246)
+    at d.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:107:468)
+    at o.setSelectedExpression (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2732:793)
+    at X.addWatchExpression (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5035:328)
+    at n.openViewlet.then (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4953:808)
+[2019-10-21 05:03:34.845] [renderer1] [error] Data tree node not found: err
+not available: Error: Data tree node not found: err
+not available
+    at X.getDataNode (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1024:594)
+    at X.rerender (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1022:347)
+    at _register.debugService.getViewModel.onDidSelectExpression.e (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5064:246)
+    at d.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:107:468)
+    at o.setSelectedExpression (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2732:793)
+    at X.addWatchExpression (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5035:328)
+    at n.openViewlet.then (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4953:808)
+[2019-10-21 05:26:57.016] [renderer1] [error] Error: [File Watcher (node.js)] Failed to watch /root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts for changes using fs.watch() (Error: ENOSPC: no space left on device, watch '/root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts')
+[2019-10-21 05:26:57.026] [renderer1] [error] [File Watcher (node.js)] Failed to watch /root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts for changes using fs.watch() (Error: ENOSPC: no space left on device, watch '/root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts')
+[2019-10-21 05:29:13.317] [renderer1] [error] Error: [File Watcher (node.js)] Failed to watch /root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts for changes using fs.watch() (Error: ENOSPC: no space left on device, watch '/root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts')
+[2019-10-21 05:29:13.330] [renderer1] [error] [File Watcher (node.js)] Failed to watch /root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts for changes using fs.watch() (Error: ENOSPC: no space left on device, watch '/root/.cache/typescript/3.6/node_modules/@types/jsonwebtoken/index.d.ts')
+[2019-10-21 05:29:44.859] [renderer1] [error] Tree element not found: [object Object]: Error: Tree element not found: [object Object]
+    at s.getElementLocation (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:124:791)
+    at s.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:124:65)
+    at q.isCollapsed (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1009:19)
+    at W.revealMarkersForCurrentActiveEditor (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5714:628)
+    at W.autoReveal (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5714:485)
+    at W.onActiveEditorChanged (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5711:775)
+    at W._register.e (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5710:789)
+    at d.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:107:488)
+    at setTimeout (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:103:913)
+[2019-10-21 05:48:51.183] [renderer1] [error] Data tree node not found: token.split('.')[1]
+not available: Error: Data tree node not found: token.split('.')[1]
+not available
+    at X.getDataNode (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1024:594)
+    at X.rerender (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1022:347)
+    at _register.debugService.getViewModel.onDidSelectExpression.e (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5064:246)
+    at d.fire (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:107:468)
+    at o.setSelectedExpression (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2732:793)
+    at X.addWatchExpression (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:5035:328)
+    at n.openViewlet.then (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:4953:808)

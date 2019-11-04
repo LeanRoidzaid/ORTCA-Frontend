@@ -32,6 +32,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - db
+    links:
+      - db
     #  image: nodejs
     container_name: nodeUsu
     restart: always
@@ -55,12 +57,16 @@ services:
     restart: always
     env_file: .env
     environment:
-      - MYSQL_USER={$MYSQL_USER}
-      - MYSQL_PASSWORD={$MYSQL_PASSWORD}
-      - MYSQL_ROOT_PASSWORD={$MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE={$MYSQL_DATABASE}
+    #  - MYSQL_USER={$MYSQL_USER}
+    #  - MYSQL_PASSWORD={$MYSQL_PASSWORD}
+    #  - MYSQL_ROOT_PASSWORD={$MYSQL_ROOT_PASSWORD}
+    #  - MYSQL_DATABASE={$MYSQL_DATABASE}
     
-    
+
+      - MYSQL_USER=elaiss_app
+      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=db_elaiss   
 
     ports:
       # <Port exposed> : < MySQL Port running inside container>
@@ -72,6 +78,8 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./db-init/:/docker-entrypoint-initdb.d
+    networks:
+      - app-network-usuarios
 
 
 

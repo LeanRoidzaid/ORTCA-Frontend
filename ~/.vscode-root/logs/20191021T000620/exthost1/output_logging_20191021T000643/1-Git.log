@@ -1,0 +1,903 @@
+Looking for git in: git
+Using git 1.8.3.1 from git
+> git rev-parse --show-toplevel
+> git rev-parse --git-dir
+> git config --get commit.template
+Open repository: /root/Documentos/WebApp/usuarios/ORTCA-Usuarios
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git show :.vscode/launch.json
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :.vscode/launch.json
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :.vscode/launch.json
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git check-ignore -v -z --stdin
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git show :package.json
+> git check-ignore -v -z --stdin
+> git show :src/config/development.json
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :.vscode/launch.json
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :package.json
+> git check-ignore -v -z --stdin
+> git show :.vscode/launch.json
+> git show :package.json
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :.vscode/launch.json
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :package.json
+> git show :.vscode/launch.json
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/config/development.json
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git check-ignore -v -z --stdin
+> git show :src/server.js
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git show :src/api/routers/routers_login.js
+> git show :src/api/models/models_usuarios.js
+> git check-ignore -v -z --stdin
+> git show :src/api/routers/routers_login.js
+> git show :src/api/models/models_usuario_rol.js
+> git show :src/api/models/models_usuarios.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/routers/routers_login.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/server.js
+> git show :src/api/routers/routers_login.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git check-ignore -v -z --stdin
+> git show :src/api/routers/routers_usuarios.js
+> git show :node_modules/express/lib/router/layer.js
+> git check-ignore -v -z --stdin
+> git ls-files --stage -- node_modules/express/lib/router/
+> git check-ignore -v -z --stdin
+> git show :node_modules/express/lib/router/route.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git check-ignore -v -z --stdin
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git check-ignore -v -z --stdin
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git check-ignore -v -z --stdin
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/server.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/server.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git rev-parse --show-toplevel
+fatal: Not a git repository (or any of the parent directories): .git
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_usuarios.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git rev-parse --show-toplevel
+fatal: Not a git repository (or any of the parent directories): .git
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git check-ignore -v -z --stdin
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/server.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :node_modules/express/lib/router/layer.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :node_modules/express/lib/router/route.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :node_modules/express/lib/router/layer.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/controllers/controllers_usuarios.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/controllers/controllers_usuarios.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git check-ignore -v -z --stdin
+> git show :node_modules/sequelize/lib/sequelize.js
+> git ls-files --stage -- node_modules/sequelize/lib/
+> git check-ignore -v -z --stdin
+> git show :src/api/routers/routers_usuarios.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/server.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :node_modules/express/lib/router/layer.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :node_modules/express/lib/router/route.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :src/api/routers/routers_usuarios.js
+> git show :node_modules/bluebird/js/release/util.js
+> git ls-files --stage -- node_modules/bluebird/js/release/
+> git check-ignore -v -z --stdin
+> git check-ignore -v -z --stdin
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :node_modules/express/lib/router/layer.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :node_modules/express/lib/router/route.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/server.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :node_modules/bluebird/js/release/util.js
+> git ls-files --stage -- node_modules/bluebird/js/release/
+> git show :src/api/routers/routers_usuarios.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/server.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :node_modules/express/lib/router/layer.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :node_modules/express/lib/router/route.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :src/api/routers/routers_usuarios.js
+> git show :node_modules/bluebird/js/release/util.js
+> git ls-files --stage -- node_modules/bluebird/js/release/
+> git show :node_modules/bluebird/js/release/promise.js
+> git ls-files --stage -- node_modules/bluebird/js/release/
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/server.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :node_modules/bluebird/js/release/util.js
+> git ls-files --stage -- node_modules/bluebird/js/release/
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git rev-parse --show-toplevel
+fatal: Not a git repository (or any of the parent directories): .git
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/server.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/controllers/controllers_usuarios.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :node_modules/express/lib/router/layer.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :node_modules/express/lib/router/route.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/routers/routers_login.js
+> git show :node_modules/express/lib/router/layer.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/server.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git show :src/config/config.js
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git rev-parse --show-toplevel
+fatal: Not a git repository (or any of the parent directories): .git
+> git show :src/api/routers/routers_login.js
+> git rev-parse --show-toplevel
+fatal: Not a git repository (or any of the parent directories): .git
+> git show :src/api/routers/routers_login.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/verificaTokenMiddleware.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/routers/routers_login.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_login.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/routers/routers_usuarios.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/routers/routers_login.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :node_modules/express/lib/router/layer.js
+> git ls-files --stage -- node_modules/express/lib/router/
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/controllers/controllers_roles.js
+> git show :src/api/routers/routers_usuarios.js
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git show :src/api/routers/routers_usuarios.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
+> git show :src/api/middlewares/varificaRolMiddleware.js
+> git status -z -u
+> git symbolic-ref --short HEAD
+> git rev-parse master
+> git rev-parse --symbolic-full-name master@{u}
+> git rev-list --left-right master...refs/remotes/origin/master
+> git for-each-ref --format %(refname) %(objectname) --sort -committerdate
+> git remote --verbose
