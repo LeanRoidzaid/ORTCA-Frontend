@@ -19,18 +19,23 @@
     <%if (token.length > 0) { 
       
       
-    var DataMenu = [{NameItem: "Usuarios", url: "/usuarios",roles:"1,2,3,4"},
-                    {NameItem: "Beneficiarios", url: "/beneficiarios",roles:"1,2,3,4"},
-                    {NameItem: "Stock", url: "/stock",roles:"1,2,3,4"},
-                    {NameItem: "Ordenes", url: "/ordenes",roles:"1,2,3,4"}
+    var DataMenu = [{NameItem: "Gestion de Usuarios", url: "/usuarios",roles:"4"},
+                    {NameItem: "Gestion de Beneficiarios", url: "/beneficiarios/",roles:"1,2,3,4"},
+                    
+                    {NameItem: "Gestion de Ordenes", url: "/ordenes/",roles:"2"},
+                    
+                    {NameItem: "Suspender Ordenes", url: "/",roles:"1"},
+                    {NameItem: "Realizar Entrega", url: "/",roles:"2"},
+                    {NameItem: "Suspender Ordenes", url: "/",roles:"3"},
+                    {NameItem: "Productos", url: "/",roles:"1,2,3,4"}
                     ];  
     
 
 
 
-    var DataMenuReports = [{NameItem: "Reporte de Retiros", url: "/usuarios",roles:"1,2,3,4"},
-                    {NameItem: "Reporte de Ordenes", url: "/beneficiarios",roles:"1,2,3,4"},
-                    {NameItem: "Reporte Stock", url: "/stock",roles:"1,2,3,4"}
+    var DataMenuReports = [{NameItem: "Reporte de Retiros", url: "/index",roles:"1,2,3,4"},
+                    {NameItem: "Reporte de Ordenes", url: "/index",roles:"1,2,3,4"},
+                    {NameItem: "Reporte de Demanda", url: "/Reportes/demanda",roles:"1,2,3,4"}
                     ];                      
     %>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -64,7 +69,7 @@
                          if(DataMenu[j].roles.split(",")[k]==Rol[i].rol){
                             muestraItem=true; 
                           %>
-                      
+
                         <% } %>
                         <% } %>                        
                       <% } 

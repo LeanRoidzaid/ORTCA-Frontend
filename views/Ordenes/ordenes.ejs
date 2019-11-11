@@ -1,0 +1,113 @@
+<%- contentFor('body') %> 
+<script type="text/javascript" src="../javascripts/ordenes/funciones.js"></script>
+<script>
+
+
+    $(document).ready(function() {  
+    
+    
+    
+        /*
+    
+        $.ajax({
+    
+                url : 'http://localhost:3000/usuarios/all',
+                type : 'GET',
+                data : {
+                    'numberOfWords' : 10
+                },
+                dataType:'json',
+                success : bindData,
+                error : function(request,error)
+                {
+                    alert("Request: "+JSON.stringify(request));
+                }
+            });
+    
+        */
+
+
+        var ordenes = [
+            { "Beneficiario": "Ruiz Pablo", "medico": "Otto Clay", "Estado": "Activa" , "Producto": "Leche la Serenisima", "FVigencia": "10/09/2019 al 10/03/2020"},
+            { "Beneficiario": "D. A Maradona", "medico": "Connor Johnston","Estado": "Activa" , "Producto": "Pastillas Anticonceptivas", "FVigencia": "10/09/2019 al 10/03/2020"},
+            { "Beneficiario": "G Suller", "medico": "Lacey Hess","Estado": "Activa" , "Producto": "Leche la Serenisima", "FVigencia": "10/09/2019 al 10/03/2020"},
+            { "Beneficiario": "M Botana", "medico": "Timothy Henson","Estado": "Activa" , "Producto": "Pastillas Anticonceptivas", "FVigencia": "10/09/2019 al 10/03/2020"},
+            { "Beneficiario": "R Arias","medico": "Ramona Benton", "Estado": "Activa" , "Producto": "Leche la Serenisima", "FVigencia": "10/09/2019 al 10/03/2020"},
+        ];
+        
+        bindData(ordenes);
+       
+    });
+        </script>
+        
+        
+       
+        
+        <link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid.min.css" />
+        <link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid-theme.min.css" />
+            
+        <script type="text/javascript" src="../javascripts/jsgrid/jsgrid.min.js"></script>
+        
+        <h2>Ordenes</h2>
+        <br>
+        <div id="jsGrid" ></div>
+        
+<!--MODAL DE EDIT Y VER USUARIO-->
+<div class="modal fade" id="DetalleModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-xl" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="RolesModalLabel">Detalle de la Orden</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                            <input type="hidden" class="form-control" id="id" >
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Beneficiario:</label>
+                          <input type="text" class="form-control" id="beneficiario" value="Beneficiario 1">
+                        </div>
+                        <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Medico:</label>
+                                <input type="text" class="form-control" id="medico" value="Medico 1">
+                        </div>
+                        <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Estado:</label>
+                                <input type="text" class="form-control" id="estado" value="Pendiente">
+                        </div>
+                        <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Producto:</label>
+                                <input type="text" class="form-control" id="producto" value="Leche">
+                        </div>
+                        <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Fecha de Vigencia desde:</label>
+                                <input type="text" class="form-control" id="fdesde" value="21/10/2019">
+                        </div>
+                        <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Fecha de Vigencia hasta:</label>
+                                <input type="text" class="form-control" id="fhasta" value="21/11/2019">
+                        </div>
+                        <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Entergas</label>
+                        <div id="jsGridEntregas" ></div>
+
+                                
+        
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" onclick="actualizar();">Actualizar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+        <script>
+        
+        </script>
+        
+        

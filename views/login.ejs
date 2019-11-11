@@ -1,13 +1,24 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"> 
+        
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </head>
+
+
 <body>
 
 
 
 
-
-
+<div style="width: 600px; padding-left: 300px; padding-right: 0px; align-content: center">
+  <h2></h2>
+<h1 >  <span class="badge badge-secondary" > SISTEMA ELAISS</span></h1>
 
 <form action="/usuarios/login/" method="POST">
-  <div class="form-group">
+  <div class="form-group" >
     <label for="exampleInputEmail1">Email</label>
     <input type="text" class="form-control"  size="60"  id="usuario" name="usuario" aria-describedby="emailHelp" placeholder="Ingrese su usuario">
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
@@ -19,7 +30,40 @@
 
     <input type="submit" value="Submit" id="submit" class="btn btn-primary">
 </form>
+<br>
+<%
+if(msg==1){
+  %>
+  <div class="alert alert-danger" role="alert">
+    Tu sesión expiró
+  </div>
 
+  <%
+}
+if(msg==2){
+  %>
+  <div class="alert alert-danger" role="alert">
+    Usuario invalido
+  </div>
+
+  <%
+}
+
+
+if(msg==3){
+  %>
+  <div class="alert alert-danger" role="alert">
+    Error al inciar sesion
+  </div>
+
+  <%
+}
+%>
 
 </div>
+
+
+
 </body>
+
+</html>

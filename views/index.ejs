@@ -1,16 +1,112 @@
 
 <%- contentFor('body') %>
-<div class="container">
-        <div class="row align-items-center">
-          <div class="col-md border bg-light">
-            Retiros de la fecha
-          </div>
-          <div class="col-md border bg-light">
-             Notificaciones Manuales
-          </div>
-          <div class="col-md border bg-light">
-            Nivel de Stock
-          </div>
-        </div>
-      </div>
+<style>
+.container{
 
+  padding-top: 20px!important;
+  padding-right: 0px!important;
+  padding-left: 60px!important;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+  padding-bottom: 0px !important;
+
+}
+
+.dahsboard{
+  width: 1600px!important;
+ 
+}
+
+</style>
+<div class="container" >
+
+  <table class="dahsboard" >
+
+    <tr>
+      <td>
+
+        </td>
+      <td>
+          <div class="col-md border bg-light">
+              Retiros de la fecha</div>
+      </td>
+      <td>
+          <div class="col-md border bg-light">
+              Notificaciones Manuales</div>
+      </td>
+      <td>         
+         <div class="col-md border bg-light">
+          Nivel de Stock</div>
+      </td>
+
+    </tr>
+    <tr>
+        <td>
+          <table>
+            <tr>
+              <td style="width: 500px">
+                 
+                  <div class="card border-primary mb-3" style="max-width: 18rem;">
+                      <div class="card-header text-center"><b>Pendientes de Retiros</b></div>
+                      <div class="card-body text-primary">
+                         <h5 class="card-title"><h1 class="display-1 text-center">7</h1></h5>
+                        <p class="card-text text-center" ><strong>11/11/2019</strong></p>
+                      </div>
+                    
+                  </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td>
+            <div class="alert alert-secondary" role="alert">
+                Beneficiario: Leandro Roidzaid - Producto: Pastillas anticonceptivas
+              </div>
+              <div class="alert alert-secondary" role="alert">
+                Beneficiario: Leandro Roidzaid - Producto: Leche
+              </div>
+              <div class="alert alert-secondary" role="alert">
+                Beneficiario: Kevi de Rittis  - Producto: Leche
+              </div>
+  
+              <div class="alert alert-secondary" role="alert">
+                Beneficiario: Florencia de la Vega - Producto: Pastillas anticonceptivas
+              </div>
+        </td>
+        <td>
+              <div class="alert alert-warning" role="alert">
+                  Beneficiario: Florencia de la Vega - Producto: Pastillas anticonceptivas
+                </div>
+                <div class="alert alert-warning" role="alert">
+                  Beneficiario: Florencia de la Vega - Producto: Pastillas anticonceptivas
+                </div>
+                <div class="alert alert-warning" role="alert">
+                  Beneficiario: Florencia de la Vega - Producto: Pastillas anticonceptivas
+                </div>
+                <div class="alert alert-warning" role="alert">
+                  Beneficiario: Florencia de la Vega - Producto: Pastillas anticonceptivas
+                </div>
+        </td>
+        <td>
+            <div class="alert alert-success" role="alert">
+                Producto: Pastillas anticonceptivas - Nivel: Ok
+              </div>
+              <div class="alert alert-warning" role="alert">
+                Producto: Pastillas anticonceptivas - Nivel: Ok Demanda cubierta 
+              </div>
+              <div class="alert alert-danger" role="alert">
+                Producto: Pastillas anticonceptivas - Nivel: Insuficiente stock para cubrir la demanda
+              </div>
+        </td>
+  
+      </tr>
+
+
+
+  </table>
+
+          
+          
+
+            
+</div>

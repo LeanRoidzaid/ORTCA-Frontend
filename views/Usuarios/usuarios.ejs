@@ -1,25 +1,117 @@
 
 <script>
+
+function getBooleanCkecked(staus){
+    if(staus=='on'){
+        return true;
+    }
+    return false;
+}
+
+function actualizar(){
+var id = $('#id').val();    
+var nombre = $('#nombre').val();
+var apellido = $('#apellido').val();
+var dni = $('#dni').val();
+var mail = $('#mail').val();
+var usuario = $('#usuario').val();
+
+
+var administrativo = $('#administrativo').prop('checked') ;
+var medico = $('#medico').prop('checked') ;
+var administrador = $('#administrador').prop('checked') ;
+var auditor = $('#auditor').prop('checked') ;
+
+
+
+    $.ajax({
+
+            url : 'http://localhost:3000/usuarios/actualizar',
+            type : 'POST',
+            data : {
+                'id' : id,
+                'nombre' : nombre,
+                'apellido' : apellido,
+                'usuario' : usuario,
+                'dni' : dni,
+                'mail' : mail,
+                'administrativo' : administrativo,
+                'medico': medico,
+                'administrador': administrador,
+                'auditor' : auditor
+            },
+            dataType:'json',
+            success : function(data){
+                $.ajax({
+
+                        url : 'http://localhost:3000/usuarios/all',
+                        type : 'GET',
+                        data : {
+                            'numberOfWords' : 10
+                        },
+                        dataType:'json',
+                        success : bindData,
+                        error : function(request,error)
+                        {
+                            alert("Error: "+JSON.stringify(request));
+                        }
+                });
+            },
+            error : function(request,error)
+            {
+                alert("Request: "+JSON.stringify(request.responseText));
+            }
+            });
+
+            $('#RolesModal').modal('hide')
+
+return;
+
+
+}
 function insertarUsuario(datos){
 
     $.ajax({
 
-            url : 'http://localhost:3000/usuarios/all',
+            url : 'http://localhost:3000/usuarios/insertar',
             type : 'POST',
             data : {
-                'numberOfWords' : 10
+                'nombre' : datos.item.nombre,
+                'apellido' : datos.item.apellido,
+                'usuario' : datos.item.usuario,
+                'dni' : datos.item.dni,
+                'mail' : datos.item.mail,
             },
             dataType:'json',
-            success : bindData,
+            success : function(data){
+                $.ajax({
+
+                        url : 'http://localhost:3000/usuarios/all',
+                        type : 'GET',
+                        data : {
+                            'numberOfWords' : 10
+                        },
+                        dataType:'json',
+                        success : bindData,
+                        error : function(request,error)
+                        {
+                            alert("Error: "+JSON.stringify(request));
+                        }
+                });
+            },
             error : function(request,error)
             {
-                alert("Request: "+JSON.stringify(request));
+                alert("Request: "+JSON.stringify(request.responseText));
             }
         });
-    
+
+
+
+    return;
 }
 
 function limpiarModal(){
+    $('#id').val('');
     $('#nombre').val('');
     $('#apellido').val('');
     $('#dni').val('');
@@ -39,6 +131,7 @@ function limpiarModal(){
 }
 function editarUsuario(args){
     limpiarModal();
+    $('#id').val(args.item.id);
     $('#nombre').val(args.item.nombre);
     $('#apellido').val(args.item.apellido);
     $('#dni').val(args.item.dni);
@@ -75,6 +168,7 @@ function editarUsuario(args){
 
 
 function bindData(json){
+
     var usuario_roles = [
        
         { Name: "Medico", idRol: 1 },
@@ -94,14 +188,22 @@ function bindData(json){
         sorting: true,
         paging: true,
         selecting: true,
+        deleteItem: function(item) {
+            alert("eliminando");
+        //return $.ajax({
+        //    type: "DELETE",
+        //    url: "/items",
+        //    data: item
+        //});
+        },
         onItemInserting: function(args) {
             insertarUsuario(args);
             // cancel insertion of the item with empty 'name' field
-            alert("Specify the name of the item!");
-            if(args.item.Edad === "") {
-                args.cancel = true;
-                alert("Specify the name of the item!");
-            }
+           // alert("Specify the name of the item!");
+           // if(args.item.Edad === "") {
+            //    args.cancel = true;
+            //    alert("Specify the name of the item!");
+            //}
         },
         onItemUpdating: function(args) {
         // cancel insertion of the item with empty 'name' field
@@ -133,7 +235,7 @@ function bindData(json){
         ]
         */
         fields: [
-            { name: "id", title:"Id" , type: "number", width: 5, validate: "required" },
+            { name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
             { name: "nombre", title:"Nombre" , type: "text", width: 40, validate: "required" },
             { name: "apellido", title: "Apellido" ,type: "text", width: 30, validate: "required" },
             { name: "dni",title:"DNI" ,type: "text", width: 30, validate: "required" },
@@ -147,7 +249,7 @@ function bindData(json){
             //{ name: "esAuditor", title: "Auditor",  type: "checkbox", width: 20},
             //{ name: "esAdministrador", title: "Administrador",  type: "checkbox", width: 40}
             //,
-            //{ type: "control" }
+            { type: "control",editButton: false, }
         ]
     });
 
@@ -199,22 +301,24 @@ $(document).ready(function() {
 <link type="text/css" rel="stylesheet" href="stylesheets/jsgrid-theme.min.css" />
     
 <script type="text/javascript" src="javascripts/jsgrid/jsgrid.min.js"></script>
+
 <h2>Usuarios</h2>
 <br>
 <div id="jsGrid" ></div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <!--MODAL DE EDIT Y VER USUARIO-->                                                                                                                                                                                                                                                                                                                                   
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <!--MODAL DE EDIT Y VER USUARIO-->                                                                                                                                                                                                                                                                                                                                   
 <div class="modal fade" id="RolesModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="RolesModalLabel">Gestionar Usuario</h5>
+              <h5 class="modal-title" id="RolesModalLabel">Detalle Usuario</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <form>
+                    <input type="hidden" class="form-control" id="id" >
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Nombre:</label>
                   <input type="text" class="form-control" id="nombre">

@@ -1,0 +1,7 @@
+{
+    "CLAVEJWT": 123456,
+    "PORT": 3000,
+    "URLUsuarios" : "nodeusu:3001",
+    "URLFe" : "nodefe:3000",
+    "Protocol": "http://"
+}

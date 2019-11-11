@@ -10,10 +10,10 @@ router.post('/login',  function(req, res, next) {
   //const token='123456';
 
    request.post({
-                  "headers": { "content-type": "application/json" },
-                  "url": config.Protocol + config.URLUsuarios+"/api/login/",
-                  "body": JSON.stringify({"usuario": req.body.usuario, "pass": req.body.pass
-                })
+                      "headers": { "content-type": "application/json" },
+                      "url": config.Protocol + config.URLUsuarios+"/api/login/",
+                      "body": JSON.stringify({"usuario": req.body.usuario, "pass": req.body.pass
+                    })
                     }, 
                       (error, response, body) => 
                       {
@@ -22,25 +22,10 @@ router.post('/login',  function(req, res, next) {
                           
                           return res.redirect('/');
                         }else{
-                          if(response.statusCode==200)
-                          {
-                            res.cookie('jwt' ,JSON.parse(body).token);
-                            console.log(response);
-                            console.dir(JSON.parse(body));
-                            return res.redirect('/');
-                          }
-                          else if(response.statusCode==401){
-                            
-                            return res.redirect('../../login/?msg=2');
-
-                          }
-                          else
-                          {
-                            return res.redirect('../../login/?msg=3');
-
-                          }
-
-                          
+                          res.cookie('jwt' ,JSON.parse(body).token);
+                          console.log(response);
+                          console.dir(JSON.parse(body));
+                          return res.redirect('/');
                         }
 
                       });

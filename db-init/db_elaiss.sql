@@ -44,7 +44,7 @@ CREATE TABLE `autorizado` (
 -- Estructura de tabla para la tabla `beneficiario`
 --
 
-CREATE TABLE `beneficiario` (
+CREATE TABLE `beneficiarios` (
   `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `apellido` varchar(30) NOT NULL,
@@ -319,7 +319,7 @@ ALTER TABLE `autorizado`
 --
 -- Indices de la tabla `beneficiario`
 --
-ALTER TABLE `beneficiario`
+ALTER TABLE `beneficiarios`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`),
   ADD UNIQUE KEY `dni_UNIQUE` (`DNI`);
@@ -431,7 +431,7 @@ ALTER TABLE `autorizado`
 --
 -- AUTO_INCREMENT de la tabla `beneficiario`
 --
-ALTER TABLE `beneficiario`
+ALTER TABLE `beneficiarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -503,7 +503,7 @@ ALTER TABLE `usuario_roles`
 --
 ALTER TABLE `beneficiario_autorizado`
   ADD CONSTRAINT `FK_AUTORIZADO` FOREIGN KEY (`id_autorizado`) REFERENCES `autorizado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_BENEFICIARIO` FOREIGN KEY (`id_beneficiario`) REFERENCES `beneficiario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_BENEFICIARIO` FOREIGN KEY (`id_beneficiario`) REFERENCES `beneficiarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `entrega`
@@ -529,13 +529,13 @@ ALTER TABLE `movimiento`
 --
 ALTER TABLE `notificacion`
   ADD CONSTRAINT `FK_NOT_AUT` FOREIGN KEY (`idAutorizado`) REFERENCES `autorizado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_NOT_BENE` FOREIGN KEY (`idBeneficiario`) REFERENCES `beneficiario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_NOT_BENE` FOREIGN KEY (`idBeneficiario`) REFERENCES `beneficiarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `orden`
 --
 ALTER TABLE `orden`
-  ADD CONSTRAINT `FK_BENEF` FOREIGN KEY (`idBeneficiario`) REFERENCES `beneficiario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_BENEF` FOREIGN KEY (`idBeneficiario`) REFERENCES `beneficiarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_CENTRO` FOREIGN KEY (`idCentro`) REFERENCES `centro` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_PRODUCTO` FOREIGN KEY (`idproducto`) REFERENCES `producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_UALTA` FOREIGN KEY (`idUsuarioAlta`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -545,7 +545,7 @@ ALTER TABLE `orden`
 --
 ALTER TABLE `retiro`
   ADD CONSTRAINT `FK_AUTO_RETIRO` FOREIGN KEY (`idAutorizado`) REFERENCES `autorizado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_BENE_RETIRO` FOREIGN KEY (`idBeneficiario`) REFERENCES `beneficiario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_BENE_RETIRO` FOREIGN KEY (`idBeneficiario`) REFERENCES `beneficiarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_ENTREGA` FOREIGN KEY (`idEntrega`) REFERENCES `entrega` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_RETIRO_LOTE` FOREIGN KEY (`idLote`) REFERENCES `lote` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 

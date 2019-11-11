@@ -16,7 +16,8 @@ router.get('/',auth,function(req, res, next) {
 
 router.get('/login', function(req, res, next) {
   jwt=req.cookies.token;
-  res.render('login', { title: 'Login' , token : jwt,usuario:'usuarioes'});
+  
+  res.render('login', { title: 'Login' , token : jwt,usuario:'usuarioes',msg:req.query.msg});
 });
 /*
 router.post('/users', function(req, res, next) {
@@ -28,9 +29,9 @@ router.post('/users', function(req, res, next) {
 });
 */
 
-router.get('/reportes', function(req, res, next) {
-  jwt=req.cookies.token;
-  res.render('reportes', { title: 'Reportes' , token : jwt,usuario:'usuarioes'});
+router.get('/reportes/demanda',auth,function(req, res, next) {
+  
+  res.render('Reportes/demanda', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol});
 });
 
 router.get('/stock', function(req, res, next) {
@@ -44,14 +45,15 @@ router.get('/usuarios', auth,function(req, res, next) {
 });
 
 
-router.get('/beneficiarios', function(req, res, next) {
-  jwt=req.cookies.token;
-  console.log("beneficiaro");
-  res.render('beneficiarios', { title: 'Beneficiarios' , token : jwt,usuario:'usuarioes'});
+router.get('/beneficiarios', auth,function(req, res, next) {
+
+  res.render('Beneficiarios/beneficiarios', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol});
 });
 
-// middleware function to check for logged-in users
+router.get('/ordenes', auth,function(req, res, next) {
 
+  res.render('Ordenes/ordenes', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol});
+});
 
 
 

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "chart.js": "^2.9.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",

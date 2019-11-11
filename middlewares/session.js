@@ -1,22 +1,41 @@
 const request = require('request');
-
+const config = require('../config/config');
 
 
 var auth = function(req, res, next) {
+  
 
         if (req.cookies['jwt']){
         jwt=req.cookies['jwt'];
+       
         
-        
-        request.get("http://localhost:3001/api/usuarios/usuarioToken/?token="+jwt, (error, response, body) => {
-            if(error) {
-                //return 
+        request.get(config.Protocol + config.URLUsuarios+"/api/usuarios/usuarioToken/?token="+jwt, (error, response, body) => {
+             if(error) {
                 console.dir(error);
+                return res.redirect('/login');
            }
-           else{
+           else
+           {
             const jsonResponse = JSON.parse(response.body);
-            res.sessionUser = {token: jwt,usuario: jsonResponse.username.usuario, roles : Rol = [{rol:1},{rol:2},{rol:3}] };
-            next();
+
+                if( response.statusCode ==200)  { 
+                  
+                  var rol=[];
+                  var i =0;
+                    jsonResponse.username.usuario_roles.forEach(roles => {
+                        rol[i] ={'rol': roles.idRol};
+                        i++;
+
+                    });
+                  res.sessionUser = {token: jwt,usuario: jsonResponse.username.usuario, roles : Rol = rol }; 
+                  next();
+
+                }
+                else
+                {
+                  return res.redirect('/login?msg=1');
+
+                }
            }
             //console.dir(JSON.parse(response.body.username));
         });
