@@ -22,8 +22,23 @@ var medico = $('#medico').prop('checked') ;
 var administrador = $('#administrador').prop('checked') ;
 var auditor = $('#auditor').prop('checked') ;
 
+var mensajeValidacion = "";
+    if(typeof nombre =="undefined"  || !(nombre.length>1 && nombre.length<45) ){
+        mensajeValidacion += "El largo del nombre debe se mayor a 1 y menor a 45 \n " ;
+    }
+    if( typeof apellido =="undefined"  || !(apellido.length>1 && apellido.length<45)){
+        mensajeValidacion += "El largo del apellido debe se mayor a 1 y menor a 45 \n " ;
+    }
+    if((typeof dni =="undefined" )||!dni.length>8){
+        mensajeValidacion += "El DNI no debe ser mayor a 8 caracteres \n " ;
+    }
+    var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
+    if((typeof mail =="undefined")||(!regex.test(mail)) ||(!mail.length>3 && mail.length<45 )){
+        mensajeValidacion += "El mail debe ser una direccion de correo valida. \n " ;
+    }
 
+    if(mensajeValidacion==""){
     $.ajax({
 
             url : 'http://localhost:3000/usuarios/actualizar',
@@ -56,22 +71,54 @@ var auditor = $('#auditor').prop('checked') ;
                             alert("Error: "+JSON.stringify(request));
                         }
                 });
+                $('#RolesModal').modal('hide')
             },
             error : function(request,error)
             {
                 alert("Request: "+JSON.stringify(request.responseText));
             }
             });
-
-            $('#RolesModal').modal('hide')
+        }
+        else{
+            alert(mensajeValidacion);
+            //llenarFilas();
+            //$('#RolesModal').modal('hide')
+            return false;
+        }
+            
 
 return;
 
 
 }
+function llenarFilas(){
+    $.ajax({
+
+            url : 'http://localhost:3000/usuarios/all',
+            type : 'GET',
+            data : {
+                'numberOfWords' : 10
+            },
+            dataType:'json',
+            success : bindData,
+            error : function(request,error)
+            {
+                alert("Error: "+JSON.stringify(request));
+            }
+    });
+}
+
+
 function insertarUsuario(datos){
 
-    $.ajax({
+    var esok=false;
+
+    if(datos.item.nombre.length>0&&datos.item.nombre.length<30){
+        esok = true;
+        $('#alertBag').html("El nombre debe ser mayor a 0 y menor a 30");
+    }
+    if(esok){
+        $.ajax({
 
             url : 'http://localhost:3000/usuarios/insertar',
             type : 'POST',
@@ -84,26 +131,29 @@ function insertarUsuario(datos){
             },
             dataType:'json',
             success : function(data){
-                $.ajax({
+                if(data.staus!=200){
+                    alert(data.error);
 
-                        url : 'http://localhost:3000/usuarios/all',
-                        type : 'GET',
-                        data : {
-                            'numberOfWords' : 10
-                        },
-                        dataType:'json',
-                        success : bindData,
-                        error : function(request,error)
-                        {
-                            alert("Error: "+JSON.stringify(request));
-                        }
-                });
+                }
+                llenarFilas();
+
+                
+          
             },
             error : function(request,error)
             {
                 alert("Request: "+JSON.stringify(request.responseText));
+                
             }
         });
+        llenarFilas();
+
+
+    }
+    else{
+        $('#alertBag').show(); 
+    }
+
 
 
 
@@ -176,6 +226,10 @@ function bindData(json){
         { Name: "Auditor", idRol: 3 },
         { Name: "Administrador", idRol: 4 }
     ];
+
+
+    
+
  
     $("#jsGrid").jsGrid({
         width: "1600",
@@ -235,12 +289,53 @@ function bindData(json){
         ]
         */
         fields: [
-            { name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
-            { name: "nombre", title:"Nombre" , type: "text", width: 40, validate: "required" },
-            { name: "apellido", title: "Apellido" ,type: "text", width: 30, validate: "required" },
-            { name: "dni",title:"DNI" ,type: "text", width: 30, validate: "required" },
-            { name: "mail", title:"Mail", type: "text", width: 60, validate: "required" },
-            { name: "usuario",title:"Usuario", type: "text", width: 25, validate: "required" },
+            { name: "id", title:"Id" , visible:false, type: "number", width: 5},
+            { name: "nombre", title:"Nombre" , type: "text", width: 45,
+            validate: {
+                validator: "rangeLength",
+                message: function(value, item) {
+                    return "El largo del campo Nombre debe ser entre 1 y 45";
+                },
+                param: [1, 45]
+            }
+            },
+            { name: "apellido", title: "Apellido" ,type: "text", width: 30, 
+            validate: {
+                validator: "rangeLength",
+                message: function(value, item) {
+                    return "El largo del campo Apellido debe ser entre 1 y 45";
+                },
+                param: [1, 45]
+            }
+            
+            },
+            { name: "dni",title:"DNI" ,type: "text", width: 15, 
+            validate: {
+                validator: "rangeLength",
+                message: function(value, item) {
+                    return "El largo del campo DNI debe ser 8 digitos";
+                },
+                param: [7, 9]
+            }
+            },
+            { name: "mail", title:"Mail", type: "text", width: 60,             
+            validate: {
+                validator: "rangeLength",
+                message: function(value, item) {
+                    return "El largo del campo mail debe ser entre 5 y 45";
+                },
+                param: [5, 45]
+            }
+            },
+            { name: "usuario",title:"Usuario", type: "text", width: 25, 
+            validate: {
+                validator: "rangeLength",
+                message: function(value, item) {
+                    return "El largo del campo usuario debe ser entre 5 y 45";
+                },
+                param: [5, 45]
+            }
+            },
             //{ name: "usuario_roles",visible:true, type: "select", items: usuario_roles, valueField: "idRol", textField: "Name" },
             { name: "fh_alta",title:"Fecha Alta" ,visible:false ,type: "text", width: 50, validate: "required" },
             { name: "fh_baja", visible:false, type: "text", width: 150},
@@ -254,10 +349,19 @@ function bindData(json){
     });
 
 }
+
+
+
+
+
+
+
+
+
 $(document).ready(function() {  
 
 
-
+    $('#alertBag').hide(); 
 
 
     $.ajax({
@@ -301,12 +405,14 @@ $(document).ready(function() {
 <link type="text/css" rel="stylesheet" href="stylesheets/jsgrid-theme.min.css" />
     
 <script type="text/javascript" src="javascripts/jsgrid/jsgrid.min.js"></script>
-
+<div class="alert alert-primary"  id="alertBag" role="alert">
+    
+</div>
 <h2>Usuarios</h2>
 <br>
+
 <div id="jsGrid" ></div>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <!--MODAL DE EDIT Y VER USUARIO-->                                                                                                                                                                                                                                                                                                                                   
 <div class="modal fade" id="RolesModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">

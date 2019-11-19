@@ -3,6 +3,7 @@
     "PORT": 3001,
     "URLUsuarios" : "0.0.0.0:3001",
     "URLFe" : "localhost:3000",
-    "Protocol": "http://"
+    "Protocol": "http://",
+    "URLBeneficiarios" : "0.0.0.0:3002"
 
 }

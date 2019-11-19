@@ -1,0 +1,282 @@
+file:///root/Documentos/WebApp/WebApp/views/Beneficiarios/beneficiarios.ejs {"mtime":1574144165466,"size":22543,"etag":"347bmje3rne6","orphaned":false}
+<%- contentFor('body') %> 
+<script>
+    function popularBeneficiarios(){
+        $.ajax({
+        
+        url : '/beneficiarios/all',
+        type : 'GET',
+        data : {
+            'numberOfWords' : 10
+        },
+        dataType:'json',
+        success : ejecutarLlenadoGrilla,
+        error : function(request,error)
+        {
+            alert("Request: "+JSON.stringify(request));
+        }
+        });
+
+    }
+    function ejecutarLlenadoGrilla(data)
+    {
+        this.ancho = "900";
+        this.alto  = "1200";
+        $(div).jsGrid({
+            width: this.ancho,
+            height: this.alto,
+            autoload: true,
+            pageLoading: true,
+            inserting: true,
+            rowDoubleClick: editar,
+            sorting: true,
+            paging: true,
+            selecting: true,
+            editing: false,
+           // updatedItem:actualizar,
+
+          
+           // deleteItem: borrar,
+            onItemInserting:insertar,
+            onItemUpdating: actualizar,
+            data: data ,
+            controller: {
+                loadData: function(filter) {
+                    var startIndex = (filter.pageIndex - 1) * filter.pageSize;
+                    return ;
+                }
+            } ,
+            fields: [
+                { name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
+                { name: "nombre", title:"Nombre" , type: "text", width: 45, validate: {
+                    validator: "rangeLength",
+                    message: function(value, item) {
+                            return "El largo del campo Nombre debe ser entre 1 y 45";
+                        },
+                        param: [1, 45]
+                    }
+                 },
+                { name: "apellido", title: "Apellido" ,type: "text", width: 45, 
+                validate: {
+                    validator: "rangeLength",
+                        message: function(value, item) {
+                            return "El largo del campo Apellido debe ser entre 1 y 45";
+                        },
+                        param: [1, 45]
+                    }
+                },
+                { name: "dni",title:"DNI" ,type: "text", width: 30, 
+                validate: {
+                    validator: "rangeLength",
+                    message: function(value, item) {
+                        return "El largo del campo DNI debe ser 8 digitos";
+                    },
+                    param: [7, 9]
+                }
+                },
+                { name: "telefono", title:"Telefono", type: "number", width: 30 },
+                { name: "usuario",visible:false,title:"Usuario", type: "text", width: 50, validate: "required" },
+                { name: "fh_alta",title:"Fecha Alta" ,visible:false ,type: "text", width: 50, validate: "required" },
+                { name: "fh_baja", visible:false, type: "text", width: 150},
+                { name: "id", title:"Acciones",  align :"right",type: "text", width: 80,
+                
+                itemTemplate: function(value) {
+                    //return $("<div>").addClass("rating").append(Array(value + 1).join("&#9733;"));
+                        return $("<button type='button' onclick=javascript:verAutorizados('"+value+"')>Ver Autorizados</button>").addClass("btn btn-primary");
+                }
+            },
+
+                { type: "control",editButton: true}
+            ]
+        });
+
+
+    }
+
+
+   var grilla = {
+    div : "",
+    ancho : "",
+    alto:"",
+
+
+    crear :function (divP,ancho,alto,editar,borrar,insertar,actualizar){
+
+        div   = divP;
+        ancho = "900";
+        alto  = "1200";
+
+ 
+
+    },
+    popular :popularBeneficiarios,
+    llenarGrilla : ejecutarLlenadoGrilla
+
+    }
+    function editar(ars){
+        alert("editar")
+    }
+    function verAutorizados(ars){
+        //alert("editar");
+        grilla.crear("#jsGridAutorizados","900","1200",null,null,null,null);
+        grilla.popular();
+        $('#AutorizadoModal').modal();
+    }
+    function actualizar(ars){
+        alert("Funcionalidad no implementada");
+    }
+
+    function insertar(datos){
+     
+
+     $.ajax({
+
+         url : 'http://localhost:3000/beneficiarios/insertar',
+         type : 'POST',
+         data : {
+             'nombre' : datos.item.nombre,
+             'apellido' : datos.item.apellido,
+             'usuario' : datos.item.usuario,
+             'dni' : datos.item.dni,
+             'telefono' : datos.item.telefono,
+         },
+         dataType:'json',
+         success : function(data){
+             if(data.staus!=200){
+                // alert(data.error);
+
+             }
+             grilla.popular();
+
+             
+
+         },
+         error : function(request,error)
+         {
+             alert("Request: "+JSON.stringify(request.responseText));
+             
+         }
+     });
+     
+     
+     grilla.popular();
+
+
+
+
+
+
+
+ }
+
+
+
+    $(document).ready(function() {  
+        
+        grilla.crear("#jsGrid","900","1200",null,null,null,null);
+        grilla.popular();
+
+        /*
+        
+        
+            $.ajax({
+        
+                    url : 'http://localhost:3000/usuarios/all',
+                    type : 'GET',
+                    data : {
+                        'numberOfWords' : 10
+                    },
+                    dataType:'json',
+                    success : bindData,
+                    error : function(request,error)
+                    {
+                        alert("Request: "+JSON.stringify(request));
+                    }
+                });
+        
+        */
+       
+
+
+
+
+
+
+
+
+    });
+
+
+
+
+
+    </script>
+        
+        
+       
+        
+        <link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid.min.css" />
+        <link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid-theme.min.css" />
+            
+        <script type="text/javascript" src="../javascripts/jsgrid/jsgrid.min.js"></script>
+        
+        <h2>Beneficiarios</h2>
+        <br>
+        <div id="jsGrid" ></div>
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <script   
+        <div class="modal fade" id="AutorizadoModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-xl" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="RolesModalLabel">Autorizados</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                            <input type="hidden" class="form-control" id="id" >
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Nombre:</label>
+                          <input type="text" class="form-control" id="nombre">
+                        </div>
+                        <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Apellido:</label>
+                                <input type="text" class="form-control" id="apellido">
+                        </div>
+                        <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">DNI:</label>
+                                <input type="text" class="form-control" id="dni">
+                        </div>
+                        <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Mail:</label>
+                                <input type="text" class="form-control" id="mail">
+                        </div>
+                        <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Telefono:</label>
+                                <input type="text" class="form-control" id="telefono">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="agregar();">Agregar Auroizado</button>
+                        <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Autorizados</label>
+                        <div id="jsGridAutorizados" ></div>
+
+                                
+        
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" onclick="actualizar();">Actualizar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+        <script>
+        
+        </script>
+        
+        

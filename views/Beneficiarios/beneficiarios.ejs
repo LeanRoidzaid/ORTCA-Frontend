@@ -1,340 +1,181 @@
 <%- contentFor('body') %> 
 <script>
-
-    function getBooleanCkecked(staus){
-        if(staus=='on'){
-            return true;
-        }
-        return false;
-    }
-        
-    function actualizar(){
-    var id = $('#id').val();    
-    var nombre = $('#nombre').val();
-    var apellido = $('#apellido').val();
-    var dni = $('#dni').val();
-    var mail = $('#mail').val();
-    var usuario = $('#usuario').val();
-    
-    
-    var administrativo = $('#administrativo').prop('checked') ;
-    var medico = $('#medico').prop('checked') ;
-    var administrador = $('#administrador').prop('checked') ;
-    var auditor = $('#auditor').prop('checked') ;
-    
-    
-    
+    function popularBeneficiarios(){
         $.ajax({
-    
-                url : 'http://localhost:3000/usuarios/actualizar',
-                type : 'POST',
-                data : {
-                    'id' : id,
-                    'nombre' : nombre,
-                    'apellido' : apellido,
-                    'usuario' : usuario,
-                    'dni' : dni,
-                    'mail' : mail,
-                    'administrativo' : administrativo,
-                    'medico': medico,
-                    'administrador': administrador,
-                    'auditor' : auditor
-                },
-                dataType:'json',
-                success : function(data){
-                    $.ajax({
-    
-                            url : 'http://localhost:3000/usuarios/all',
-                            type : 'GET',
-                            data : {
-                                'numberOfWords' : 10
-                            },
-                            dataType:'json',
-                            success : bindData,
-                            error : function(request,error)
-                            {
-                                alert("Error: "+JSON.stringify(request));
-                            }
-                    });
-                },
-                error : function(request,error)
-                {
-                    alert("Request: "+JSON.stringify(request.responseText));
-                }
-                });
-    
-                $('#RolesModal').modal('hide')
-    
-    return;
-    
-    
-    }
-    function insertarUsuario(datos){
         
-    $.ajax({
-
-            url : 'http://localhost:3000/usuarios/insertar',
-            type : 'POST',
-            data : {
-                'nombre' : datos.item.nombre,
-                'apellido' : datos.item.apellido,
-                'usuario' : datos.item.usuario,
-                'dni' : datos.item.dni,
-                'mail' : datos.item.mail,
-            },
-            dataType:'json',
-            success : function(data){
-                $.ajax({
-
-                        url : 'http://localhost:3000/usuarios/all',
-                        type : 'GET',
-                        data : {
-                            'numberOfWords' : 10
-                        },
-                        dataType:'json',
-                        success : bindData,
-                        error : function(request,error)
-                        {
-                            alert("Error: "+JSON.stringify(request));
-                        }
-                });
-            },
-            error : function(request,error)
-            {
-                alert("Request: "+JSON.stringify(request.responseText));
-            }
+        url : '/beneficiarios/all',
+        type : 'GET',
+        data : {
+            'numberOfWords' : 10
+        },
+        dataType:'json',
+        success : ejecutarLlenadoGrilla,
+        error : function(request,error)
+        {
+            alert("Request: "+JSON.stringify(request));
+        }
         });
-        
-        
-        
-        return;
+
     }
-        
-    function limpiarModal(){
-        $('#id').val('');
-        $('#nombre').val('');
-        $('#apellido').val('');
-        $('#dni').val('');
-        $('#mail').val('');
-        $('#usuario').val('');
-    
-    
-        $('#medico').attr('checked',false);
-    
-        $('#administrativo').attr('checked',false);
-    
-        $('#auditor').attr('checked',false);
-    
-        $('#administrador').attr('checked',false);
-    
-    
-    }
-    function editarUsuario(args){
-        limpiarModal();
-        $('#id').val(args.item.id);
-        $('#nombre').val(args.item.nombre);
-        $('#apellido').val(args.item.apellido);
-        $('#dni').val(args.item.dni);
-        $('#mail').val(args.item.mail);
-        $('#usuario').val(args.item.usuario);
-    
-    
-
-
-        var Atorizados = [
-                { "nombre": "Luciano", "apellido":"Castro" , "dni": "25.500.666","Telefono" :"8272-7472"},
-                { "nombre": "Connor", "apellido":"Johnston" , "dni": "13.789.986","Telefono" :"8835-4647"},
-                { "nombre": "Lacey", "apellido":"Hess" , "dni": "24.323.444","Telefono" :"8272-8835"},
-                { "nombre": "Ramona", "apellido":"Benton" , "dni": "25.754.182","Telefono" :"8835-4647"}            ];
-         
-
-
-
-
-
-
-
-
-
-
-
-            $("#jsGridAutorizados").jsGrid({
-            width: "1000",
-            height: "1000",
+    function ejecutarLlenadoGrilla(data)
+    {
+        this.ancho = "900";
+        this.alto  = "1200";
+        $(div).jsGrid({
+            width: this.ancho,
+            height: this.alto,
             autoload: true,
             pageLoading: true,
             inserting: true,
-            //editing: true,
-            rowDoubleClick: editarUsuario,
+            rowDoubleClick: editar,
             sorting: true,
             paging: true,
             selecting: true,
-            deleteItem: function(item) {
-                alert("eliminando");
-            //return $.ajax({
-            //    type: "DELETE",
-            //    url: "/items",
-            //    data: item
-            //});
-            },
-            onItemInserting: function(args) {
-                insertarUsuario(args);
-                // cancel insertion of the item with empty 'name' field
-                // alert("Specify the name of the item!");
-                // if(args.item.Edad === "") {
-                //    args.cancel = true;
-                //    alert("Specify the name of the item!");
-                //}
-            },
-            onItemUpdating: function(args) {
-            // cancel insertion of the item with empty 'name' field
-            alert("Specify the name of the item!");
-                if(args.item.Edad === "") {
-                    args.cancel = true;
-                    alert("Specify the name of the item!");
-                }
-            },
-            data: Atorizados ,
+            editing: false,
+           // updatedItem:actualizar,
+
+          
+           // deleteItem: borrar,
+            onItemInserting:insertar,
+            onItemUpdating: actualizar,
+            data: data ,
             controller: {
                 loadData: function(filter) {
                     var startIndex = (filter.pageIndex - 1) * filter.pageSize;
-                    //alert("asdas"+filter.usuario_roles);
-                    return ;//{
-                        //data: db.clients.slice(startIndex, startIndex + filter.pageSize),
-                        //itemsCount: db.clients.length
-                    //};
+                    return ;
                 }
             } ,
-            /*
-            fields: [
-                { name: "Usuario", type: "text", width: 150, validate: "required" },
-                { name: "Edad", type: "number", width: 50 },
-                { name: "Dir", type: "text", width: 200 },
-                { name: "CAS", type: "select", items: countries, valueField: "Id", textField: "Name" },
-                { name: "Activo", type: "checkbox", title: "Esta activo", sorting: false },
-                { type: "control" }
-            ]
-            */
-            fields: [
-                //{ name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
-                { name: "nombre", title:"Nombre" , type: "text", width: 40, validate: "required" },
-                { name: "apellido", title: "Apellido" ,type: "text", width: 30, validate: "required" },
-                { name: "dni",title:"DNI" ,type: "text", width: 30, validate: "required" },
-               { name: "telefono", title:"Telefono", type: "text", width: 60, validate: "required" },
-                //{ name: "usuario",visible:false,title:"Usuario", type: "text", width: 25, validate: "required" },
-                //{ name: "usuario_roles",visible:true, type: "select", items: usuario_roles, valueField: "idRol", textField: "Name" },
-               // { name: "fh_alta",title:"Fecha Alta" ,visible:false ,type: "text", width: 50, validate: "required" },
-              // { name: "fh_baja", visible:false, type: "text", width: 150},
-
-                //{ name: "esMedico", title: "Medico",  type: "checkbox", width: 20},
-                //{ name: "esAdministrativo", title: "Administrativo",  type: "checkbox", width: 40},
-                //{ name: "esAuditor", title: "Auditor",  type: "checkbox", width: 20},
-                //{ name: "esAdministrador", title: "Administrador",  type: "checkbox", width: 40}
-                //,
-                { type: "control",editButton: false, }
-            ]
-        });
-
-        
-        $('#DetalleModal').modal();
-    
-        //alert("Specify asdaad name of the item!");
-    
-    }
-    
-        
-    function bindData(json){
-    
-        var usuario_roles = [
-            
-            { Name: "Medico", idRol: 1 },
-            { Name: "Administrativo", idRol: 2 },
-            { Name: "Auditor", idRol: 3 },
-            { Name: "Administrador", idRol: 4 }
-        ];
-        
-        $("#jsGrid").jsGrid({
-            width: "900",
-            //height: "1200",
-            autoload: true,
-            pageLoading: true,
-            inserting: true,
-            //editing: true,
-            rowDoubleClick: editarUsuario,
-            sorting: true,
-            paging: true,
-            selecting: true,
-            deleteItem: function(item) {
-                alert("eliminando");
-            //return $.ajax({
-            //    type: "DELETE",
-            //    url: "/items",
-            //    data: item
-            //});
-            },
-            onItemInserting: function(args) {
-                insertarUsuario(args);
-                // cancel insertion of the item with empty 'name' field
-                // alert("Specify the name of the item!");
-                // if(args.item.Edad === "") {
-                //    args.cancel = true;
-                //    alert("Specify the name of the item!");
-                //}
-            },
-            onItemUpdating: function(args) {
-            // cancel insertion of the item with empty 'name' field
-            alert("Specify the name of the item!");
-                if(args.item.Edad === "") {
-                    args.cancel = true;
-                    alert("Specify the name of the item!");
-                }
-            },
-            data: json ,
-            controller: {
-                loadData: function(filter) {
-                    var startIndex = (filter.pageIndex - 1) * filter.pageSize;
-                    //alert("asdas"+filter.usuario_roles);
-                    return ;//{
-                        //data: db.clients.slice(startIndex, startIndex + filter.pageSize),
-                        //itemsCount: db.clients.length
-                    //};
-                }
-            } ,
-            /*
-            fields: [
-                { name: "Usuario", type: "text", width: 150, validate: "required" },
-                { name: "Edad", type: "number", width: 50 },
-                { name: "Dir", type: "text", width: 200 },
-                { name: "CAS", type: "select", items: countries, valueField: "Id", textField: "Name" },
-                { name: "Activo", type: "checkbox", title: "Esta activo", sorting: false },
-                { type: "control" }
-            ]
-            */
             fields: [
                 { name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
-                { name: "nombre", title:"Nombre" , type: "text", width: 40, validate: "required" },
-                { name: "apellido", title: "Apellido" ,type: "text", width: 30, validate: "required" },
-                { name: "dni",title:"DNI" ,type: "text", width: 30, validate: "required" },
-                { name: "mail", title:"Mail", type: "text", width: 60, validate: "required" },
-                { name: "usuario",visible:false,title:"Usuario", type: "text", width: 25, validate: "required" },
-                //{ name: "usuario_roles",visible:true, type: "select", items: usuario_roles, valueField: "idRol", textField: "Name" },
+                { name: "nombre", title:"Nombre" , type: "text", width: 45, validate: {
+                    validator: "rangeLength",
+                    message: function(value, item) {
+                            return "El largo del campo Nombre debe ser entre 1 y 45";
+                        },
+                        param: [1, 45]
+                    }
+                 },
+                { name: "apellido", title: "Apellido" ,type: "text", width: 45, 
+                validate: {
+                    validator: "rangeLength",
+                        message: function(value, item) {
+                            return "El largo del campo Apellido debe ser entre 1 y 45";
+                        },
+                        param: [1, 45]
+                    }
+                },
+                { name: "dni",title:"DNI" ,type: "text", width: 30, 
+                validate: {
+                    validator: "rangeLength",
+                    message: function(value, item) {
+                        return "El largo del campo DNI debe ser 8 digitos";
+                    },
+                    param: [7, 9]
+                }
+                },
+                { name: "telefono", title:"Telefono", type: "number", width: 30 },
+                { name: "usuario",visible:false,title:"Usuario", type: "text", width: 50, validate: "required" },
                 { name: "fh_alta",title:"Fecha Alta" ,visible:false ,type: "text", width: 50, validate: "required" },
                 { name: "fh_baja", visible:false, type: "text", width: 150},
+                { name: "id", title:"Acciones",  align :"right",type: "text", width: 80,
+                
+                itemTemplate: function(value) {
+                    //return $("<div>").addClass("rating").append(Array(value + 1).join("&#9733;"));
+                        return $("<button type='button' onclick=javascript:verAutorizados('"+value+"')>Ver Autorizados</button>").addClass("btn btn-primary");
+                }
+            },
 
-                //{ name: "esMedico", title: "Medico",  type: "checkbox", width: 20},
-                //{ name: "esAdministrativo", title: "Administrativo",  type: "checkbox", width: 40},
-                //{ name: "esAuditor", title: "Auditor",  type: "checkbox", width: 20},
-                //{ name: "esAdministrador", title: "Administrador",  type: "checkbox", width: 40}
-                //,
-                { type: "control",editButton: false, }
+                { type: "control",editButton: true}
             ]
         });
-    
+
+
     }
-        $(document).ready(function() {  
+
+
+   var grilla = {
+    div : "",
+    ancho : "",
+    alto:"",
+
+
+    crear :function (divP,ancho,alto,editar,borrar,insertar,actualizar){
+
+        div   = divP;
+        ancho = "900";
+        alto  = "1200";
+
+ 
+
+    },
+    popular :popularBeneficiarios,
+    llenarGrilla : ejecutarLlenadoGrilla
+
+    }
+    function editar(ars){
+        alert("editar")
+    }
+    function verAutorizados(ars){
+        //alert("editar");
+        grilla.crear("#jsGridAutorizados","900","1200",null,null,null,null);
+        grilla.popular();
+        $('#AutorizadoModal').modal();
+    }
+    function actualizar(ars){
+        alert("Funcionalidad no implementada");
+    }
+
+    function insertar(datos){
+     
+
+     $.ajax({
+
+         url : 'http://localhost:3000/beneficiarios/insertar',
+         type : 'POST',
+         data : {
+             'nombre' : datos.item.nombre,
+             'apellido' : datos.item.apellido,
+             'usuario' : datos.item.usuario,
+             'dni' : datos.item.dni,
+             'telefono' : datos.item.telefono,
+         },
+         dataType:'json',
+         success : function(data){
+             if(data.staus!=200){
+                // alert(data.error);
+
+             }
+             grilla.popular();
+
+             
+
+         },
+         error : function(request,error)
+         {
+             alert("Request: "+JSON.stringify(request.responseText));
+             
+         }
+     });
+     
+     
+     grilla.popular();
+
+
+
+
+
+
+
+ }
+
+
+
+    $(document).ready(function() {  
         
-        
-        
+        grilla.crear("#jsGrid","900","1200",null,null,null,null);
+        grilla.popular();
+
+        /*
         
         
             $.ajax({
@@ -352,24 +193,23 @@
                     }
                 });
         
-            /*
-            var clients = [
-                { "Usuario": "Otto Clay", "Edad": 25, "CAS": 1, "Dir": "Av. Siempre viva 177", "Activo": false },
-                { "Usuario": "Connor Johnston", "Edad": 45, "CAS": 2, "Dir": "Ap #370-4647 Dis Av.", "Activo": true },
-                { "Usuario": "Lacey Hess", "Edad": 29, "CAS": 3, "Dir": "Ap #365-8835 Integer St.", "Activo": false },
-                { "Usuario": "Timothy Henson", "Edad": 56, "CAS": 1, "Dir": "911-5143 Luctus Ave", "Activo": true },
-                { "Usuario": "Ramona Benton", "Edad": 32, "CAS": 3, "Dir": "Ap #614-689 Vehicula Street", "Activo": false }
-            ];
-         
-            var countries = [
-                { Name: "CAS 0", Id: 0 },
-                { Name: "CAS 1", Id: 1 },
-                { Name: "CAS 2", Id: 2 },
-                { Name: "CAS 3", Id: 3 }
-            ];
-            */
-        });
-        </script>
+        */
+       
+
+
+
+
+
+
+
+
+    });
+
+
+
+
+
+    </script>
         
         
        
@@ -383,12 +223,12 @@
         <br>
         <div id="jsGrid" ></div>
         
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <!--MODAL DE EDIT Y VER USUARIO-->                                                                                                                                                                                                                                                                                                                                   
-        <div class="modal fade" id="DetalleModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
+ <script   ></script>
+        <div class="modal fade" id="AutorizadoModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
                 <div class="modal-dialog  modal-xl" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="RolesModalLabel">Detalles del Beneficiario</h5>
+                      <h5 class="modal-title" id="RolesModalLabel">Autorizados</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -416,6 +256,7 @@
                                 <label for="recipient-name" class="col-form-label">Telefono:</label>
                                 <input type="text" class="form-control" id="telefono">
                         </div>
+                        <button type="button" class="btn btn-primary" onclick="agregar();">Agregar Auroizado</button>
                         <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Autorizados</label>
                         <div id="jsGridAutorizados" ></div>
@@ -434,7 +275,4 @@
               </div>
         
         <script>
-        
-        </script>
-        
         

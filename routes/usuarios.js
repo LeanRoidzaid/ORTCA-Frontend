@@ -6,10 +6,10 @@ var config = require('../config/config');
 
 
 
-router.post('/login',  function(req, res, next) {
+router.post('/login',  async function(req, res, next) {
   //const token='123456';
 
-   request.post({
+  await request.post({
                   "headers": { "content-type": "application/json" },
                   "url": config.Protocol + config.URLUsuarios+"/api/login/",
                   "body": JSON.stringify({"usuario": req.body.usuario, "pass": req.body.pass
@@ -39,13 +39,13 @@ router.post('/login',  function(req, res, next) {
                             return res.redirect('../../login/?msg=3');
 
                           }
-
+                          console.log(response);
                           
                         }
-
+                        
                       });
 
-  
+                      
 
 
   
@@ -212,12 +212,14 @@ router.post('/insertar', auth,async function(req, res,next) {
     "body": JSON.stringify(req.body )
     }, (error, response, body) => {
         if(error) {
-            return console.dir(error);
+          console.log(error);
+          res.send(error);
+           
         }
         else
         {
-
-          res.send(response.body);
+          console.log(response.body);
+          res.status(201).send(response.body);
         }
 
     });

@@ -43,6 +43,7 @@ services:
       - NODE_ENV=production    
     ports:
       - '3001:3001'
+      
 
       #     volumes:
       #- .:/root/Documentos/WebApp/WebApp/
@@ -50,6 +51,34 @@ services:
     networks:
       #- app-network-usuarios
       - app-network
+
+
+
+
+  nodebenef:
+    build:
+      context: ./../beneficiarios/ORTCA-Beneficiarios
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    links:
+      - db
+    #  image: nodejs
+    container_name: nodebenef
+    restart: always
+    # env_file: .env
+    environment:
+      - NODE_ENV=production    
+    ports:
+      - '3002:3002'
+
+      #     volumes:
+      #- .:/root/Documentos/WebApp/WebApp/
+      #- node_modules:/root/Documentos/WebApp/WebApp/node_modules/
+    networks:
+      #- app-network-usuarios
+      - app-network
+
 
 
 
