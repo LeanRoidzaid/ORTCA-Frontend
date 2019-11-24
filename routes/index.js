@@ -1,16 +1,17 @@
 var express = require('express');
 var auth = require('../middlewares/session');
+var ordenes = require('../api/controllers/controller_ordenes');
 
 var router = express.Router();
 var jwt='asda';
 
 /* GET home page. */
-router.get('/',auth,function(req, res, next) {
+router.get('/',auth, async function(req, res, next) {
   jwt=req.cookies['jwt'];
-  //jwt='asda';
-  //res.cookie('jwt','123456');
-
-  res.render('index', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol});
+  var retiros = await ordenes.obtenerEntregasDia();
+  
+  console.log( JSON.stringify(retiros));
+  res.render('index', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol, retiroDia: retiros});
 });
 
 

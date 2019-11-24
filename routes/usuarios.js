@@ -219,7 +219,7 @@ router.post('/insertar', auth,async function(req, res,next) {
         else
         {
           console.log(response.body);
-          res.status(201).send(response.body);
+          res.status(200).send(response.body);
         }
 
     });

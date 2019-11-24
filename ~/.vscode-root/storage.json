@@ -2,6 +2,7 @@
     "telemetry.machineId": "5ec15239f23e67b519c366226d91a0a04a5c255028961906b901413e07a34fff",
     "openedPathsList": {
         "workspaces3": [
+            "file:///root/Documentos/WebApp/WebApp",
             "file:///root/Documentos/WebApp/usuarios/ORTCA-Usuarios"
         ],
         "files2": []
@@ -49,7 +50,18 @@
                                     "id": "openRecentFolder",
                                     "uri": {
                                         "$mid": 1,
-                                        "fsPath": "/root/Documentos/WebApp/usuarios/ORTCA-Usuarios",
+                                        "fsPath": "/root/Documentos/WebApp/WebApp",
+                                        "external": "file:///root/Documentos/WebApp/WebApp",
+                                        "path": "/root/Documentos/WebApp/WebApp",
+                                        "scheme": "file"
+                                    },
+                                    "enabled": true,
+                                    "label": "~/Documentos/WebApp/WebApp"
+                                },
+                                {
+                                    "id": "openRecentFolder",
+                                    "uri": {
+                                        "$mid": 1,
                                         "external": "file:///root/Documentos/WebApp/usuarios/ORTCA-Usuarios",
                                         "path": "/root/Documentos/WebApp/usuarios/ORTCA-Usuarios",
                                         "scheme": "file"
@@ -720,13 +732,11 @@
                     },
                     {
                         "id": "workbench.action.debug.stop",
-                        "label": "&&Stop Debugging",
-                        "enabled": false
+                        "label": "&&Stop Debugging"
                     },
                     {
                         "id": "workbench.action.debug.restart",
-                        "label": "&&Restart Debugging",
-                        "enabled": false
+                        "label": "&&Restart Debugging"
                     },
                     {
                         "id": "vscode.menubar.separator"
@@ -825,7 +835,8 @@
                     },
                     {
                         "id": "workbench.action.terminal.split",
-                        "label": "&&Split Terminal"
+                        "label": "&&Split Terminal",
+                        "enabled": false
                     },
                     {
                         "id": "vscode.menubar.separator"
@@ -1385,11 +1396,11 @@
     },
     "theme": "vs-dark",
     "themeBackground": "#1e1e1e",
-    "pickerWorkingDir": "/root/Documentos/WebApp/usuarios",
+    "pickerWorkingDir": "/root/Documentos/WebApp",
     "windowsState": {
         "lastActiveWindow": {
-            "folder": "file:///root/Documentos/WebApp/usuarios/ORTCA-Usuarios",
-            "backupPath": "/root/Documentos/WebApp/WebApp/~/.vscode-root/Backups/de720ed9890e0569d5df3f13f754f6ca",
+            "folder": "file:///root/Documentos/WebApp/WebApp",
+            "backupPath": "/root/Documentos/WebApp/WebApp/~/.vscode-root/Backups/c8af539cd763f1c7c45b33fa99a6801d",
             "uiState": {
                 "mode": 0,
                 "x": 448,

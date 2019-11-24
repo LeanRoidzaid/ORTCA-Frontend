@@ -111,13 +111,7 @@ function llenarFilas(){
 
 function insertarUsuario(datos){
 
-    var esok=false;
 
-    if(datos.item.nombre.length>0&&datos.item.nombre.length<30){
-        esok = true;
-        $('#alertBag').html("El nombre debe ser mayor a 0 y menor a 30");
-    }
-    if(esok){
         $.ajax({
 
             url : 'http://localhost:3000/usuarios/insertar',
@@ -142,17 +136,15 @@ function insertarUsuario(datos){
             },
             error : function(request,error)
             {
-                alert("Request: "+JSON.stringify(request.responseText));
+                //alert("Request: "+JSON.stringify(request.responseText)+"  "+error+"  "+request);
+                llenarFilas();
                 
             }
         });
         llenarFilas();
 
 
-    }
-    else{
-        $('#alertBag').show(); 
-    }
+
 
 
 

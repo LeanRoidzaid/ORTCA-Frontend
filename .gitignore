@@ -5,3 +5,6 @@ npm-debug.log
 .DS_Store
 ~/.vscode-root/Cookies
 ~/.vscode-root/*
+
+~/.vscode-root/GPUCache/*
+~/.vscode-root/Backups/c8af539cd763f1c7c45b33fa99a6801d/file/.c12f20acd85a7aaa8e6d65dc0114421a.swp

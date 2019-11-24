@@ -9,6 +9,8 @@ const expressLayouts = require('express-ejs-layouts')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/usuarios');
 var benefRouter = require('./routes/beneficiarios');
+var homeRouter  = require('./routes/home');
+
 
 var app = express();
 
@@ -29,6 +31,8 @@ app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 app.use('/', indexRouter);
 app.use('/usuarios', usersRouter);
 app.use('/beneficiarios',benefRouter);
+app.use('/home',homeRouter);
+
 app.use(exppress_session({
   secret: 'elaiss',
   resave: false,

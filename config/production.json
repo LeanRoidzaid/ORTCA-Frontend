@@ -4,7 +4,14 @@
     "URLUsuarios" : "nodeusu:3001",
     "URLFe" : "nodefe:3000",
     "Protocol": "http://",
-    "URLBeneficiarios" : "nodebenef:3002"
+    "URLBeneficiarios" : "nodebenef:3002",
+    "DB": {
+        "name": "db_elaiss",
+        "host": "db",
+        "port": "3306",
+        "user": "elaiss_app",
+        "password": "123456"
+    }
 
 
 }
