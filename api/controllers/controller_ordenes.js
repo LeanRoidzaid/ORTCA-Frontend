@@ -58,7 +58,14 @@ exports.obtenerEntregasDia = async function(){
         
     for(const entrega of entregas ) {
             var orden = await  exports.obtenerOrdenesById(entrega.idOrden);
-            entregasRet.push({idEntrega:entrega.id,idOrden:entrega.idOrden, descripcion:orden[0].descTratamiento,beneficiario:orden[0].beneficiario.nombre});
+            var estado;
+            if(entrega.estadoEntrega=='P'){
+                estado='Pendiente';
+            }
+            else{
+                estado='Entregado';
+            }
+            entregasRet.push({idEntrega:entrega.id,idOrden:entrega.idOrden, descripcion:orden[0].descTratamiento,beneficiario:orden[0].beneficiario,entregaEstado: estado});
         }
         return entregasRet;
 }

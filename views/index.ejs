@@ -5,6 +5,7 @@
     
 <script type="text/javascript" src="/javascripts/jsgrid/jsgrid.min.js"></script>
 <script>
+  var idEntrega;
   
   var grilla = {
     div : "",
@@ -25,10 +26,37 @@
     llenarGrilla : ejecutarLlenadoGrilla
 
     }
-    function popularBeneficiarios(){
+
+    function entregoOk(data){
+      if(!data.err){
+        $('#retiroModal').modal('hide');
+        location.reload(); 
+      }else{
+        alert(data.err);
+      }
+        
+    }
+
+    function Entregar(){
+
+
+
+      //alert(idEntrega);
+      $.ajax({
+              url : '/home/Entregar/?id='+idEntrega,
+              type : 'GET',
+             // dataType:'json',
+              success : entregoOk,
+              error : function(request,error)
+              {
+                  alert("Request: "+JSON.stringify(error));
+              }
+        });
+    }
+    function popularBeneficiarios(idEntrega){
         $.ajax({
         
-        url : '/home/autorizadosById/?id=1',
+        url : '/home/autorizadosById/?id='+idEntrega,
         type : 'GET',
         data : {
             'numberOfWords' : 10
@@ -47,6 +75,31 @@
     {
         this.ancho = "900";
         this.alto  = "300";
+
+        $('#idOrden').html(data.orden[0].idOrden);
+        $('#descripcionOrden').html(data.orden[0].descripcion);
+        $('#descripcionBenenficiarios').html(data.orden[0].beneficiario.nombre);
+        $('#descripcionDocumento').html(data.orden[0].beneficiario.dni);
+        $('#BenenficiarioTelefono').html(data.orden[0].beneficiario.telefono);
+        $('#descripcionProducto').html(data.orden[0].productoEntrga[0].nombre);
+        $('#codBar').html(data.orden[0].productoEntrga[0].codbar);
+        $('#cantidadDisponible').html(data.orden[0].productoEntrga[0] .cantDisp);
+        idEntrega = data.orden[0].idEntrega;
+
+
+        if(data.orden[0].entregaEstado=='P'){
+          $('#estadoEntrega').html('PENDIENTE');
+          $("#buttonEntregar").attr("disabled", false);
+        }else {
+          $("#buttonEntregar").attr("disabled", true);
+          $('#estadoEntrega').html('ENTREGADO');
+        }
+
+
+
+
+
+
         $(div).jsGrid({
             width: this.ancho,
             height: this.alto,
@@ -64,7 +117,7 @@
            // deleteItem: borrar,
             //onItemInserting:insertar,
             //onItemUpdating: actualizar,
-            data: data ,
+            data: data.autorizados ,
             controller: {
                 loadData: function(filter) {
                     var startIndex = (filter.pageIndex - 1) * filter.pageSize;
@@ -119,10 +172,10 @@
     }
     
 
-    function verEntrega(ars){
+    function verEntrega(idEntrega){
         //alert("editar");
         grilla.crear("#jsGridAutorizados","900","1200",null,null,null,null);
-        grilla.popular();
+        grilla.popular(idEntrega);
         $('#retiroModal').modal();
     }
 </script>
@@ -176,8 +229,20 @@
                   <div class="card border-primary mb-3" style="max-width: 18rem;">
                       <div class="card-header text-center"><b>Pendientes de Retiros</b></div>
                       <div class="card-body text-primary">
-                         <h5 class="card-title"><h1 class="display-1 text-center"><%=retiroDia.length%></h1></h5>
-                        <p class="card-text text-center" ><strong>11/11/2019</strong></p>
+                         <% 
+                         var pendientes = 0;
+                         for(var i=0; i < retiroDia.length; i++) {
+                          if(retiroDia[i].entregaEstado =='Pendiente'){
+                            pendientes++; 
+                          }
+                          }
+                          
+                          %>
+
+
+
+                         <h5 class="card-title"><h1 class="display-1 text-center"><%=pendientes%></h1></h5>
+                        <p class="card-text text-center" ><strong><%= new Date().toLocaleString() %></strong></p>
                       </div>
                     
                   </div>
@@ -190,10 +255,26 @@
           for(var i=0; i < retiroDia.length; i++) { %>
             
               <div class="alert alert-secondary" role="alert">
-                  Beneficiario: <%= retiroDia[i].beneficiario %> - Tratamiento:<%=retiroDia[i].descripcion %>
-                  <div>
-                      <button type="button" class="btn btn-info" onclick="javascript:verEntrega(<%= retiroDia[i].idEntrega%>)">Info</button>
-                    </div>  
+
+                <table>
+                  <tr>
+                      <td>
+                          <h5>Nombre: <%= retiroDia[i].beneficiario.nombre %> <br>
+                            Apellido: <%= retiroDia[i].beneficiario.apellido %> <br> 
+                            Telefono: <%= retiroDia[i].beneficiario.telefono %><br>
+                            DNI: <%=retiroDia[i].beneficiario.dni %>  <br><br>
+                            Tratamiento: <%=retiroDia[i].descripcion %>  <br>
+                            Estado: <%=retiroDia[i].entregaEstado %></h5>
+                      </td>
+                      <td style="vertical-align: top;padding-left: 40px">
+                        <button type="button" class="btn btn-info" onclick="javascript:verEntrega(<%= retiroDia[i].idEntrega%>)" style="height: 70px;width: 100px;">Ver detalle</button>
+                            
+                      </td>
+                  </tr>
+                </table>
+                  
+
+
               </div>  
 
            <% }  %>
@@ -263,38 +344,52 @@ $(document).ready(function() {
     <div class="modal-dialog  modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="RolesModalLabel">Detalles de Entrega</h5>
+          <h5 class="modal-title" id="RolesModalLabel">Detalle de Entrega</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form>
-                <input type="hidden" class="form-control" id="id" >
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Nombre:</label>
-              <input type="text" class="form-control" id="nombre">
-            </div>
-            <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Apellido:</label>
-                    <input type="text" class="form-control" id="apellido">
-            </div>
-            <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">DNI:</label>
-                    <input type="text" class="form-control" id="dni">
-            </div>
-            <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Mail:</label>
-                    <input type="text" class="form-control" id="mail">
-            </div>
-            <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Telefono:</label>
-                    <input type="text" class="form-control" id="telefono">
-            </div>
-            <button type="button" class="btn btn-primary" onclick="agregar();">Agregar Auroizado</button>
-            <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Autorizados</label>
-            <div id="jsGridAutorizados" ></div>
+        <div>
+          <table class="table">
+            
+              
+            
+            <tbody>
+                <tr>
+                  <th scope="row">Numero Orden</th>
+                  <td><div id="idOrden"></div></td>
+                  <th scope="row">Descripcion</th>
+                  <td ><div id="descripcionOrden"></div></td> 
+                  <th scope="row">Estado</th>
+                  <td colspan="4"><div id="estadoEntrega"></div></td>                   
+                                           
+                </tr>
+                <tr>
+                  
+                    <th scope="row">Beneficiario</th>
+                    <td><div id="descripcionBenenficiarios"></div></td>          
+                    <th scope="row">Documento</th>
+                    <td><div id="descripcionDocumento"></div></td>      
+                    <th scope="row">Telefono</th>
+                    <td colspan="4"><div id="BenenficiarioTelefono"></div></td>                                             
+                  </tr>                
+                <tr>
+
+                    <th scope="row">Producto</th>
+                    <td><div id="descripcionProducto"></div></td> 
+                    <th scope="row">codBar</th>
+                    <td><div id="codBar"></div></td>
+                    <th scope="row">Catidad Disponible</th>
+                    <td colspan="4"><div id="cantidadDisponible"></div></td>          
+                                           
+                  </tr>                
+            </tbody>
+          </table>
+        </div>  
+        <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Autorizados</label>
+        <div id="jsGridAutorizados" ></div>
 
                     
 
@@ -303,7 +398,7 @@ $(document).ready(function() {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" onclick="actualizar();">Actualizar</button>
+          <button type="button" id="buttonEntregar" class="btn btn-primary" onclick="javascript:Entregar();">Realizar Entrega</button>
         </div>
       </div>
     </div>

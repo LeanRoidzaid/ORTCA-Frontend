@@ -21,24 +21,24 @@ exports.insertarMovimiento = function(movimiento){
        })
 }
 
-exports.movimientoProducto = async function(req){
+exports.egreso = async function(codbar,cantidad){
 
-    let producto = await this.buscarProducto(req.body.codbar);
-    producto.cantDisp = producto.cantDisp + req.body.cantidad;
+    let producto = await this.buscarProducto(codbar);
+    producto.cantDisp = producto.cantDisp - cantidad;
     
     result = await this.updateDisponible(producto)
  
-    if (req.body.cantidad < 0){
+    if (cantidad < 0){
         tipo = "egreso"
     }else{
         tipo = "ingreso"
     }
 
 
-    const movimiento = { idProducto: req.body.codbar, 
+    const movimiento = { idProducto: producto.id, 
                          tipoMov: tipo,
-                         cantUnidades: req.body.cantidad,
-                         idUsuario: req.tokenDesencriptado.datostoken.username.id}
+                         cantUnidades: cantidad,
+                         idUsuario: 1}
 
     return this.insertarMovimiento(movimiento)
 

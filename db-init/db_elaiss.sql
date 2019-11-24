@@ -96,6 +96,7 @@ INSERT INTO `centro` (`id`, `numero`, `nombre`, `direccion`) VALUES
 CREATE TABLE `entregas` (
   `id` int(11) NOT NULL,
   `idOrden` int(11) DEFAULT NULL,
+  `cantidad` int(11) DEFAULT NULL,
   `idproducto` int(11) NOT NULL,
   `fechaEntrega` date DEFAULT NULL,
   `fechaRetiro` datetime DEFAULT NULL,
@@ -125,7 +126,8 @@ CREATE TABLE `lote` (
 CREATE TABLE `movimiento` (
   `id` int(11) NOT NULL,
   `idProducto` int(11) NOT NULL,
-  `mov` int(11) NOT NULL,
+  `tipoMov` varchar(45),
+  `cantUnidades` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -175,6 +177,7 @@ CREATE TABLE `orden` (
 CREATE TABLE `producto` (
   `id` int(11) NOT NULL ,
   `codbar` varchar(45) NOT NULL,
+  `Nombre` varchar(255) DEFAULT NULL,
   `GTIN` varchar(45) DEFAULT NULL,
   `nSerie` varchar(45) DEFAULT NULL,
   `codOrigen` varchar(45) DEFAULT NULL,
