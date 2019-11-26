@@ -5,6 +5,7 @@
     "URLFe" : "nodefe:3000",
     "Protocol": "http://",
     "URLBeneficiarios" : "nodebenef:3002",
+    "URLNotificaciones" : "nodenotif:3003",
     "DB": {
         "name": "db_elaiss",
         "host": "db",

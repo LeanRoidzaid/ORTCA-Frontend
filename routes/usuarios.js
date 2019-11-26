@@ -106,6 +106,14 @@ function actualizarRolUsuario(idusuario,rol,asigna,jwt){
       });    
   }
 }
+
+
+
+
+
+
+
+
 router.post('/actualizar', auth,async function(req, res,next) {
 
   req.body.pass='ABC!@#';
@@ -203,7 +211,7 @@ router.post('/insertar', auth,async function(req, res,next) {
  // res.cookie('jwt' ,'');
   //res.redirect('/');
   req.body.pass='ABC!@#';
-  req.body.fh_alta=Date.now();
+   req.body.fh_alta=Date.now();
   req.body.idCentro=1;
 
   await request.post({

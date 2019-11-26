@@ -6,10 +6,8 @@ const ENTREGAS= require('../models/models_entregas');
 const ORDENES = require('../models/models_ordenes');
 const PRODUCTOS = require('../models/models_productos');
 const productosController = require('./controllers_productos');
-
-
-
-
+const request = require('request');
+var config = require('../../config/config');
 
 
 
@@ -76,6 +74,41 @@ exports.generarEntrega = async function(idEntrega){
     if(cantidadPedida < entrega.orden[0].productoEntrga[0].cantDisp){
         var codbar = await productosController.buscarProducto(entrega.orden[0].productoEntrga[0].codbar);
         await productosController.egreso(codbar.codbar,cantidadPedida);
+        await request.post({
+            "headers": { "content-type": "application/json" },
+            "url": config.Protocol + config.URLNotificaciones+"/api/notificaciones/retiro",
+            "body": JSON.stringify({"destinatario": "+"+entrega.orden[0].beneficiario.telefono, "mensaje": "su producto fue retirado"
+          })
+              }, 
+                (error, response, body) => 
+                {
+                  if(error) {
+                    console.dir(error);
+                    
+                   // return res.redirect('/');
+                  }else{
+                    if(response.statusCode==200)
+                    {
+                   //   res.cookie('jwt' ,JSON.parse(body).token);
+                      console.log(response);
+                      console.dir(JSON.parse(body));
+                    //  return res.redirect('/');
+                    }
+                    else if(response.statusCode==401){
+                      
+                      //return res.redirect('../../login/?msg=2');
+
+                    }
+                    else
+                    {
+                      //return res.redirect('../../login/?msg=3');
+
+                    }
+                    console.log(response);
+                    
+                  }
+                  
+                });
 
         console.log("si");
     }else{

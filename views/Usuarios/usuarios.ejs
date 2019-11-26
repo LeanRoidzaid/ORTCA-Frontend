@@ -364,11 +364,7 @@ $(document).ready(function() {
                 'numberOfWords' : 10
             },
             dataType:'json',
-            success : bindData,
-            error : function(request,error)
-            {
-                alert("Request: "+JSON.stringify(request));
-            }
+            success : bindData
         });
 
     /*

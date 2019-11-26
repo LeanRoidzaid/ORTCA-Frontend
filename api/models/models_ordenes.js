@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../../config/dbConnection');
 const beneficiario = require('./models_beneficiarios');
+const producto = require('./models_productos');
 
 const Ordenes = sequelize.define('orden', {
-     id: {type: Sequelize.INTEGER, primaryKey: true},
+     id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
      idUsuarioMedico: Sequelize.INTEGER,  
      idCentro: Sequelize.INTEGER,
      idBeneficiario: Sequelize.INTEGER,
@@ -19,5 +20,6 @@ const Ordenes = sequelize.define('orden', {
   });
 
 
-Ordenes.hasOne(beneficiario, { foreignKey: 'id' })
+Ordenes.belongsTo(beneficiario, { foreignKey: 'idBeneficiario' })
+Ordenes.belongsTo(producto, { foreignKey: 'idProducto' })
 module.exports = Ordenes; 

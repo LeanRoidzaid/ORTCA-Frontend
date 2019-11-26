@@ -43,7 +43,7 @@ VALUES
     '00000000',
     '2019-12-12 00:00:00',
     'Nombrebeneficiariodemo',
-    '15-000-0000'
+    '5491140716602'
   );
 
 
@@ -74,7 +74,7 @@ VALUES
     '00000000',
     '2019-11-23 00:00:00',
     'NombreAutorizado',
-    '15-0000-0000'
+    '5491140716602'
   );
 
 INSERT INTO `db_elaiss`.`beneficiario_autorizado` (

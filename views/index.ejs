@@ -221,8 +221,8 @@
     -->
     </tr>
     <tr>
-        <td style="width: 300px">
-          <table>
+        <td style="width: 300px;vertical-align: top" >
+          <table >
             <tr>
               <td style="width: 500px">
                  
@@ -242,7 +242,10 @@
 
 
                          <h5 class="card-title"><h1 class="display-1 text-center"><%=pendientes%></h1></h5>
-                        <p class="card-text text-center" ><strong><%= new Date().toLocaleString() %></strong></p>
+                        <p class="card-text text-center" ><strong><%
+                          var f = new Date();
+                          var fecha = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+                          %><%=fecha%></strong></p>
                       </div>
                     
                   </div>

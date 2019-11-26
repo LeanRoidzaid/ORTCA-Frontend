@@ -5,6 +5,7 @@
     "URLFe" : "localhost:3000",
     "Protocol": "http://",
     "URLBeneficiarios" : "0.0.0.0:3002",
+    "URLNotificaciones" : "0.0.0.0:3003",
     "DB": {
         "name": "db_elaiss",
         "host": "0.0.0.0",

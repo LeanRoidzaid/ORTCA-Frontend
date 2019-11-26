@@ -1,113 +1,351 @@
-<%- contentFor('body') %> 
+<%- contentFor('body') %>
+<style>
+  .container {
+
+    padding-top: 20px !important;
+    padding-right: 0px !important;
+    padding-left: 60px !important;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    padding-bottom: 0px !important;
+
+  }
+
+  .dahsboard {
+    width: 1600px !important;
+
+  }
+</style>
 <script type="text/javascript" src="../javascripts/ordenes/funciones.js"></script>
 <script>
 
-
-    $(document).ready(function() {  
-    
-    
-    
-        /*
-    
-        $.ajax({
-    
-                url : 'http://localhost:3000/usuarios/all',
-                type : 'GET',
-                data : {
-                    'numberOfWords' : 10
-                },
-                dataType:'json',
-                success : bindData,
-                error : function(request,error)
-                {
-                    alert("Request: "+JSON.stringify(request));
-                }
-            });
-    
-        */
+var productosAlta = <%-JSON.stringify(productos) %>;
+var beneficiariosAlta = <%-JSON.stringify(beneficiarios) %>;
 
 
-        var ordenes = [
-            { "Beneficiario": "Ruiz Pablo", "medico": "Otto Clay", "Estado": "Activa" , "Producto": "Leche la Serenisima", "FVigencia": "10/09/2019 al 10/03/2020"},
-            { "Beneficiario": "D. A Maradona", "medico": "Connor Johnston","Estado": "Activa" , "Producto": "Pastillas Anticonceptivas", "FVigencia": "10/09/2019 al 10/03/2020"},
-            { "Beneficiario": "G Suller", "medico": "Lacey Hess","Estado": "Activa" , "Producto": "Leche la Serenisima", "FVigencia": "10/09/2019 al 10/03/2020"},
-            { "Beneficiario": "M Botana", "medico": "Timothy Henson","Estado": "Activa" , "Producto": "Pastillas Anticonceptivas", "FVigencia": "10/09/2019 al 10/03/2020"},
-            { "Beneficiario": "R Arias","medico": "Ramona Benton", "Estado": "Activa" , "Producto": "Leche la Serenisima", "FVigencia": "10/09/2019 al 10/03/2020"},
-        ];
-        
-        bindData(ordenes);
-       
+
+  $(document).ready(function () {
+
+    for(var i= 0;i<productosAlta.length;i++ ){
+
+      $('#productoSelect').append('<option value="'+productosAlta[i].id+'">Producto: '+productosAlta[i].nombre+' - CODBAR: '+ productosAlta[i].codbar +'  </option>'); 
+    } 
+    for(var i= 0;i<beneficiariosAlta.length;i++ ){
+
+      $('#beneficiarioSelect').append('<option value="'+beneficiariosAlta[i].id+'">Nombre: '+beneficiariosAlta[i].nombre+' - Apellido: '+ beneficiariosAlta[i].nombre+'  DNI: '+beneficiariosAlta[i].dni+' </option>'); 
+    } 
+
+    $("#InsertModal").on("show.bs.modal", function () {
+        limpiarForm();
     });
-        </script>
-        
-        
-       
-        
-        <link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid.min.css" />
-        <link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid-theme.min.css" />
-            
-        <script type="text/javascript" src="../javascripts/jsgrid/jsgrid.min.js"></script>
-        
-        <h2>Ordenes</h2>
-        <br>
-        <div id="jsGrid" ></div>
-        
+
+    generarGrilla();
+
+   
+
+
+
+
+
+    var maxField = 10; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper'); //Input field wrapper
+    var fieldHTML = '<p><div>Fecha : <input type="date" id="fechaEntrega"  name="fechaEntrega[]" value=""/>'; //New input field html 
+    fieldHTML += ' Cantidad : <input type="number" name="cantidadEntrega[]" id="cantidadEntrega" value=""/><a href="javascript:void(0);" class="remove_button">(-)</a></div></p>'; //New input field html 
+    //alert(fieldHTML);
+    var x = 1; //Initial field counter is 1
+    
+    //Once add button is clicked
+    $(addButton).click(function(){
+        //Check maximum number of input fields
+        if(x < maxField){ 
+            x++; //Increment field counter
+            $(wrapper).append(fieldHTML); //Add field html
+        }
+    });
+    
+    //Once remove button is clicked
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+
+  });
+  function generarGrilla(){
+    $.ajax({
+
+      url: 'http://localhost:3000/ordenes/all',
+      type: 'GET',
+      data: {
+        'numberOfWords': 10
+      },
+      dataType: 'json',
+      success: bindData,
+      error: function (request, error) {
+        alert("Request: " + JSON.stringify(request));
+      }
+    });
+
+  }
+</script>
+
+
+
+
+<link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid.min.css" />
+<link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid-theme.min.css" />
+
+<script type="text/javascript" src="../javascripts/jsgrid/jsgrid.min.js"></script>
+
+<h2>Ordenes</h2>
+<br>
+<p>
+<button type="button" class="btn-primary" value="Nueva Orden" onclick="javascript:DetalleOrden(0);"
+  style="width: 100px;height:30px ">Nueva </button>
+</p>
+<div id="jsGrid"></div>
+
 <!--MODAL DE EDIT Y VER USUARIO-->
 <div class="modal fade" id="DetalleModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
-                <div class="modal-dialog  modal-xl" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="RolesModalLabel">Detalle de la Orden</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form>
-                            <input type="hidden" class="form-control" id="id" >
-                        <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Beneficiario:</label>
-                          <input type="text" class="form-control" id="beneficiario" value="Beneficiario 1">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Medico:</label>
-                                <input type="text" class="form-control" id="medico" value="Medico 1">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Estado:</label>
-                                <input type="text" class="form-control" id="estado" value="Pendiente">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Producto:</label>
-                                <input type="text" class="form-control" id="producto" value="Leche">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Fecha de Vigencia desde:</label>
-                                <input type="text" class="form-control" id="fdesde" value="21/10/2019">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Fecha de Vigencia hasta:</label>
-                                <input type="text" class="form-control" id="fhasta" value="21/11/2019">
-                        </div>
-                        <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Entergas</label>
-                        <div id="jsGridEntregas" ></div>
+  <div class="modal-dialog  modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="RolesModalLabel">Detalle de la Orden</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="hidden" class="form-control" id="id">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Tratamiento:</label>
+            <input type="text" class="form-control" id="tratamiento" >
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Apellido:</label>
+            <input type="text" class="form-control" id="apellido">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">DNI:</label>
+            <input type="text" class="form-control" id="dni">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Producto:</label>
+            <input type="text" class="form-control" id="producto" >
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Vigencia</label>
+            <input type="text" class="form-control" id="vigencia" >
+          </div>
+          <div class="form-group">
+          <label for="recipient-name" class="col-form-label">Entergas</label>
+            <div id="jsGridEntregas"></div>
 
-                                
-        
-                        </div>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                      <button type="button" class="btn btn-primary" onclick="actualizar();">Actualizar</button>
-                    </div>
-                  </div>
+
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function crearOrden() {
+    var validacion = "";
+    var idBeneficiario = $('#beneficiarioSelect').val();
+    var idProducto = $('#productoSelect').val();
+    var tratamiento = $('#tratamientoAlta').val();
+
+    if (idBeneficiario == -1 || idProducto == -1 || tratamiento == "") {
+      validacion = "Debe completar todos los campos del formulario. \n";
+
+    }
+    else {
+
+
+
+      var fecharArray = [];
+      var fechaEntrega = $("input[id='fechaEntrega']").map(function () {
+        if ($(this).val() != '') {
+          var fecha = $(this).val().split('-');
+
+
+          fecharArray.push(new Date(fecha[0], fecha[1] - 1, fecha[2]));
+          return $(this).val();
+        } else {
+          validacion += "Debe completar todos los campos fecha \n"
+        }
+      }).get();
+      var cantidadEntrega = $("input[id='cantidadEntrega']").map(function () {
+        if ($(this).val() == '') {
+          validacion += "Debe completar todos las cantidades. \n"
+        }
+        return $(this).val();
+      })
+        .get();
+
+    }
+    if (validacion == "") {
+      var maximumDate = max_date(fecharArray);
+      var minimumDate = min_date(fecharArray);
+      var orden = {idBeneficiario:idBeneficiario, fechaInicio:minimumDate,fechaFin:maximumDate ,idProducto:idProducto,descTratamiento:tratamiento,fechasEntregas:fechaEntrega,cantidadEntregas:cantidadEntrega};
+      $.ajax({
+
+        url: 'http://localhost:3000/ordenes/alta',
+        type: 'POST',
+        data: {
+          'Orden': JSON.stringify(orden)
+        },
+        dataType: 'json',
+        success: altaOrdenResponse,
+        error: function (request, error) {
+          alert("Error: " +request.responseText);
+        }
+      });
+
+      
+
+
+    }
+    else {
+      alert(validacion);
+    }
+
+
+
+
+  }
+
+function limpiarForm(){
+  $('#beneficiarioSelect').val('-1');
+  $('#productoSelect').val('-1');
+  $('#tratamientoAlta').val('');
+
+  var html = '<div>';
+      html +='<p><div>Fecha : <input type="date" id="fechaEntrega" name="fechaEntrega[]" value=""/>Cantidad : <input type="number" id="cantidadEntrega" name="cantidadEntrega[]" value=""/></div></p>';
+      html +='</div>';
+  $('.field_wrapper').html(html);
+}
+
+function altaOrdenResponse(data){
+  limpiarForm();
+  $('#InsertModal').modal('hide');
+  generarGrilla();
+
+
+}
+
+
+
+  function min_date(all_dates) {
+    var min_dt = all_dates[0],
+      min_dtObj = new Date(all_dates[0]);
+    all_dates.forEach(function (dt, index) {
+      if (new Date(dt) < min_dtObj) {
+        min_dt = dt;
+        min_dtObj = new Date(dt);
+      }
+    });
+    return min_dt;
+  }
+  function max_date(all_dates) {
+    var min_dt = all_dates[0],
+      min_dtObj = new Date(all_dates[0]);
+    all_dates.forEach(function (dt, index) {
+      if (new Date(dt) > min_dtObj) {
+        min_dt = dt;
+        min_dtObj = new Date(dt);
+      }
+    });
+    return min_dt;
+  }
+</script>
+<!--MODAL DE ALTA-->
+<div class="modal fade" id="InsertModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="RolesModalLabel">Nueva Orden</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+              <input type="hidden" class="form-control" id="idAlta">
+              <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Beneficiario:</label>
+                  <select id="beneficiarioSelect">
+                      <option value="-1" selected>Debe seleccionar un Beneficiario  ----></option>
+                  </select>
                 </div>
+  
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Producto:</label>
+                  <select id="productoSelect">
+                    <option value="-1" selected>Debe seleccionar un producto    ----></option>
+                  </select>
+                </div>
+  
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Tratamiento:</label>
+                <input type="text" class="form-control" id="tratamientoAlta" >
               </div>
-        
-        <script>
-        
-        </script>
-        
-        
+
+
+              <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Entergas <a href="javascript:void(0);" class="add_button" title="Agregar">(+)</a> </label> 
+              <div class="field_wrapper">
+                  <div>
+                      <p><div>Fecha : <input type="date" id="fechaEntrega" name="fechaEntrega[]" value=""/>Cantidad : <input type="number" id="cantidadEntrega" name="cantidadEntrega[]" value=""/></div></p>
+                      
+                  </div>
+              </div>
+                <div id="entegasAlta">
+
+                </div>
+    
+    
+    
+              </div>
+            </form>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="crearOrden();">Crear</button>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  
+  </div>

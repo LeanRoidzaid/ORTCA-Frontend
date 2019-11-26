@@ -21,7 +21,7 @@ var auditor = $('#auditor').prop('checked') ;
 
 
 
-    $.ajax({
+$.ajax({
 
             url : 'http://localhost:3000/usuarios/actualizar',
             type : 'POST',
@@ -134,81 +134,123 @@ function limpiarModal(){
 
 
 
-function verRetiro(args){}
-function DetalleOrden(args){
-    limpiarModal();
+function verRetiro(args){
+
+}
+function llenarGrillaEntregas(data){
+    var Entregas = [] ;
+    var estado;
+    if(data.entregas[i].producto.nombre =='null' ){
+        producto =" ";
+    }else{
+        producto =data.entregas[i].producto.nombre ;
+    }
+
+    for(var i =0; i<data.entregas.length;i++){
+        if(data.entregas[i].estadoEntrega=='P'){
+            estado = 'PENDIENTE';
+
+        }else
+        {
+            estado = 'ENTREGADO';
+        }
+        Entregas.push({ "producto": data.entregas[i].producto.nombre, "fechaRetiro": data.entregas[i].fechaRetiro,"Estado":estado});
+    }
+    
+/*
+    var Entregas = [
+        { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"},
+        { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"},
+        { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"},
+        { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"}           ];
+ */
+
+$("#jsGridEntregas").jsGrid({
+    width: "1500",
+    height: "1200",
+    autoload: true,
+    pageLoading: true,
+    inserting: false,
+    //editing: true,
+   // rowDoubleClick: verRetiro,
+    sorting: false,
+    paging: true,
+    selecting: false,
+
+    onItemUpdating: function(args) {
+    // cancel insertion of the item with empty 'name' field
+    alert("Specify the name of the item!");
+        if(args.item.Edad === "") {
+            args.cancel = true;
+            alert("Specify the name of the item!");
+        }
+    },
+    data: Entregas ,
+    controller: {
+        loadData: function(filter) {
+            var startIndex = (filter.pageIndex - 1) * filter.pageSize;
+            //alert("asdas"+filter.usuario_roles);
+            return ;//{
+                //data: db.clients.slice(startIndex, startIndex + filter.pageSize),
+                //itemsCount: db.clients.length
+            //};
+        }
+    } ,
+
+    fields: [
+        //{ name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
+        { name: "producto", title:"Producto" , type: "text", width: 40, validate: "required" },
+        { name: "fechaRetiro", title: "Fecha de Entega" ,type: "text", width: 30, validate: "required" },
+        { name: "Estado",title:"Estado" ,type: "text", width: 30, validate: "required" }//,
+      
+
+
+        //{ type: "control" }
+    ]
+});
+
+}
+function CargarOrden(args){
+
+
+
     $('#id').val(args.item.id);
+    $('#tratamiento').val(args.item.tratamiento);
     $('#nombre').val(args.item.nombre);
+   
     $('#apellido').val(args.item.apellido);
     $('#dni').val(args.item.dni);
-    $('#mail').val(args.item.mail);
-    $('#usuario').val(args.item.usuario);
+    $('#producto').val(args.item.producto);
+    $('#vigencia').val(args.item.vigencia);
+    //S$('#usuario').val(args.item.usuario);
 
+    $.ajax({
 
-
-
-    var Entregas = [
-            { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"},
-            { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"},
-            { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"},
-            { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"}           ];
-     
-
-
-
-        $("#jsGridEntregas").jsGrid({
-        width: "1000",
-        height: "1000",
-        autoload: true,
-        pageLoading: true,
-        inserting: true,
-        //editing: true,
-        rowDoubleClick: verRetiro,
-        sorting: true,
-        paging: true,
-        selecting: true,
-        deleteItem: function(item) {
-            alert("eliminando");
-
-        },
-        onItemInserting: function(args) {
-            insertarUsuario(args);
-
-        },
-        onItemUpdating: function(args) {
-        // cancel insertion of the item with empty 'name' field
-        alert("Specify the name of the item!");
-            if(args.item.Edad === "") {
-                args.cancel = true;
-                alert("Specify the name of the item!");
-            }
-        },
-        data: Entregas ,
-        controller: {
-            loadData: function(filter) {
-                var startIndex = (filter.pageIndex - 1) * filter.pageSize;
-                //alert("asdas"+filter.usuario_roles);
-                return ;//{
-                    //data: db.clients.slice(startIndex, startIndex + filter.pageSize),
-                    //itemsCount: db.clients.length
-                //};
-            }
-        } ,
-
-        fields: [
-            //{ name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
-            { name: "producto", title:"Producto" , type: "text", width: 40, validate: "required" },
-            { name: "fecha", title: "Fecha de Entega" ,type: "text", width: 30, validate: "required" },
-            { name: "fechaRetiro",title:"Fecha de Retiro" ,type: "text", width: 30, validate: "required" },
-          
-
-
-            { type: "control",editButton: false, }
-        ]
+        url : 'http://localhost:3000/ordenes/entregasByIdOrden/?idOrden='+args.item.id,
+        type : 'GET',
+        //dataType:'application/json; charset=utf-8',
+        dataType:'json',
+        success: llenarGrillaEntregas
     });
 
+
+
+
+
+}
+function DetalleOrden(args){
+    limpiarModal();
+    if(args!=0){
+    CargarOrden(args);
     
     $('#DetalleModal').modal();
+}
+else{
+    //MODO INSERT
+    
+    $('#InsertModal').modal();
+    return false;
+}
 
     //alert("Specify asdaad name of the item!");
 
@@ -216,15 +258,14 @@ function DetalleOrden(args){
 
     
 function bindData(json){
+    const ordenes = [];
 
-    var usuario_roles = [
-        
-        { Name: "Medico", idRol: 1 },
-        { Name: "Administrativo", idRol: 2 },
-        { Name: "Auditor", idRol: 3 },
-        { Name: "Administrador", idRol: 4 }
-    ];
-    
+    for(var i=0;i<json.length;i++){
+        ordenes.push({id:json[i].id,nombre: json[i].beneficiario.nombre ,apellido: json[i].beneficiario.apellido,dni:json[i].beneficiario.dni,tratamiento:json[i].descTratamiento,producto:json[i].producto.nombre,vigencia : json[i].fechaInicio+" - "+json[i].fechaFin});    
+
+    }
+
+
     $("#jsGrid").jsGrid({
         width: "1600",
         height: "1200",
@@ -236,14 +277,7 @@ function bindData(json){
         sorting: true,
         paging: true,
         selecting: true,
-        deleteItem: function(item) {
-            alert("eliminando");
-        //return $.ajax({
-        //    type: "DELETE",
-        //    url: "/items",
-        //    data: item
-        //});
-        },
+        
         onItemInserting: function(args) {
             insertarUsuario(args);
             // cancel insertion of the item with empty 'name' field
@@ -261,7 +295,7 @@ function bindData(json){
                 alert("Specify the name of the item!");
             }
         },
-        data: json ,
+        data: ordenes ,
         controller: {
             loadData: function(filter) {
                 var startIndex = (filter.pageIndex - 1) * filter.pageSize;
@@ -272,39 +306,15 @@ function bindData(json){
                 //};
             }
         } ,
-        /*
-        fields: [
-            { name: "Usuario", type: "text", width: 150, validate: "required" },
-            { name: "Edad", type: "number", width: 50 },
-            { name: "Dir", type: "text", width: 200 },
-            { name: "CAS", type: "select", items: countries, valueField: "Id", textField: "Name" },
-            { name: "Activo", type: "checkbox", title: "Esta activo", sorting: false },
-            { type: "control" }
-        ]
-       
-       
-        { "Beneficiario": "Ruiz Pablo", "medico": "Otto Clay", "Estado": "Activa" , "Producto": "Leche la Serenisima", "Fecha de Vigencia": "10/09/2019 al 10/03/2020"},
-    
-        */
 
         fields: [
-            { name: "Beneficiario", title:"Id" , type: "number", width: 5, validate: "required" },
-            { name: "Beneficiario", title:"Beneficiario" , type: "text", width: 5, validate: "required" },
-            { name: "medico", title:"Medico" , type: "text", width: 40, validate: "required" },
-            { name: "Estado", title: "Estado" ,type: "text", width: 30, validate: "required" },
-            { name: "Producto",title:"Producto" ,type: "text", width: 30, validate: "required" },
-            { name: "FVigencia", title:"Fecha de Vigencia", type: "text", width: 60, validate: "required" },
-            //{ name: "usuario",visible:false,title:"Usuario", type: "text", width: 25, validate: "required" },
-            //{ name: "usuario_roles",visible:true, type: "select", items: usuario_roles, valueField: "idRol", textField: "Name" },
-         //   { name: "fh_alta",title:"Fecha Alta" ,visible:false ,type: "text", width: 50, validate: "required" },
-           // { name: "fh_baja", visible:false, type: "text", width: 150},
-
-            //{ name: "esMedico", title: "Medico",  type: "checkbox", width: 20},
-            //{ name: "esAdministrativo", title: "Administrativo",  type: "checkbox", width: 40},
-            //{ name: "esAuditor", title: "Auditor",  type: "checkbox", width: 20},
-            //{ name: "esAdministrador", title: "Administrador",  type: "checkbox", width: 40}
-            //,
-            { type: "control",editButton: false, }
+            { name: "id", title:"Nro Orden" , type: "number", width: 5, validate: "required" },
+            { name: "tratamiento",title:"Tratamietno" ,type: "text", width: 30, validate: "required" },
+            { name: "nombre", title:"Nombre" , type: "text", width: 40, validate: "required" },
+            { name: "apellido", title:"Apellido" , type: "text", width: 40, validate: "required" },
+            { name: "dni", title:"DNI" , type: "text", width: 15, validate: "required" },
+            { name: "producto",title:"Producto" ,type: "text", width: 30, validate: "required" },
+            { name: "vigencia", title:"Fecha de Vigencia", type: "text", width: 60, validate: "required" }
         ]
     });
 

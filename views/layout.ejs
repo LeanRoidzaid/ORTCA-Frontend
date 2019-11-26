@@ -15,6 +15,14 @@
 
 <body>
   <header>
+  <!--
+    ITEMS NO IMPLEMENTADOS AUN
+                        {NameItem: "Suspender Ordenes", url: "/",roles:"1"},
+                    {NameItem: "Realizar Entrega", url: "/",roles:"2"},
+                    {NameItem: "Suspender Ordenes", url: "/",roles:"3"},
+                    {NameItem: "Productos", url: "/",roles:"1,2,3,4"}
+
+  -->
   <%if (typeof token != 'undefined') {  %>
     <%if (token.length > 0) { 
       
@@ -22,12 +30,8 @@
     var DataMenu = [{NameItem: "Gestion de Usuarios", url: "/usuarios",roles:"4"},
                     {NameItem: "Gestion de Beneficiarios", url: "/beneficiarios/",roles:"1,2,3,4"},
                     
-                    {NameItem: "Gestion de Ordenes", url: "/ordenes/",roles:"2"},
+                    {NameItem: "Gestion de Ordenes", url: "/ordenes/",roles:"2"}
                     
-                    {NameItem: "Suspender Ordenes", url: "/",roles:"1"},
-                    {NameItem: "Realizar Entrega", url: "/",roles:"2"},
-                    {NameItem: "Suspender Ordenes", url: "/",roles:"3"},
-                    {NameItem: "Productos", url: "/",roles:"1,2,3,4"}
                     ];  
     
 
