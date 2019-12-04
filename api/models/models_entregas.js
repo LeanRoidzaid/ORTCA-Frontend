@@ -14,6 +14,6 @@ const Entregas = sequelize.define('entregas', {
      },{timestamps: false,freezeTableName: true
   });
 
-Entregas.hasOne(Ordenes, { foreignKey: 'id' })
-Entregas.hasOne(Producto, { foreignKey: 'id' })
+Entregas.belongsTo(Ordenes, { foreignKey: 'idOrden' })
+Entregas.belongsTo(Producto, { foreignKey: 'idProducto' })
 module.exports = Entregas; 

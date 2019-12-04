@@ -140,11 +140,6 @@ function verRetiro(args){
 function llenarGrillaEntregas(data){
     var Entregas = [] ;
     var estado;
-    if(data.entregas[i].producto.nombre =='null' ){
-        producto =" ";
-    }else{
-        producto =data.entregas[i].producto.nombre ;
-    }
 
     for(var i =0; i<data.entregas.length;i++){
         if(data.entregas[i].estadoEntrega=='P'){
@@ -154,20 +149,14 @@ function llenarGrillaEntregas(data){
         {
             estado = 'ENTREGADO';
         }
-        Entregas.push({ "producto": data.entregas[i].producto.nombre, "fechaRetiro": data.entregas[i].fechaRetiro,"Estado":estado});
+        Entregas.push({ "producto": data.entregas[i].producto.nombre, "fechaRetiro": data.entregas[i].fechaRetiro,"fechaEntrega":data.entregas[i].fechaEntrega,"Estado":estado});
     }
     
-/*
-    var Entregas = [
-        { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"},
-        { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"},
-        { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"},
-        { "producto": "Anticonceptivo Marca x", "fecha":"10/11/2019" , "fechaRetiro": "10/11/2019"}           ];
- */
+
 
 $("#jsGridEntregas").jsGrid({
-    width: "1500",
-    height: "1200",
+    width: "800",
+    height: "400",
     autoload: true,
     pageLoading: true,
     inserting: false,
@@ -200,8 +189,9 @@ $("#jsGridEntregas").jsGrid({
     fields: [
         //{ name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
         { name: "producto", title:"Producto" , type: "text", width: 40, validate: "required" },
-        { name: "fechaRetiro", title: "Fecha de Entega" ,type: "text", width: 30, validate: "required" },
-        { name: "Estado",title:"Estado" ,type: "text", width: 30, validate: "required" }//,
+        { name: "Estado",title:"Estado" ,type: "text", width: 30, validate: "required" },
+        { name: "fechaEntrega", title: "Fecha de Entrega" ,type: "text", width: 30, validate: "required" },
+        { name: "fechaRetiro", title: "Fecha de Retiro" ,type: "text", width: 30, validate: "required" }//,
       
 
 
@@ -270,13 +260,17 @@ function bindData(json){
         width: "1600",
         height: "1200",
         autoload: true,
-        pageLoading: true,
+      //  pageLoading: true,
         //inserting: true,
         //editing: true,
         rowDoubleClick: DetalleOrden,
+        selecting: true,
         sorting: true,
         paging: true,
-        selecting: true,
+        autoload: true,
+ 
+        pageSize: 10,
+        pageButtonCount: 5,
         
         onItemInserting: function(args) {
             insertarUsuario(args);

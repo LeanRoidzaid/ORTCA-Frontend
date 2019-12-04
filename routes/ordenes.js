@@ -15,6 +15,31 @@ router.get('/all',async function(req, res,next) {
 
 
 });
+router.get('/byIdBeneficiario',async function(req, res,next) {
+
+    var ordenes = await api.obtenerOrdenesByBenef(req.query.idBeneficiario);
+    ///console.log(JSON.stringify(ordenes));
+    //console.log(req.query.idBeneficiario);
+    res.json(ordenes);
+    //res.send();
+
+
+
+
+});
+
+
+router.get('/getOrdenByBusqueda',async function(req, res,next) {
+
+
+    var ordenes = await api.obtenerOrdenesBy(req.query.term);
+    res.json(ordenes);
+
+
+
+
+});
+
 router.get('/entregasByIdOrden',async function(req, res,next) {
 
     var entregas = await api.obtenerEntregaByOrden (req.query.idOrden);

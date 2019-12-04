@@ -84,6 +84,7 @@
         $('#descripcionProducto').html(data.orden[0].productoEntrga[0].nombre);
         $('#codBar').html(data.orden[0].productoEntrga[0].codbar);
         $('#cantidadDisponible').html(data.orden[0].productoEntrga[0] .cantDisp);
+        $('#cantidadRetiro').html(data.orden[0].cantidad);
         idEntrega = data.orden[0].idEntrega;
 
 
@@ -261,12 +262,13 @@
 
                 <table>
                   <tr>
-                      <td>
-                          <h5>Nombre: <%= retiroDia[i].beneficiario.nombre %> <br>
-                            Apellido: <%= retiroDia[i].beneficiario.apellido %> <br> 
+                      <td style="width: 300px">
+                          <h5>Beneficiario: <%= retiroDia[i].beneficiario.nombre %> <%= retiroDia[i].beneficiario.apellido %>  <br>
+                            
                             Telefono: <%= retiroDia[i].beneficiario.telefono %><br>
                             DNI: <%=retiroDia[i].beneficiario.dni %>  <br><br>
-                            Tratamiento: <%=retiroDia[i].descripcion %>  <br>
+                            Producto: <%=retiroDia[i].productoNombre %>  <br>
+                           <!-- Tratamiento: <%=retiroDia[i].descripcion %>  <br>-->
                             Estado: <%=retiroDia[i].entregaEstado %></h5>
                       </td>
                       <td style="vertical-align: top;padding-left: 40px">
@@ -383,8 +385,11 @@ $(document).ready(function() {
                     <td><div id="descripcionProducto"></div></td> 
                     <th scope="row">codBar</th>
                     <td><div id="codBar"></div></td>
+                    <!--
                     <th scope="row">Catidad Disponible</th>
-                    <td colspan="4"><div id="cantidadDisponible"></div></td>          
+                    <td colspan="4"><div id="cantidadDisponible"></div></td>      -->
+                    <th scope="row">Catidad Retiro</th>
+                    <td colspan="4"><div id="cantidadRetiro"></div></td>     
                                            
                   </tr>                
             </tbody>

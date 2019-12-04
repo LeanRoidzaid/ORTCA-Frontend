@@ -56,7 +56,7 @@ INSERT INTO `orden` (`DescTratamiento`, `estado`, `fechaFin`,
                        1,1,1,
                        'Orden de prueba observacion','0');
                        
-INSERT INTO `db_elaiss`.`entregas` ( estadoEntrega, fechaRetiro, idOrden, idproducto,cantidad  )
+INSERT INTO `db_elaiss`.`entregas` ( estadoEntrega, fechaEntrega, idOrden, idproducto,cantidad  )
                         VALUES
                         ( 'P', '2019-11-23 00:00:00', 1, 1,3 );
 

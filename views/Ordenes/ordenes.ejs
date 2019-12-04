@@ -17,78 +17,7 @@
   }
 </style>
 <script type="text/javascript" src="../javascripts/ordenes/funciones.js"></script>
-<script>
 
-var productosAlta = <%-JSON.stringify(productos) %>;
-var beneficiariosAlta = <%-JSON.stringify(beneficiarios) %>;
-
-
-
-  $(document).ready(function () {
-
-    for(var i= 0;i<productosAlta.length;i++ ){
-
-      $('#productoSelect').append('<option value="'+productosAlta[i].id+'">Producto: '+productosAlta[i].nombre+' - CODBAR: '+ productosAlta[i].codbar +'  </option>'); 
-    } 
-    for(var i= 0;i<beneficiariosAlta.length;i++ ){
-
-      $('#beneficiarioSelect').append('<option value="'+beneficiariosAlta[i].id+'">Nombre: '+beneficiariosAlta[i].nombre+' - Apellido: '+ beneficiariosAlta[i].nombre+'  DNI: '+beneficiariosAlta[i].dni+' </option>'); 
-    } 
-
-    $("#InsertModal").on("show.bs.modal", function () {
-        limpiarForm();
-    });
-
-    generarGrilla();
-
-   
-
-
-
-
-
-    var maxField = 10; //Input fields increment limitation
-    var addButton = $('.add_button'); //Add button selector
-    var wrapper = $('.field_wrapper'); //Input field wrapper
-    var fieldHTML = '<p><div>Fecha : <input type="date" id="fechaEntrega"  name="fechaEntrega[]" value=""/>'; //New input field html 
-    fieldHTML += ' Cantidad : <input type="number" name="cantidadEntrega[]" id="cantidadEntrega" value=""/><a href="javascript:void(0);" class="remove_button">(-)</a></div></p>'; //New input field html 
-    //alert(fieldHTML);
-    var x = 1; //Initial field counter is 1
-    
-    //Once add button is clicked
-    $(addButton).click(function(){
-        //Check maximum number of input fields
-        if(x < maxField){ 
-            x++; //Increment field counter
-            $(wrapper).append(fieldHTML); //Add field html
-        }
-    });
-    
-    //Once remove button is clicked
-    $(wrapper).on('click', '.remove_button', function(e){
-        e.preventDefault();
-        $(this).parent('div').remove(); //Remove field html
-        x--; //Decrement field counter
-    });
-
-  });
-  function generarGrilla(){
-    $.ajax({
-
-      url: 'http://localhost:3000/ordenes/all',
-      type: 'GET',
-      data: {
-        'numberOfWords': 10
-      },
-      dataType: 'json',
-      success: bindData,
-      error: function (request, error) {
-        alert("Request: " + JSON.stringify(request));
-      }
-    });
-
-  }
-</script>
 
 
 
@@ -99,11 +28,18 @@ var beneficiariosAlta = <%-JSON.stringify(beneficiarios) %>;
 <script type="text/javascript" src="../javascripts/jsgrid/jsgrid.min.js"></script>
 
 <h2>Ordenes</h2>
-<br>
-<p>
-<button type="button" class="btn-primary" value="Nueva Orden" onclick="javascript:DetalleOrden(0);"
-  style="width: 100px;height:30px ">Nueva </button>
+
+<p style="padding-left: 1400px">
+  <button type="button" class="btn-primary" value="Nueva Orden" onclick="javascript:DetalleOrden(0);"
+    style="width: 100px;height:30px ">Nueva </button>
 </p>
+  
+<p>
+  <input type="text" id="buscarOrden" name="buscarOrden" class="form-control"    placeholder="Nombre o DNI del Beneficiario">
+</p>
+
+
+
 <div id="jsGrid"></div>
 
 <!--MODAL DE EDIT Y VER USUARIO-->
@@ -349,3 +285,107 @@ function altaOrdenResponse(data){
   
   
   </div>
+  <script>
+
+    var productosAlta = <%-JSON.stringify(productos) %>;
+    var beneficiariosAlta = <%-JSON.stringify(beneficiarios) %>;
+    
+
+    
+      $(document).ready(function () {
+    
+        $(document).on('focus', '#buscarOrden', function () {
+
+          $(this).autocomplete({
+            //source have a url of a service
+            source: 'getOrdenByBusqueda',
+            select: function (event, ui) {
+            event.preventDefault();
+            // alert(ui.item.value); // start an alert which contains the value of proposal
+            //this.value = ui.item.label;
+            generarGrillaByBenef(ui.item.value);
+            $(this).val(ui.item.label);
+            },
+            minLength: 1//min = 2 characters
+          });
+        });        
+   
+        
+
+        for(var i= 0;i<productosAlta.length;i++ ){
+    
+          $('#productoSelect').append('<option value="'+productosAlta[i].id+'">Producto: '+productosAlta[i].nombre+' - CODBAR: '+ productosAlta[i].codbar +'  </option>'); 
+        } 
+        for(var i= 0;i<beneficiariosAlta.length;i++ ){
+    
+          $('#beneficiarioSelect').append('<option value="'+beneficiariosAlta[i].id+'">Nombre: '+beneficiariosAlta[i].nombre+' - Apellido: '+ beneficiariosAlta[i].nombre+'  DNI: '+beneficiariosAlta[i].dni+' </option>'); 
+        } 
+    
+        $("#InsertModal").on("show.bs.modal", function () {
+            limpiarForm();
+        });
+    
+       
+    
+    
+        generarGrilla();
+    
+    
+        var maxField = 10; //Input fields increment limitation
+        var addButton = $('.add_button'); //Add button selector
+        var wrapper = $('.field_wrapper'); //Input field wrapper
+        var fieldHTML = '<p><div>Fecha : <input type="date" id="fechaEntrega"  name="fechaEntrega[]" value=""/>'; //New input field html 
+        fieldHTML += ' Cantidad : <input type="number" name="cantidadEntrega[]" id="cantidadEntrega" value=""/><a href="javascript:void(0);" class="remove_button">(-)</a></div></p>'; //New input field html 
+        //alert(fieldHTML);
+        var x = 1; //Initial field counter is 1
+        
+        //Once add button is clicked
+        $(addButton).click(function(){
+            //Check maximum number of input fields
+            if(x < maxField){ 
+                x++; //Increment field counter
+                $(wrapper).append(fieldHTML); //Add field html
+            }
+        });
+        
+        //Once remove button is clicked
+        $(wrapper).on('click', '.remove_button', function(e){
+            e.preventDefault();
+            $(this).parent('div').remove(); //Remove field html
+            x--; //Decrement field counter
+        });
+    
+      });
+      function generarGrilla(){
+        $.ajax({
+    
+          url: 'http://localhost:3000/ordenes/all',
+          type: 'GET',
+          data: {
+            'numberOfWords': 10
+          },
+          dataType: 'json',
+          success: bindData,
+          error: function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+          }
+        });
+    
+      }
+      function generarGrillaByBenef(id){
+        $.ajax({
+    
+          url: 'http://localhost:3000/ordenes/byIdBeneficiario',
+          type: 'GET',
+          data: {
+            'idBeneficiario': id
+          },
+          dataType: 'json',
+          success: bindData,
+          error: function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+          }
+        });
+    
+      }
+    </script>
