@@ -43,7 +43,8 @@
 <div id="jsGrid"></div>
 
 <!--MODAL DE EDIT Y VER USUARIO-->
-<div class="modal fade" id="DetalleModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
+<div class="modal fade" id="DetalleModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog  modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -54,33 +55,63 @@
       </div>
       <div class="modal-body">
         <form>
-          <input type="hidden" class="form-control" id="id">
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Tratamiento:</label>
-            <input type="text" class="form-control" id="tratamiento" >
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="recipient-name" class="col-form-label">Nro Orden</label>
+              <input type="text" class="form-control" id="id">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="recipient-name" class="col-form-label">Vigencia</label>
+              <input type="text" class="form-control" id="vigencia">
+            </div>
+            <div class="form-group col-md-4">
+              &nbsp;
+            </div>
           </div>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Nombre:</label>
-            <input type="text" class="form-control" id="nombre">
+            <label for="recipient-name" class="col-form-label">Producto</label>
+            <input type="text" class="form-control" id="producto">
           </div>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Apellido:</label>
-            <input type="text" class="form-control" id="apellido">
+            <label for="recipient-name" class="col-form-label">Observaciones</label>
+            <input type="text" class="form-control" id="tratamiento">
           </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">DNI:</label>
-            <input type="text" class="form-control" id="dni">
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="recipient-name" class="col-form-label">Datos del Beneficiario</label>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Producto:</label>
-            <input type="text" class="form-control" id="producto" >
+          <div class="form-row">
+            <div class="form-group col-md-4">
+
+              <label for="recipient-name" class="col-form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="recipient-name" class="col-form-label">Apellido</label>
+              <input type="text" class="form-control" id="apellido">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="recipient-name" class="col-form-label">DNI</label>
+              <input type="text" class="form-control" id="dni">
+            </div>
           </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Vigencia</label>
-            <input type="text" class="form-control" id="vigencia" >
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="recipient-name" class="col-form-label">Autorizados</label>
+              <div id="jsGridAutorizados"></div>
+            </div>
           </div>
+
+
+
+
+
+
           <div class="form-group">
-          <label for="recipient-name" class="col-form-label">Entergas</label>
+            <label for="recipient-name" class="col-form-label">Entergas</label>
             <div id="jsGridEntregas"></div>
 
 
@@ -120,8 +151,8 @@
     var idProducto = $('#productoSelect').val();
     var tratamiento = $('#tratamientoAlta').val();
 
-    if (idBeneficiario == -1 || idProducto == -1 || tratamiento == "") {
-      validacion = "Debe completar todos los campos del formulario. \n";
+    if (idBeneficiario == -1 || idProducto == -1) {
+      validacion = "Debe seleccionar un beneficiario y un producto. \n";
 
     }
     else {
@@ -252,7 +283,7 @@ function altaOrdenResponse(data){
                 </div>
   
               <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Tratamiento:</label>
+                <label for="recipient-name" class="col-form-label">Observaciones</label>
                 <input type="text" class="form-control" id="tratamientoAlta" >
               </div>
 

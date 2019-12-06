@@ -59,5 +59,5 @@ exports.buscarProducto = async function(codbar){
     )
 }
 exports.obtenerProductos = async function(){
-    return PRODUCTOS.findAll();
+    return await PRODUCTOS.findAll();
 }

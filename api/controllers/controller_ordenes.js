@@ -4,6 +4,8 @@ const BENEFICIARIOS = require('../models/models_beneficiarios');
 const beneAutoriz = require('../models/models_beneficiario_autorizado');
 const autorizados = require('../models/models_autorizados');
 const Sequelize = require('sequelize');
+
+const sequelize  = require('../../config/dbConnection');
 const PRODUCTO=require('../models/models_productos');
 const productosController = require('./controllers_productos');
 const request = require('request');
@@ -64,11 +66,17 @@ exports.obtenerOrdenesByBenef = async function(id){
 
 
 }
-exports.obtenerOrdenesBy = async function(dni){
-    return await BENEFICIARIOS.findAll({
+exports.obtenerOrdenesBy = async function(busqueda){
+    /*
+    return await BENEFICIARIOS.findAll({where: { [Sequelize.Op.or] : [{DNI:{ [Sequelize.Op.like]: "%"+busqueda+"%"} },{nombre:{ [Sequelize.Op.like]: "%"+busqueda+"%"} } ] }},{
         attributes: [ ['id', 'value'], [Sequelize.literal("concat('Beneficiario: ',nombre,' ',apellido,' DNI:',DNI)"),"label"]]//id, first AS firstName
-      },{where: {DNI:{ [Sequelize.Op.like]: "%"+dni+"%"}  }}
     );
+        */
+
+       return await sequelize.query("SELECT id as 'value', concat('Beneficiario: ',nombre,' ',apellido,' DNI:',DNI) as label  FROM `beneficiarios` where DNI LIKE '%"+busqueda+"%' or nombre LIKE '%"+busqueda+"%' or apellido LIKE '%"+busqueda+"%' ", { type: Sequelize.QueryTypes.SELECT});
+
+      
+ 
 
 
 
@@ -106,7 +114,7 @@ exports.obtenerEntregasDia = async function(){
         fechaEntrega: {
             [Op.lt]: new Date(new Date() + 24 * 60 * 60 * 1000),
             [Op.gt]: new Date(new Date() - 48 * 60 * 60 * 1000)
-          }
+          }, estadoEntrega:"P"
         },
         include: [{
             model: ORDENES
@@ -125,7 +133,7 @@ exports.obtenerEntregasDia = async function(){
             else{
                 estado='Entregado';
             }
-            entregasRet.push({idEntrega:entrega.id,idOrden:entrega.idOrden, descripcion:orden[0].descTratamiento,beneficiario:orden[0].beneficiario,entregaEstado: estado,productoNombre:entrega.producto.nombre });
+            entregasRet.push({idEntrega:entrega.id,idOrden:entrega.idOrden, descripcion:orden[0].descTratamiento,beneficiario:orden[0].beneficiario,entregaEstado: estado,productoNombre:entrega.producto.nombre,idproducto:entrega.idProducto,cantidadEntrgar: entrega.cantidad });
         }
         return entregasRet;
 }
@@ -156,8 +164,11 @@ exports.obtenerProductos = async function (idProducto){
 
 exports.generarEntrega = async function(idEntrega){
     var entrega = await this.obtenerEntregasId(idEntrega);
+    var d = new Date();
+    var fecha = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+(d.getDay()+1);
+
     ENTREGAS.update({
-        estadoEntrega: 'E'},{where:{id:idEntrega} });
+        estadoEntrega: 'E',fechaRetiro: fecha},{where:{id:idEntrega} });
 
         
     var cantidadPedida = entrega.orden[0].cantidad;

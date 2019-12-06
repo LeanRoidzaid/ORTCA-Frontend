@@ -33,7 +33,7 @@ router.get('/getOrdenByBusqueda',async function(req, res,next) {
 
 
     var ordenes = await api.obtenerOrdenesBy(req.query.term);
-    res.json(ordenes);
+    res.send(JSON.stringify(ordenes));
 
 
 

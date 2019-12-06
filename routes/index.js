@@ -9,9 +9,10 @@ var jwt='asda';
 router.get('/',auth, async function(req, res, next) {
   jwt=req.cookies['jwt'];
   var retiros = await ordenes.obtenerEntregasDia();
+  var productosList = await productos.obtenerProductos();
   
   console.log( JSON.stringify(retiros));
-  res.render('index', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol, retiroDia: retiros});
+  res.render('index', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol, retiroDia: retiros,  productosStock: productosList});
 });
 
 

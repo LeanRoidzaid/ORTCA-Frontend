@@ -4,185 +4,9 @@ const request = require('request');
 var auth = require('../middlewares/session');
 var config = require('../config/config');
 
+var ordenes = require("../api/controllers/controller_ordenes")
 
 
-router.post('/login',  function(req, res, next) {
-  //const token='123456';
-
-   request.post({
-                      "headers": { "content-type": "application/json" },
-                      "url": config.Protocol + config.URLUsuarios+"/api/login/",
-                      "body": JSON.stringify({"usuario": req.body.usuario, "pass": req.body.pass
-                    })
-                    }, 
-                      (error, response, body) => 
-                      {
-                        if(error) {
-                          console.dir(error);
-                          
-                          return res.redirect('/');
-                        }else{
-                          res.cookie('jwt' ,JSON.parse(body).token);
-                          console.log(response);
-                          console.dir(JSON.parse(body));
-                          return res.redirect('/');
-                        }
-
-                      });
-
-  
-
-
-  
-  //res.json({ title: 'Usuarios' , token : 'jwt',usuario:'usuarioes'});
-
-     //.render('index',{ title: 'Usuarios' , token : token,usuario:'usuarioes'});
-});
-
-
-
-router.get('/salir', function(req, res,next) {
-
-  res.cookie('jwt' ,'');
-  res.redirect('/');
-
-
-});
-
-function actualizarRolUsuario(idusuario,rol,asigna,jwt){
-
-  var msg = {"idUsuario":idusuario,"idRol":rol};
-  
-  if(asigna)
-  { 
-     request.post({
-      "headers": { "content-type": "application/json" },
-      "url":  config.Protocol + config.URLUsuarios+"/api/roles/asignarRoles/?token="+jwt,
-      "body": JSON.stringify(msg )
-      }, (error, response, body) => {
-          if(error) {
-              return console.dir(error);
-          }
-          else
-          {
-
-            return;
-          }
-
-      });
-  }
-  else
-
-  {
-    request.post({
-      "headers": { "content-type": "application/json" },
-      "url":  config.Protocol + config.URLUsuarios+"/api/roles/quitarRol/?token="+jwt,
-      "body": JSON.stringify(msg)
-      }, (error, response, body) => {
-          if(error) {
-              return console.dir(error);
-          }
-          else
-          {
-
-            return;
-          }
-
-      });    
-  }
-}
-router.post('/actualizar', auth,async function(req, res,next) {
-
-  req.body.pass='ABC!@#';
-  req.body.fh_alta=Date.now();
-  req.body.idCentro=1;
-
-  await request.post({
-    "headers": { "content-type": "application/json" },
-    "url":  config.Protocol + config.URLUsuarios+"/api/usuarios/actualizar/?token="+req.cookies['jwt'],
-    "body": JSON.stringify(req.body )
-    }, (error, response, body) => {
-        if(error) {
-            return console.dir(error);
-        }
-        else
-        {
-          if(req.body.medico=="true")
-          {
-            actualizarRolUsuario(req.body.id,1,true,req.cookies['jwt']) 
-          }
-          else{
-            actualizarRolUsuario(req.body.id,1,false,req.cookies['jwt']) 
-          }
-
-
-          if(req.body.administrativo=="true")
-          {
-            actualizarRolUsuario(req.body.id,2,true,req.cookies['jwt']) 
-          }
-          else
-          {
-             actualizarRolUsuario( req.body.id,2,false,req.cookies['jwt']) 
-          
-          }
-
-
-          if(req.body.auditor=="true")
-          {
-            actualizarRolUsuario(req.body.id,3,true,req.cookies['jwt']) 
-          }
-          else
-          {
-             actualizarRolUsuario( req.body.id,3,false,req.cookies['jwt']) 
-          
-          }
-
-
-          if(req.body.administrador=="true")
-          {
-            actualizarRolUsuario(req.body.id,4,true,req.cookies['jwt']) 
-          }
-          else
-          {
-             actualizarRolUsuario( req.body.id,4,false,req.cookies['jwt']) 
-          
-          }
-
-  
-  
-
-          res.send(response.body);
-        }
-
-    });
-
-});
-router.post('/eliminar', auth,function(req, res,next) {
-
-  res.cookie('jwt' ,'');
-  request.post({
-    "headers": { "content-type": "application/json" },
-    "url": config.Protocol + config.URLUsuarios+"/api/login/",
-    "body": JSON.stringify({
-    "usuario": req.body.usuario,
-    "pass": req.body.pass
-  })
-  }, 
-    (error, response, body) => 
-    {
-      if(error) {
-        return console.dir(error);
-      }else{
-        res.cookie('jwt' ,JSON.parse(body).token);
-        console.log(response);
-        console.dir(JSON.parse(body));
-        res.redirect('/');
-      }
-
-    });
-
-
-});
 router.post('/insertar', auth,async function(req, res,next) {
 
  // res.cookie('jwt' ,'');
@@ -234,5 +58,26 @@ router.get('/all',auth,async function(req, res,next) {
 
 
 });
+
+
+
+
+
+
+router.get('/autorizadosById',auth,async function(req, res,next) {
+  
+
+  var response = await ordenes.obtenerAutorizados(req.query.id);
+  res.send(response);
+  
+
+
+
+
+});
+
+
+
+
 
 module.exports = router;
