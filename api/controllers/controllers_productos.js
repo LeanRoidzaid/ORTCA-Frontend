@@ -24,7 +24,7 @@ exports.insertarMovimiento = function(movimiento){
 exports.egreso = async function(codbar,cantidad){
 
     let producto = await this.buscarProducto(codbar);
-    producto.cantDisp = producto.cantDisp - cantidad;
+    producto.cantDisp = producto.cantDisp + cantidad;
     
     result = await this.updateDisponible(producto)
  

@@ -8,89 +8,135 @@ function getBooleanCkecked(staus){
     return false;
 }
 
-function actualizar(){
-var id = $('#id').val();    
-var nombre = $('#nombre').val();
-var apellido = $('#apellido').val();
-var dni = $('#dni').val();
-var mail = $('#mail').val();
-var usuario = $('#usuario').val();
 
 
-var administrativo = $('#administrativo').prop('checked') ;
-var medico = $('#medico').prop('checked') ;
-var administrador = $('#administrador').prop('checked') ;
-var auditor = $('#auditor').prop('checked') ;
+    function recuperar() {
 
-var mensajeValidacion = "";
-    if(typeof nombre =="undefined"  || !(nombre.length>1 && nombre.length<45) ){
-        mensajeValidacion += "El largo del nombre debe se mayor a 1 y menor a 45 \n " ;
-    }
-    if( typeof apellido =="undefined"  || !(apellido.length>1 && apellido.length<45)){
-        mensajeValidacion += "El largo del apellido debe se mayor a 1 y menor a 45 \n " ;
-    }
-    if((typeof dni =="undefined" )||!dni.length>8){
-        mensajeValidacion += "El DNI no debe ser mayor a 8 caracteres \n " ;
-    }
-    var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var usuario = $('#usuario').val();
+        $.ajax({
 
-    if((typeof mail =="undefined")||(!regex.test(mail)) ||(!mail.length>3 && mail.length<45 )){
-        mensajeValidacion += "El mail debe ser una direccion de correo valida. \n " ;
-    }
-
-    if(mensajeValidacion==""){
-    $.ajax({
-
-            url : 'http://localhost:3000/usuarios/actualizar',
-            type : 'POST',
-            data : {
-                'id' : id,
-                'nombre' : nombre,
-                'apellido' : apellido,
-                'usuario' : usuario,
-                'dni' : dni,
-                'mail' : mail,
-                'administrativo' : administrativo,
-                'medico': medico,
-                'administrador': administrador,
-                'auditor' : auditor
+            url: 'http://localhost:3000/usuarios/recuperar',
+            type: 'POST',
+            data: {
+                'id': usuario
             },
-            dataType:'json',
-            success : function(data){
-                $.ajax({
-
-                        url : 'http://localhost:3000/usuarios/all',
-                        type : 'GET',
-                        data : {
-                            'numberOfWords' : 10
-                        },
-                        dataType:'json',
-                        success : bindData,
-                        error : function(request,error)
-                        {
-                            alert("Error: "+JSON.stringify(request));
-                        }
-                });
-                $('#RolesModal').modal('hide')
-            },
-            error : function(request,error)
-            {
-                alert("Request: "+JSON.stringify(request.responseText));
+            dataType: 'json',
+            success: llenarFilas,
+            error: function (request, error) {
+                alert("Request: " + JSON.stringify(request.responseText));
             }
+        });
+        $('#RolesModal').modal('hide');
+
+
+    }
+
+    function eliminar(id){
+
+    
+        $.ajax({
+
+            url: 'http://localhost:3000/usuarios/eliminar',
+            type: 'POST',
+            data: {
+                'id': id
+            },
+            dataType: 'json',
+            success: llenarFilas,
+            error: function (request, error) {
+                alert("Request: " + JSON.stringify(request.responseText));
+            }
+        });
+        $('#RolesModal').modal('hide');
+
+
+
+    }
+
+    function actualizar() {
+        var id = $('#id').val();
+        var nombre = $('#nombre').val();
+        var apellido = $('#apellido').val();
+        var dni = $('#dni').val();
+        var mail = $('#mail').val();
+        var usuario = $('#usuario').val();
+
+
+        var administrativo = $('#administrativo').prop('checked');
+        var medico = $('#medico').prop('checked');
+        var administrador = $('#administrador').prop('checked');
+        var auditor = $('#auditor').prop('checked');
+
+        var mensajeValidacion = "";
+        if (typeof nombre == "undefined" || !(nombre.length > 1 && nombre.length < 45)) {
+            mensajeValidacion += "El largo del nombre debe se mayor a 1 y menor a 45 \n ";
+        }
+        if (typeof apellido == "undefined" || !(apellido.length > 1 && apellido.length < 45)) {
+            mensajeValidacion += "El largo del apellido debe se mayor a 1 y menor a 45 \n ";
+        }
+        if ((typeof dni == "undefined") || !dni.length > 8) {
+            mensajeValidacion += "El DNI no debe ser mayor a 8 caracteres \n ";
+        }
+        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if ((typeof mail == "undefined") || (!regex.test(mail)) || (!mail.length > 3 && mail.length < 45)) {
+            mensajeValidacion += "El mail debe ser una direccion de correo valida. \n ";
+        }
+
+        if (mensajeValidacion == "") {
+            $.ajax({
+
+                url: 'http://localhost:3000/usuarios/actualizar',
+                type: 'POST',
+                data: {
+                    'id': id,
+                    'nombre': nombre,
+                    'apellido': apellido,
+                    'usuario': usuario,
+                    'dni': dni,
+                    'mail': mail,
+                    'administrativo': administrativo,
+                    'medico': medico,
+                    'administrador': administrador,
+                    'auditor': auditor
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $.ajax({
+
+                        url: 'http://localhost:3000/usuarios/all',
+                        type: 'GET',
+                        data: {
+                            'numberOfWords': 10
+                        },
+                        dataType: 'json',
+                        success: bindData,
+                        error: function (request, error) {
+                            alert("Error: " + JSON.stringify(request));
+                        }
+                    });
+                    $('#RolesModal').modal('hide')
+                },
+                error: function (request, error) {
+                    alert("Request: " + JSON.stringify(request.responseText));
+                }
             });
         }
-        else{
+        else {
             alert(mensajeValidacion);
             //llenarFilas();
             //$('#RolesModal').modal('hide')
             return false;
         }
-            
-
-return;
 
 
-}
+        return;
+
+
+    }
+
+
+    
 function llenarFilas(){
     $.ajax({
 
@@ -108,9 +154,19 @@ function llenarFilas(){
     });
 }
 
-
+ 
+function validarEmail(valor) {
+  if (/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(valor)){
+    return true;
+  } else {
+    return false;
+  }
+}
+ 
 function insertarUsuario(datos){
 
+
+    if(validarEmail(datos.item.mail)){
 
         $.ajax({
 
@@ -125,10 +181,12 @@ function insertarUsuario(datos){
             },
             dataType:'json',
             success : function(data){
-                if(data.staus!=200){
-                    alert(data.error);
-
+                if(data.error=="Error al insertar usuarioSequelizeUniqueConstraintError: Validation error"){
+                    alert("Error uds esta intentando ingresar un Usuario ya existente");
                 }
+                    
+
+                
                 llenarFilas();
 
                 
@@ -137,6 +195,7 @@ function insertarUsuario(datos){
             error : function(request,error)
             {
                 //alert("Request: "+JSON.stringify(request.responseText)+"  "+error+"  "+request);
+                alert("Error al insertar usuario corrobore que no este insertando un usuario duplicado")
                 llenarFilas();
                 
             }
@@ -146,6 +205,12 @@ function insertarUsuario(datos){
 
 
 
+    }
+    else{
+
+        alert("Debe ingresar una direccion de correo valida.")
+
+    }
 
 
 
@@ -211,6 +276,12 @@ function editarUsuario(args){
 
 function bindData(json){
 
+    if(json.error){
+        alert(json.error);
+        return;
+
+    }
+
     var usuario_roles = [
        
         { Name: "Medico", idRol: 1 },
@@ -236,6 +307,7 @@ function bindData(json){
         selecting: true,
         deleteItem: function(item) {
             alert("eliminando");
+            eliminar(item.id);
         //return $.ajax({
         //    type: "DELETE",
         //    url: "/items",
@@ -301,13 +373,13 @@ function bindData(json){
             }
             
             },
-            { name: "dni",title:"DNI" ,type: "text", width: 15, 
+            { name: "dni",title:"DNI" ,type: "number", width: 15, 
             validate: {
-                validator: "rangeLength",
+                validator: "range",
                 message: function(value, item) {
-                    return "El largo del campo DNI debe ser 8 digitos";
+                    return "El numero del campo DNI debe ser entre 0 y 99999999 ";
                 },
-                param: [7, 9]
+                param: [0, 99999999]
             }
             },
             { name: "mail", title:"Mail", type: "text", width: 60,             
@@ -344,7 +416,11 @@ function bindData(json){
 
 
 
+function errorCargarGrilla(response){
 
+alert(response);
+
+}
 
 
 
@@ -364,25 +440,10 @@ $(document).ready(function() {
                 'numberOfWords' : 10
             },
             dataType:'json',
-            success : bindData
+            success : bindData,
+            error : errorCargarGrilla
         });
 
-    /*
-    var clients = [
-        { "Usuario": "Otto Clay", "Edad": 25, "CAS": 1, "Dir": "Av. Siempre viva 177", "Activo": false },
-        { "Usuario": "Connor Johnston", "Edad": 45, "CAS": 2, "Dir": "Ap #370-4647 Dis Av.", "Activo": true },
-        { "Usuario": "Lacey Hess", "Edad": 29, "CAS": 3, "Dir": "Ap #365-8835 Integer St.", "Activo": false },
-        { "Usuario": "Timothy Henson", "Edad": 56, "CAS": 1, "Dir": "911-5143 Luctus Ave", "Activo": true },
-        { "Usuario": "Ramona Benton", "Edad": 32, "CAS": 3, "Dir": "Ap #614-689 Vehicula Street", "Activo": false }
-    ];
- 
-    var countries = [
-        { Name: "CAS 0", Id: 0 },
-        { Name: "CAS 1", Id: 1 },
-        { Name: "CAS 2", Id: 2 },
-        { Name: "CAS 3", Id: 3 }
-    ];
-    */
 });
 </script>
 
@@ -459,8 +520,10 @@ $(document).ready(function() {
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              
+              <button type="button" class="btn btn-primary" onclick="recuperar();">Recuperar Password</button>
               <button type="button" class="btn btn-primary" onclick="actualizar();">Actualizar</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ var router = express.Router();
 const request = require('request');
 var auth = require('../middlewares/session');
 var config = require('../config/config');
-
+var beneficiario = require("../api/controllers/controller_beneficiario");
 var ordenes = require("../api/controllers/controller_ordenes")
 
 
@@ -17,13 +17,14 @@ router.post('/insertar', auth,async function(req, res,next) {
     "url":  config.Protocol + config.URLBeneficiarios+"/api/beneficiarios/alta/?token="+req.cookies['jwt'],
     "body": JSON.stringify(req.body )
     }, (error, response, body) => {
-        if(error) {
-            return console.dir(error);
+        if(JSON.parse(response.body).error) {
+          res.status(401).json(response.body).send();
         }
         else
         {
+          
 
-          res.send(response.body);
+          res.json(response.body).send();
         }
 
     });
@@ -31,6 +32,40 @@ router.post('/insertar', auth,async function(req, res,next) {
 
 
 });
+
+
+
+
+router.post('/actualizar', auth,async function(req, res,next) {
+
+  // res.cookie('jwt' ,'');
+   //res.redirect('/');
+   req.body.fechaNac=Date.now();
+   await request.post({
+     "headers": { "content-type": "application/json" },
+     "url":  config.Protocol + config.URLBeneficiarios+"/api/beneficiarios/actualizar/?token="+req.cookies['jwt'],
+     "body": JSON.stringify(req.body )
+     }, (error, response, body) => {
+         if(JSON.parse(response.body).error) {
+           res.status(401).json(response.body).send();
+         }
+         else
+         {
+           
+ 
+           res.json(response.body).send();
+         }
+ 
+     });
+ 
+ 
+ 
+ });
+ 
+
+
+
+
 
 router.get('/all',auth,async function(req, res,next) {
   
@@ -67,11 +102,9 @@ router.get('/all',auth,async function(req, res,next) {
 router.get('/autorizadosById',auth,async function(req, res,next) {
   
 
-  var response = await ordenes.obtenerAutorizados(req.query.id);
-  res.send(response);
-  
 
-
+  var autorizados=await beneficiario.buscarAutorizados(req.query.idbeneficiario);
+  res.json({autorizados});
 
 
 });

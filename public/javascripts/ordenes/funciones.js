@@ -141,11 +141,12 @@ function verRetiro(args){
 function entregoOk(data){
     if(!data.err){
         $('#DetalleModal').modal('hide');
+        alert("Entrega realizada correctamente!");
         location.reload(); 
       }else{
         alert(data.err);
       }
-}
+} 
 function Entregar(idEntrega){
           $.ajax({
               url : '/home/Entregar/?id='+idEntrega,

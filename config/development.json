@@ -1,19 +1,19 @@
 {
     "CLAVEJWT": 123456,
     "PORT": 3001,
-    "URLUsuarios" : "0.0.0.0:3001",
+    "URLUsuarios" : "localhost:3001",
     "URLFe" : "localhost:3000",
     "Protocol": "http://",
-    "URLBeneficiarios" : "0.0.0.0:3002",
-    "URLNotificaciones" : "0.0.0.0:3003",
+    "URLBeneficiarios" : "localhost:3002",
+    "URLNotificaciones" : "localhost:3003",
     "DB": {
         "name": "db_elaiss",
-        "host": "0.0.0.0",
+        "host": "localhost",
         "port": "3306",
         "user": "elaiss_app",
         "password": "123456"
     },
-    "EnvioNotificaciones" : true
+    "EnvioNotificaciones" : false
 
 
 

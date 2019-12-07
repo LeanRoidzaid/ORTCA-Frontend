@@ -167,20 +167,19 @@ exports.generarEntrega = async function(idEntrega){
     var d = new Date();
     var fecha = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+(d.getDay()+1);
 
-    ENTREGAS.update({
-        estadoEntrega: 'E',fechaRetiro: fecha},{where:{id:idEntrega} });
+
 
         
     var cantidadPedida = entrega.orden[0].cantidad;
-    if(cantidadPedida < entrega.orden[0].productoEntrga[0].cantDisp){
+    if(cantidadPedida <= entrega.orden[0].productoEntrga[0].cantDisp){
         var codbar = await productosController.buscarProducto(entrega.orden[0].productoEntrga[0].codbar);
-        await productosController.egreso(codbar.codbar,cantidadPedida);
-        if(config.EnvioNotificaciones){
+        await productosController.egreso(codbar.codbar,cantidadPedida*-1);
+         if(config.EnvioNotificaciones){
 
         await request.post({
             "headers": { "content-type": "application/json" },
             "url": config.Protocol + config.URLNotificaciones+"/api/notificaciones/retiro",
-            "body": JSON.stringify({"destinatario": "+"+entrega.orden[0].beneficiario.telefono, "mensaje": "su producto fue retirado"
+            "body": JSON.stringify({"destinatario": "+"+entrega.orden[0].beneficiario.telefono, "mensaje": "Su entrega "
           })
               }, 
                 (error, response, body) => 
@@ -214,7 +213,8 @@ exports.generarEntrega = async function(idEntrega){
                 });
 
         }
-        
+        ENTREGAS.update({
+            estadoEntrega: 'E',fechaRetiro: fecha},{where:{id:idEntrega} });
     }else{
         throw Error('Stock Insuficiente');
     }

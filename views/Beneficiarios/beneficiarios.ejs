@@ -37,7 +37,164 @@
     function ejecutarLlenadoGrilla(data)
     {
         this.ancho = "1500";
-        this.alto  = "1200";
+        this.alto  = "800";
+        $(div).jsGrid({
+            width: this.ancho,
+            height: this.alto,
+           
+          
+            inserting: true,
+            rowDoubleClick: editar,
+            sorting: true,
+            paging: true,
+            autoload: true,
+            pageSize: 10,
+            pageButtonCount: 5,
+            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        
+            selecting: false,
+            editing: true,
+           // updatedItem:actualizar,
+        
+        
+          
+           // deleteItem: borrar,
+            onItemInserting:insertar,
+            onItemUpdating: actualizar,
+            data: data ,
+            controller: {
+            loadData: function(filter) {
+                var startIndex = (filter.pageIndex - 1) * filter.pageSize;
+                //alert("asdas"+filter.usuario_roles);
+                return ;//{
+                    //data: db.clients.slice(startIndex, startIndex + filter.pageSize),
+                    //itemsCount: db.clients.length
+                //};
+            }
+            } ,
+            fields: [
+                { name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
+                { name: "nombre", title:"Nombre" , type: "text", width: 60, validate: {
+                    validator: "rangeLength",
+                    message: function(value, item) {
+                            return "El largo del campo Nombre debe ser entre 1 y 45";
+                        },
+                        param: [1, 45]
+                    }
+                 },
+                { name: "apellido", title: "Apellido" ,type: "text", width: 60, 
+                validate: {
+                    validator: "rangeLength",
+                        message: function(value, item) {
+                            return "El largo del campo Apellido debe ser entre 1 y 45";
+                        },
+                        param: [1, 45]
+                    }
+                },
+                { name: "dni",title:"DNI" ,type: "number", width: 30, 
+                validate: {
+                    validator: "range",
+                    message: function(value, item) {
+                        return "El numero del campo DNI debe ser entre 0 y 99999999 ";
+                    },
+                    param: [0, 99999999]
+                }
+                },
+                { name: "telefono", title:"Telefono", type: "number", width: 60},
+                { name: "usuario",visible:false,title:"Usuario", type: "text", width: 50, validate: "required" },
+                { name: "fh_alta",title:"Fecha Alta" ,visible:false ,type: "text", width: 50, validate: "required" },
+                { name: "fh_baja", visible:false, type: "text", width: 150},
+                { name: "id", title:"Acciones",  align :"center",type: "select",  editing:false,  inserting: false, width: 80,
+                
+                itemTemplate: function(value) {
+                    //return $("<div>").addClass("rating").append(Array(value + 1).join("&#9733;"));
+                        return $("<button type='button' onclick=javascript:verAutorizados('"+value+"')>Ver Autorizados</button>").addClass("btn btn-primary");
+                }
+            },
+
+                { type: "control",editButton: true}
+            ]
+        });
+
+
+    }
+
+
+   var grilla = {
+    div : "",
+    ancho : "",
+    alto:"",
+
+
+    crear :function (divP,ancho,alto,editar,borrar,insertar,actualizar){
+
+        div   = divP;
+        ancho = ancho;
+        alto  = alto;
+
+ 
+
+    },
+    popular :popularBeneficiarios,
+    llenarGrilla : ejecutarLlenadoGrilla
+
+    }
+    function editar(ars){
+       // alert("editar")
+    }
+
+
+
+
+
+
+
+    var grillaAutorizados = {
+    div : "",
+    ancho : "",
+    alto:"",
+
+
+    crear :function (divP,ancho,alto,editar,borrar,insertar,actualizar){
+
+        div   = divP;
+        ancho = ancho;
+        alto  = alto;
+
+ 
+
+    },
+    popular :popularAutorizados,
+    llenarGrilla : ejecutarLlenadoGrillaAutorizados
+
+    
+
+    }
+
+
+
+
+    function popularAutorizados(id){
+        
+
+        $.ajax({
+
+            url: '/beneficiarios/autorizadosById',
+            type: 'GET',
+            data: {
+                'idbeneficiario': id
+            },
+            dataType: 'json',
+            success: ejecutarLlenadoGrillaAutorizados,
+            error: function (request, error) {
+                alert("Request: " + JSON.stringify(request));
+            }
+        });
+        alert(id);
+    }
+    function ejecutarLlenadoGrillaAutorizados(data){
+        this.ancho = "700";
+        this.alto  = "600";
         $(div).jsGrid({
             width: this.ancho,
             height: this.alto,
@@ -55,7 +212,7 @@
            // deleteItem: borrar,
             onItemInserting:insertar,
             onItemUpdating: actualizar,
-            data: data ,
+            data: data.autorizados ,
             controller: {
                 loadData: function(filter) {
                     var startIndex = (filter.pageIndex - 1) * filter.pageSize;
@@ -94,7 +251,7 @@
                 { name: "usuario",visible:false,title:"Usuario", type: "text", width: 50, validate: "required" },
                 { name: "fh_alta",title:"Fecha Alta" ,visible:false ,type: "text", width: 50, validate: "required" },
                 { name: "fh_baja", visible:false, type: "text", width: 150},
-                { name: "id", title:"Acciones",  align :"right",type: "text", width: 80,
+                { name: "id", title:"Acciones",  align :"right",type: "control", editing:false,  inserting: false, width: 80,
                 
                 itemTemplate: function(value) {
                     //return $("<div>").addClass("rating").append(Array(value + 1).join("&#9733;"));
@@ -110,74 +267,92 @@
     }
 
 
-   var grilla = {
-    div : "",
-    ancho : "",
-    alto:"",
 
 
-    crear :function (divP,ancho,alto,editar,borrar,insertar,actualizar){
 
-        div   = divP;
-        ancho = "900";
-        alto  = "1200";
-
- 
-
-    },
-    popular :popularBeneficiarios,
-    llenarGrilla : ejecutarLlenadoGrilla
-
-    }
-    function editar(ars){
-        alert("editar")
-    }
-    function verAutorizados(ars){
-        //alert("editar");
-        grilla.crear("#jsGridAutorizados","900","1200",null,null,null,null);
-        grilla.popular();
-        $('#AutorizadoModal').modal();
-    }
-    function actualizar(ars){
-        alert("Funcionalidad no implementada");
-    }
-
-    function insertar(datos){
-     
-
-     $.ajax({
-
-         url : 'http://localhost:3000/beneficiarios/insertar',
-         type : 'POST',
-         data : {
-             'nombre' : datos.item.nombre,
-             'apellido' : datos.item.apellido,
-             'usuario' : datos.item.usuario,
-             'dni' : datos.item.dni,
-             'telefono' : datos.item.telefono,
-         },
-         dataType:'json',
-         success : function(data){
-             if(data.staus!=200){
-                // alert(data.error);
-
-             }
-             grilla.popular();
-
-             
-
-         },
-         error : function(request,error)
-         {
-             alert("Request: "+JSON.stringify(request.responseText));
-             
-         }
-     });
-     
-     
-     grilla.popular();
+        function verAutorizados(ars) {
+            //alert("editar");
+            grillaAutorizados.crear("#jsGridAutorizados", "900", "1200", null, null, null, null);
+            grillaAutorizados.popular(ars);
+            $('#AutorizadoModal').modal();
+        }
 
 
+        function actualizar(datos) {
+           // alert("Funcionalidad no implementada");
+
+            $.ajax({
+
+                url: 'http://localhost:3000/beneficiarios/actualizar',
+                type: 'POST',
+                data: {
+                    'nombre': datos.item.nombre,
+                    'apellido': datos.item.apellido,
+                    'usuario': datos.item.usuario,
+                    'dni': datos.item.dni,
+                    'telefono': datos.item.telefono,
+                    'id':datos.item.id
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.staus != 200) {
+                        // alert(data.error);
+
+                    }
+                    alert("Beneficiario actualizado exitosamente");
+                    grilla.popular();
+
+
+
+                },
+                error: function (request, error) {
+                    if (JSON.parse(request.responseJSON).error) {
+                        alert("Error al actualizar");
+                    }
+                }
+            });
+
+
+
+        }
+
+    function insertar(datos) {
+
+
+            $.ajax({
+
+                url: 'http://localhost:3000/beneficiarios/insertar',
+                type: 'POST',
+                data: {
+                    'nombre': datos.item.nombre,
+                    'apellido': datos.item.apellido,
+                    'usuario': datos.item.usuario,
+                    'dni': datos.item.dni,
+                    'telefono': datos.item.telefono,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.staus != 200) {
+                        // alert(data.error);
+
+                    }
+                    alert("Beneficiario ingresado exitosamente")
+                    grilla.popular();
+
+
+
+                },
+                error: function (request, error) {
+                    if (JSON.parse(request.responseJSON).error) {
+                        alert("Error al insertar compruebe que no ingresando un beneficiario con el DNI repetido ");
+                    }
+                }
+            });
+
+
+            grilla.popular();
+
+    
 
 
 

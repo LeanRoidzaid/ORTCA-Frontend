@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
-const connection = require('../../config/dbConnection');
+const sequelize = require('../../config/dbConnection');
 
-const Beneficiarios = connection.define('beneficiarios', {
+const Beneficiarios = sequelize.define('beneficiarios', {
      id: {type: Sequelize.INTEGER, primaryKey: true},
      nombre: Sequelize.STRING,
      apellido: Sequelize.STRING,
