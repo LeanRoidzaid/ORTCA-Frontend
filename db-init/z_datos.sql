@@ -41,11 +41,11 @@ INSERT INTO `db_elaiss`.`beneficiarios` (
   )
 VALUES
   (
-    'Juan',
+    'Perez',
     '2019-12-12 00:00:00',
     '00000000',
     '2019-12-12 00:00:00',
-    'Perez',
+    'Juan',
     '5491140716602'
   );
 

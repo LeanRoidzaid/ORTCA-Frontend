@@ -44,7 +44,7 @@
            
           
             inserting: true,
-            rowDoubleClick: editar,
+            //rowDoubleClick: editar,
             sorting: true,
             paging: true,
             autoload: true,
@@ -52,7 +52,7 @@
             pageButtonCount: 5,
             pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         
-            selecting: false,
+            selecting: true,
             editing: true,
            // updatedItem:actualizar,
         
@@ -112,7 +112,7 @@
                 }
             },
 
-                { type: "control",editButton: true, deleteButton:false}
+                { type: "control", editButton: true, deleteButton:false}
             ]
         });
 
@@ -172,11 +172,67 @@
     }
 
 
+    function insertingAutorizado(arg) {
 
 
+        if (arg.item.telefono) {
+            var cadena = new String(arg.item.telefono);
+            if (cadena.length != 13) {
+                alert("El telefono debe tener al menos 13 digitos.");
+                grillaAutorizados.popular();
+
+            }
+        }
+        
+            $.ajax({
+
+                url: 'http://localhost:3000/beneficiarios/insertarAutorizado',
+                type: 'POST',
+                data: {
+                    'nombre': arg.item.nombre,
+                    'apellido': arg.item.apellido,
+                    'usuario': arg.item.usuario,
+                    'dni': arg.item.dni,
+                    'telefono': arg.item.telefono,
+                    'idBeneficiario': $("#idBeneficiarioAutorizado").val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.staus != 200) {
+                        // alert(data.error);
+
+                    }
+                    grillaAutorizados.popular($("#idBeneficiarioAutorizado").val());
+                    alert("Autorizado ingresado exitosamente")
+                    
+
+
+
+                },
+                error: function (request, error) {
+                    if (JSON.parse(request.responseJSON).error) {
+                        alert("Error al insertar  ");
+                    }
+                }
+            });
+
+    }
+    function editaAutorizado(arg){
+
+        if(arg.item.telefono ){
+            var cadena = new String(arg.item.telefono);
+            if(cadena.length!=13 ){
+                alert("El telefono debe tener al menos 13 digitos.");
+                grillaAutorizados.popular();
+                
+            }
+        }
+    
+    }
+    
     function popularAutorizados(id){
 
-        
+        $("#idBeneficiarioAutorizado").val(id);
 
         $.ajax({
 
@@ -202,17 +258,17 @@
             autoload: true,
             pageLoading: true,
             inserting: true,
-            rowDoubleClick: editar,
+           // rowDoubleClick: editar,
             sorting: true,
             paging: true,
             selecting: true,
             editing: false,
             // updatedItem:actualizar,
-
+            noDataContent: "Sin Datos...",
 
             // deleteItem: borrar,
-            onItemInserting: insertar,
-            onItemUpdating: actualizar,
+            onItemInserting: insertingAutorizado,
+            onItemUpdating: editaAutorizado,
             data: data.autorizados,
             controller: {
                 loadData: function (filter) {
@@ -221,6 +277,7 @@
                 }
             },
             fields: [
+                { name: "id_beneficiario", title: "idBeneficiario", visible: false, type: "number", width: 5, validate: "required" },
                 { name: "id", title: "Id", visible: false, type: "number", width: 5, validate: "required" },
                 {
                     name: "nombre", title: "Nombre", type: "text", width: 60, validate: {
@@ -242,20 +299,20 @@
                     }
                 },
                 {
-                    name: "dni", title: "DNI", type: "text", width: 30,
+                    name: "DNI", title: "DNI", type: "number", width: 40,
                     validate: {
-                        validator: "rangeLength",
+                        validator: "range",
                         message: function (value, item) {
                             return "El largo del campo DNI debe ser 8 digitos";
                         },
-                        param: [7, 9]
+                        param: [1, 99999999]
                     }
                 },
                 { name: "telefono", title: "Telefono", type: "number", width: 60 },
                 { name: "usuario", visible: false, title: "Usuario", type: "text", width: 50, validate: "required" },
                 { name: "fh_alta", title: "Fecha Alta", visible: false, type: "text", width: 50, validate: "required" },
                 { name: "fh_baja", visible: false, type: "text", width: 150 },
-                { type: "control", editButton: true }
+                { type: "control", editButton: false, deleteButton:false }
             ]
         });
 
@@ -276,7 +333,14 @@
 
         function actualizar(datos) {
            // alert("Funcionalidad no implementada");
-
+           if(datos.item.telefono ){
+            var cadena = new String(datos.item.telefono);
+            if(cadena.length!=13 ){
+                alert("El telefono debe tener al menos 13 digitos.");
+                grilla.popular();
+                return false;
+            }
+        }
             $.ajax({
 
                 url: 'http://localhost:3000/beneficiarios/actualizar',
@@ -313,7 +377,14 @@
         }
 
     function insertar(datos) {
-
+        if(datos.item.telefono ){
+            var cadena = new String(datos.item.telefono);
+            if(cadena.length!=13 ){
+                alert("El telefono debe tener al menos 13 digitos.");
+                grilla.popular();
+                return false;
+            }
+        }
 
             $.ajax({
 
@@ -427,6 +498,7 @@
                         <!--
                         <button type="button" class="btn btn-primary" onclick="agregar();">Agregar Auroizado</button>-->
                         <div class="form-group">
+                        <input type="hidden" id="idBeneficiarioAutorizado"/>
                       
                         <div id="jsGridAutorizados" ></div>
 

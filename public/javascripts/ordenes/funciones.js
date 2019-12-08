@@ -294,7 +294,7 @@ function llenarAutorizados(data){
             //{ name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
             { name: "nombre", title:"Nombre" , type: "text", width: 20, validate: "required" },
             { name: "apellido", title:"Apellido" , type: "text", width: 20, validate: "required" },
-            { name: "dni", title:"DNI" , type: "text", width: 10, validate: "required" },
+            { name: "DNI", title:"DNI" , type: "text", width: 10, validate: "required" },
             { name: "telefono",title:"Telefono" ,type: "text", width: 20, validate: "required" }
         
     
@@ -320,7 +320,7 @@ function CargarOrden(args){
     
     $.ajax({
 
-        url : 'http://localhost:3000/beneficiarios/autorizadosById/?id='+args.item.idBeneficiario,
+        url : 'http://localhost:3000/beneficiarios/autorizadosById/?idbeneficiario='+args.item.idBeneficiario,
         type : 'GET',
         //dataType:'application/json; charset=utf-8',
         dataType:'json',

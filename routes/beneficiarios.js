@@ -33,7 +33,21 @@ router.post('/insertar', auth,async function(req, res,next) {
 
 });
 
+router.post('/insertarAutorizado', auth,async function(req, res,next) {
 
+  try{
+    await beneficiario.insertarAutorizado(req.body);
+    res.json({});
+  }catch(error)
+  {
+    res.stus(401).json({});
+  }
+  
+ 
+ 
+ 
+ });
+ 
 
 
 router.post('/actualizar', auth,async function(req, res,next) {
