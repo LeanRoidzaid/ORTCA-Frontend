@@ -30,10 +30,7 @@ router.post('/users', function(req, res, next) {
 });
 */
 
-router.get('/reportes/demanda',auth,function(req, res, next) {
-  
-  res.render('Reportes/demanda', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol});
-});
+
 
 router.get('/stock', function(req, res, next) {
   jwt=req.cookies.token;

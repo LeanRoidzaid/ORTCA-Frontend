@@ -1,0 +1,58 @@
+<%- contentFor('body') %> 
+<script src="../javascripts/chart/chart.js/dist/Chart.min.js"></script>
+<script src="../javascripts/chart/chart.js/dist/util.js"></script>
+<link rel="stylesheet" type="text/css" href="../javascripts/chart/chart.js/dist/Chart.css" />
+<link rel="stylesheet" href="/stylesheets/reportes.css">
+<h1>Reporte de beneficiarios que no retiraron en el día</h1>
+
+
+<input type="date" id="fecha" value="<%= fecha %>">
+
+<table class="report-table">
+	<thead>
+		<td>Apellido y Nombre</td>
+		<td>Telefono</td>
+		<td>Fecha</td>
+		<td>Producto</td>
+	</thead>
+	<tbody>
+		<% for (var i = 0; i < reportData.length;  i++) { %>
+			<tr>
+				<td><%= reportData[i].apellido %>, <%= reportData[i].nombre %></td>
+				<td><%= reportData[i].telefono %></td>
+				<td><%= reportData[i].fecha %></td>
+				<td><%= reportData[i].producto %></td>
+			</tr>    
+		<% } %>
+	</tbody>
+</table>
+<br/>
+<h1>Entregado vs No entregado</h1>
+<canvas  class="grafico" id="myChart" ></canvas>
+
+
+
+<script>
+	document.querySelector('#fecha').onchange = () => {
+		const date = event.target.value
+
+		const url = window.location.origin + window.location.pathname + '?fecha=' + date
+
+		window.location.replace(url)
+	}
+	var ctx = document.getElementById('myChart');
+	var data =  <%- JSON.stringify(retiradosVsNoRetirados) %>
+	const myChart = new Chart(document.getElementById("myChart"), {
+		"type": "doughnut",
+		"data": {
+			"labels": data.map(d => d.estado),
+			"datasets":[
+				{
+					"data": data.map(d => d.cantidad),
+					"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]
+				}
+			]
+		}
+	});
+
+</script>

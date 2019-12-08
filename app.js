@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/usuarios');
 var benefRouter = require('./routes/beneficiarios');
 var homeRouter  = require('./routes/home');
+var reportRouter  = require('./routes/reportes');
 
 
 var app = express();
@@ -32,6 +33,7 @@ app.use('/', indexRouter);
 app.use('/usuarios', usersRouter);
 app.use('/beneficiarios',benefRouter);
 app.use('/home',homeRouter);
+app.use('/reportes',reportRouter);
 
 app.use(exppress_session({
   secret: 'elaiss',

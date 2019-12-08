@@ -1,0 +1,24 @@
+.report-table {
+  width: 100%;
+}
+
+.report-table thead {
+  background: #f9f9f9;
+  line-height: 44px;
+  font-weight: bold;
+}
+
+.report-table tr {
+  border-bottom: 1px solid #eceaea;
+  line-height: 30px;
+}
+
+.report-table tr:hover {
+  background: #eceaea;
+}
+
+h1 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
