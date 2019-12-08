@@ -27,6 +27,9 @@ INSERT INTO `usuario_roles` ( `idUsuario`, `idRol`) VALUES ( 1, 4);
 INSERT INTO `db_elaiss`.`producto` (cantDisp, codbar, codOrigen, GTIN,  nSerie, nombre)
                            VALUES  (100,      '3123154645646',    '20303332805', '00002132132132', 'AR-000111', 'Leche Nutrilon'  );
 
+INSERT INTO `db_elaiss`.`producto` (cantDisp, codbar, codOrigen, GTIN,  nSerie, nombre)
+                           VALUES  (100,      '9993154645646',    '70302552365', '00002132132132', 'AR-003191', 'Pastillas Anticonceptivas'  );
+
 
 INSERT INTO `db_elaiss`.`beneficiarios` (
     apellido,

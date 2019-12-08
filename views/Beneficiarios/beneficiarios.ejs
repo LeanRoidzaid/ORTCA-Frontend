@@ -56,7 +56,7 @@
             editing: true,
            // updatedItem:actualizar,
         
-        
+            
           
            // deleteItem: borrar,
             onItemInserting:insertar,
@@ -112,7 +112,7 @@
                 }
             },
 
-                { type: "control",editButton: true}
+                { type: "control",editButton: true, deleteButton:false}
             ]
         });
 
@@ -175,6 +175,7 @@
 
 
     function popularAutorizados(id){
+
         
 
         $.ajax({
@@ -190,11 +191,11 @@
                 alert("Request: " + JSON.stringify(request));
             }
         });
-        alert(id);
+      
     }
     function ejecutarLlenadoGrillaAutorizados(data){
-        this.ancho = "700";
-        this.alto  = "600";
+        this.ancho = "900";
+        this.alto = "600";
         $(div).jsGrid({
             width: this.ancho,
             height: this.alto,
@@ -206,60 +207,55 @@
             paging: true,
             selecting: true,
             editing: false,
-           // updatedItem:actualizar,
+            // updatedItem:actualizar,
 
-          
-           // deleteItem: borrar,
-            onItemInserting:insertar,
+
+            // deleteItem: borrar,
+            onItemInserting: insertar,
             onItemUpdating: actualizar,
-            data: data.autorizados ,
+            data: data.autorizados,
             controller: {
-                loadData: function(filter) {
+                loadData: function (filter) {
                     var startIndex = (filter.pageIndex - 1) * filter.pageSize;
-                    return ;
+                    return;
                 }
-            } ,
+            },
             fields: [
-                { name: "id", title:"Id" , visible:false, type: "number", width: 5, validate: "required" },
-                { name: "nombre", title:"Nombre" , type: "text", width: 60, validate: {
-                    validator: "rangeLength",
-                    message: function(value, item) {
+                { name: "id", title: "Id", visible: false, type: "number", width: 5, validate: "required" },
+                {
+                    name: "nombre", title: "Nombre", type: "text", width: 60, validate: {
+                        validator: "rangeLength",
+                        message: function (value, item) {
                             return "El largo del campo Nombre debe ser entre 1 y 45";
                         },
                         param: [1, 45]
                     }
-                 },
-                { name: "apellido", title: "Apellido" ,type: "text", width: 60, 
-                validate: {
-                    validator: "rangeLength",
-                        message: function(value, item) {
+                },
+                {
+                    name: "apellido", title: "Apellido", type: "text", width: 60,
+                    validate: {
+                        validator: "rangeLength",
+                        message: function (value, item) {
                             return "El largo del campo Apellido debe ser entre 1 y 45";
                         },
                         param: [1, 45]
                     }
                 },
-                { name: "dni",title:"DNI" ,type: "text", width: 30, 
-                validate: {
-                    validator: "rangeLength",
-                    message: function(value, item) {
-                        return "El largo del campo DNI debe ser 8 digitos";
-                    },
-                    param: [7, 9]
-                }
+                {
+                    name: "dni", title: "DNI", type: "text", width: 30,
+                    validate: {
+                        validator: "rangeLength",
+                        message: function (value, item) {
+                            return "El largo del campo DNI debe ser 8 digitos";
+                        },
+                        param: [7, 9]
+                    }
                 },
-                { name: "telefono", title:"Telefono", type: "number", width: 60},
-                { name: "usuario",visible:false,title:"Usuario", type: "text", width: 50, validate: "required" },
-                { name: "fh_alta",title:"Fecha Alta" ,visible:false ,type: "text", width: 50, validate: "required" },
-                { name: "fh_baja", visible:false, type: "text", width: 150},
-                { name: "id", title:"Acciones",  align :"right",type: "control", editing:false,  inserting: false, width: 80,
-                
-                itemTemplate: function(value) {
-                    //return $("<div>").addClass("rating").append(Array(value + 1).join("&#9733;"));
-                        return $("<button type='button' onclick=javascript:verAutorizados('"+value+"')>Ver Autorizados</button>").addClass("btn btn-primary");
-                }
-            },
-
-                { type: "control",editButton: true}
+                { name: "telefono", title: "Telefono", type: "number", width: 60 },
+                { name: "usuario", visible: false, title: "Usuario", type: "text", width: 50, validate: "required" },
+                { name: "fh_alta", title: "Fecha Alta", visible: false, type: "text", width: 50, validate: "required" },
+                { name: "fh_baja", visible: false, type: "text", width: 150 },
+                { type: "control", editButton: true }
             ]
         });
 
@@ -427,30 +423,11 @@
                     </div>
                     <div class="modal-body">
                       <form>
-                            <input type="hidden" class="form-control" id="id" >
+                        
+                        <!--
+                        <button type="button" class="btn btn-primary" onclick="agregar();">Agregar Auroizado</button>-->
                         <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Nombre:</label>
-                          <input type="text" class="form-control" id="nombre">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Apellido:</label>
-                                <input type="text" class="form-control" id="apellido">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">DNI:</label>
-                                <input type="text" class="form-control" id="dni">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Mail:</label>
-                                <input type="text" class="form-control" id="mail">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Telefono:</label>
-                                <input type="text" class="form-control" id="telefono">
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="agregar();">Agregar Auroizado</button>
-                        <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Autorizados</label>
+                      
                         <div id="jsGridAutorizados" ></div>
 
                                 

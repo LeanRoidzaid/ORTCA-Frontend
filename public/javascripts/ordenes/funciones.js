@@ -195,7 +195,7 @@ function llenarGrillaEntregas(data){
 
 $("#jsGridEntregas").jsGrid({
     width: "1000",
-    height: "400",
+    height: "200",
     autoload: true,
     pageLoading: true,
     inserting: false,
@@ -251,10 +251,11 @@ $("#jsGridEntregas").jsGrid({
 function llenarAutorizados(data){
     
    // alert( JSON.stringify(data));
-    var input = []; 
-    for(var i in data){
-        input.push(data[i].autorizados[0]);
-    }
+    //var input = []; 
+    //for(var i in data){
+     //   input.push(data[i].autorizados[0]);
+   // }
+   var input = data.autorizados;
 
 
     $("#jsGridAutorizados").jsGrid({

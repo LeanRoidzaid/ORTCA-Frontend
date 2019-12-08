@@ -35,7 +35,7 @@
 </p>
   
 <p>
-  <input type="text" id="buscarOrden" name="buscarOrden" class="form-control"    placeholder="Nombre o DNI del Beneficiario">
+  <input type="text" id="buscarOrden" name="buscarOrden" class="form-control"    placeholder="Nombre, Apellido o DNI del Beneficiario">
 </p>
 
 
@@ -57,11 +57,11 @@
         <form>
           <div class="form-row">
             <div class="form-group col-md-4">
-              <label for="recipient-name" class="col-form-label">Nro Orden</label>
+              <label for="recipient-name" class="col-form-label"><h5> Nro Orden</h5></label>
               <input type="text" class="form-control" id="id">
             </div>
             <div class="form-group col-md-4">
-              <label for="recipient-name" class="col-form-label">Vigencia</label>
+              <label for="recipient-name" class="col-form-label"><h5>Vigencia</h5></label>
               <input type="text" class="form-control" id="vigencia">
             </div>
             <div class="form-group col-md-4">
@@ -69,17 +69,14 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Producto</label>
+            <label for="recipient-name" class="col-form-label"><h5>Producto</h5></label>
             <input type="text" class="form-control" id="producto">
           </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Observaciones</label>
-            <input type="text" class="form-control" id="tratamiento">
-          </div>
+
 
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label for="recipient-name" class="col-form-label">Datos del Beneficiario</label>
+              <label for="recipient-name" class="col-form-label"><h5> Datos del Beneficiario</h5></label>
             </div>
           </div>
           <div class="form-row">
@@ -93,14 +90,14 @@
               <input type="text" class="form-control" id="apellido">
             </div>
             <div class="form-group col-md-4">
-              <label for="recipient-name" class="col-form-label">DNI</label>
+              <label for="recipient-name" class="col-form-label"> DNI</label>
               <input type="text" class="form-control" id="dni">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label for="recipient-name" class="col-form-label">Autorizados</label>
+              <label for="recipient-name" class="col-form-label"><h5>Autorizados</h5></label>
               <div id="jsGridAutorizados"></div>
             </div>
           </div>
@@ -111,11 +108,15 @@
 
 
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Entergas</label>
+            <label for="recipient-name" class="col-form-label"><h5> Entergas</h5></label>
             <div id="jsGridEntregas"></div>
 
 
 
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label"><h5> Observaciones</h5></label>
+            <input type="text" class="form-control" id="tratamiento">
           </div>
         </form>
       </div>
@@ -151,35 +152,84 @@
     var idProducto = $('#productoSelect').val();
     var tratamiento = $('#tratamientoAlta').val();
 
-    if (idBeneficiario == -1 || idProducto == -1) {
-      validacion = "Debe seleccionar un beneficiario y un producto. \n";
+    if (idBeneficiario == -1) {
+      validacion+= "Debe seleccionar un Beneficiario. \n";
 
     }
-    else {
+    if (idProducto == -1) {
+      validacion+= "Debe seleccionar un Producto. \n";
 
+    }
 
-
+      var fechaAnt;
       var fecharArray = [];
+      var date = new Date();
       var fechaEntrega = $("input[id='fechaEntrega']").map(function () {
         if ($(this).val() != '') {
+
           var fecha = $(this).val().split('-');
 
-
           fecharArray.push(new Date(fecha[0], fecha[1] - 1, fecha[2]));
+          fechaAnt=fecha;
           return $(this).val();
+
+
+
+
         } else {
           validacion += "Debe completar todos los campos fecha \n"
         }
       }).get();
-      var cantidadEntrega = $("input[id='cantidadEntrega']").map(function () {
-        if ($(this).val() == '') {
-          validacion += "Debe completar todos las cantidades. \n"
-        }
-        return $(this).val();
-      })
-        .get();
 
+
+    var setDate = new Date()
+    var date = new Date(setDate.getFullYear(), setDate.getMonth(), setDate.getDate());
+    var tienePasadas = false;
+    var tieneNoCorrelativa = false;
+    for (var j = 0; fecharArray.length > j; j++) {
+
+      if (fecharArray[j] < date) {
+
+        tienePasadas = true;
+      }
+      for (var k = j + 1; fecharArray.length > k; k++) {
+        if (fecharArray[j] >= fecharArray[k]) {
+          tieneNoCorrelativa = true;
+
+        }
+      }
     }
+
+
+    if (tieneNoCorrelativa) {
+      validacion += "Las fechas deben ser correlativas y no se pueden repetir."
+   
+    }
+    if (tienePasadas) {
+      validacion += "No pueden elegir fechas pasadas."
+    }
+
+
+
+    var cantidadEntrega = $("input[id='cantidadEntrega']").map(function () {
+      if ($(this).val() == '') {
+        validacion += "Debe completar todas las cantidades. \n"
+      }
+      return $(this).val();
+    }).get();
+
+
+      
+
+
+
+
+
+
+
+
+
+
     if (validacion == "") {
       var maximumDate = max_date(fecharArray);
       var minimumDate = min_date(fecharArray);
@@ -215,6 +265,8 @@ function limpiarForm(){
   $('#beneficiarioSelect').val('-1');
   $('#productoSelect').val('-1');
   $('#tratamientoAlta').val('');
+  $('#buscarBeneficiario').val('');
+  $("#beneficiario").html("");
 
   var html = '<div>';
       html +='<p><div>Fecha : <input type="date" id="fechaEntrega" name="fechaEntrega[]" value=""/>Cantidad : <input type="number" id="cantidadEntrega" name="cantidadEntrega[]" value=""/></div></p>';
@@ -255,6 +307,9 @@ function altaOrdenResponse(data){
     return min_dt;
   }
 </script>
+<style>
+
+</style>
 <!--MODAL DE ALTA-->
 <div class="modal fade" id="InsertModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-xl" role="document">
@@ -268,28 +323,36 @@ function altaOrdenResponse(data){
         <div class="modal-body">
             <form>
               <input type="hidden" class="form-control" id="idAlta">
-              <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Beneficiario:</label>
-                  <select id="beneficiarioSelect">
-                      <option value="-1" selected>Debe seleccionar un Beneficiario  ----></option>
-                  </select>
+              <div class="form-group"  >
+                  <label for="recipient-name" class="col-form-label"><h4>1 - Seleccione el Beneficiario</h4></label>
+                  <input type="text" id="buscarBeneficiario" name="buscarBeneficiario" class="form-control"    placeholder="Nombre, Apellido o DNI del Beneficiario" >
+
+                  <div id="beneficiariosList" style="position: absolute;">
+
+                  </div>
+                  <br>
+                  
+                  <h4 id="beneficiario"></h4>
+                  <hr/>
+                  <input type="hidden" id="beneficiarioSelect">
+                  <!--
+                    <select id="beneficiarioSelect">
+                      <option value="-1" selected>Debe seleccionar un Beneficiario  </option>
+                  </select>-->
                 </div>
   
                 <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Producto:</label>
-                  <select id="productoSelect">
-                    <option value="-1" selected>Debe seleccionar un producto    ----></option>
+                  <label for="recipient-name" class="col-form-label"><h4>2 - Seleccione el producto</h4></label><br>
+                  <select id="productoSelect" >
+                    <option value="-1" selected>Debe seleccionar un producto --------------------------------------------------------------------------------------->                           </option>
                   </select>
                 </div>
   
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Observaciones</label>
-                <input type="text" class="form-control" id="tratamientoAlta" >
-              </div>
 
 
+                <hr/>
               <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Entergas <a href="javascript:void(0);" class="add_button" title="Agregar">(+)</a> </label> 
+              <label for="recipient-name" class="col-form-label"> <h4>3 - Entergas</h4> <a href="javascript:void(0);" class="add_button" title="Agregar">(+)</a> </label> 
               <div class="field_wrapper">
                   <div>
                       <p><div>Fecha : <input type="date" id="fechaEntrega" name="fechaEntrega[]" value=""/>Cantidad : <input type="number" id="cantidadEntrega" name="cantidadEntrega[]" value=""/></div></p>
@@ -299,8 +362,11 @@ function altaOrdenResponse(data){
                 <div id="entegasAlta">
 
                 </div>
-    
-    
+                <hr/>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label"><h4> Observaciones</h4></label>
+                  <input type="text" class="form-control" id="tratamientoAlta" >
+                </div>
     
               </div>
             </form>
@@ -341,6 +407,26 @@ function altaOrdenResponse(data){
           });
         });        
    
+appendTo: "#someElem"
+        $(document).on('focus', '#buscarBeneficiario', function () {
+
+          $(this).autocomplete({
+            appendTo: "#beneficiariosList",
+            //source have a url of a service
+            source: 'getOrdenByBusqueda',
+            select: function (event, ui) {
+              event.preventDefault();
+              $("#beneficiarioSelect").val(ui.item.value);
+              $("#buscarBeneficiario").val("");
+              $("#beneficiario").html(ui.item.label);
+              // alert(ui.item.value); // start an alert which contains the value of proposal
+              //this.value = ui.item.label;
+              //generarGrillaByBenef(ui.item.value);
+              //$(this).val(ui.item.label); con esto seteo que se quede o no el label en el campo
+            },
+            minLength: 1//min = 2 characters
+          });
+        });           
         
 
         for(var i= 0;i<productosAlta.length;i++ ){

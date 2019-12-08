@@ -317,16 +317,15 @@
 
                 <table>
                   <tr>
-                      <td style="width: 300px">
-                          <h5>Beneficiario: <%= retiroDia[i].beneficiario.nombre %> <%= retiroDia[i].beneficiario.apellido %>  <br>
-                            
-                            Telefono: <%= retiroDia[i].beneficiario.telefono %><br>
-                            DNI: <%=retiroDia[i].beneficiario.dni %>  <br><br>
-                            Producto: <%=retiroDia[i].productoNombre %>  <br>
+                      <td style="width: 800px">
+                          <h5>Beneficiario <br>
+                            Nombre y Apellido: <%= retiroDia[i].beneficiario.nombre %> <%= retiroDia[i].beneficiario.apellido %>  Telefono: <%= retiroDia[i].beneficiario.telefono %> DNI: <%=retiroDia[i].beneficiario.dni %>  <br>
+                            Producto: <%=retiroDia[i].productoNombre %> Cantidad: <%= retiroDia[i].cantidadEntrgar %> 
+
                            <!-- Tratamiento: <%=retiroDia[i].descripcion %>  <br>-->
-                            Estado: <%=retiroDia[i].entregaEstado %></h5>
+                            
                       </td>
-                      <td style="vertical-align: top;padding-left: 40px">
+                      <td style="vertical-align: top;padding-left:30%">
                         <button type="button" class="btn btn-info" onclick="javascript:verEntrega(<%= retiroDia[i].idEntrega%>)" style="height: 70px;width: 100px;">Ver detalle</button>
                             
                       </td>
