@@ -267,8 +267,7 @@ CREATE TABLE `usuario_roles` (
 -- Indices de la tabla `autorizado`
 --
 ALTER TABLE `autorizados`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `dni_UNIQUE` (`DNI`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `beneficiario`

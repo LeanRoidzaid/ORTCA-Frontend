@@ -36,7 +36,7 @@ router.post('/insertar', auth,async function(req, res,next) {
 router.post('/insertarAutorizado', auth,async function(req, res,next) {
 
   try{
-    await beneficiario.insertarAutorizado(req.body);
+    await await beneficiario.insertarAutorizado(req.body);
     res.json({});
   }catch(error)
   {
