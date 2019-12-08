@@ -150,7 +150,7 @@ exports.obtenerOrdenesById = async function(idOrden){
 }
 
 exports.obtenerAutorizados = async function(idBenef){
-    return beneAutoriz.findAll({ where:{ id_beneficiario: idBenef},
+    return await beneAutoriz.findAll({ where:{ id_beneficiario: idBenef},
         include: [{
             model: autorizados
         } ]      });
@@ -246,9 +246,26 @@ exports.obtenerEntregasId= async function(idEntrega){
             entregaRet.orden.push({idEntrega:entrega.id,idOrden:entrega.idOrden, descripcion:orden[0].descTratamiento,beneficiario:orden[0].beneficiario,cantidad: entrega.cantidad,productoEntrga: producto,entregaEstado: entrega.estadoEntrega});
     };
 
-    var autocur = await exports.obtenerAutorizados(orden[0].idBeneficiario);
+
+
+
+    
+    
+    
+    
+    var autocur = await sequelize.query("SELECT * FROM DB_ELAISS.BENEFICIARIO_AUTORIZADO BENEF INNER JOIN DB_ELAISS.AUTORIZADOS AUT ON (BENEF.ID_AUTORIZADO=AUT.ID) WHERE BENEF.ID_BENEFICIARIO="+orden[0].idBeneficiario, { type: Sequelize.QueryTypes.SELECT});
+    
+
+
+
+
+    
+
+    //var autocur = await exports.obtenerAutorizados(orden[0].idBeneficiario);
     for(const autorizado of autocur){
-        entregaRet.autorizados.push ({nombre: autorizado.autorizados[0].nombre,apellido:autorizado.autorizados[0].apellido,dni:autorizado.autorizados[0].dni,telefono: autorizado.autorizados[0].telefono});
+      
+            entregaRet.autorizados.push ({nombre: autorizado.nombre,apellido:autorizado.apellido,dni:autorizado.DNI,telefono:autorizado.telefono});
+
     }
     
 

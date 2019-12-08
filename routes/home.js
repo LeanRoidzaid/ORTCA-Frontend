@@ -7,8 +7,16 @@ var router = express.Router();
 
 router.get('/autorizadosById', async function(req, res, next) {
 
+ 
+try{
     var response = await ordenes.obtenerEntregasId(req.query.id);
     res.send(response);
+}catch(err){
+    next(err);
+}
+    
+    
+    
     
 
 });
