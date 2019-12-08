@@ -9,3 +9,9 @@ npm-debug.log
 ~/.vscode-root/GPUCache/*
 ~/.vscode-root/Backups/c8af539cd763f1c7c45b33fa99a6801d/file/.c12f20acd85a7aaa8e6d65dc0114421a.swp
 ~/.vscode-root/Cache/047afb5f73a81c81_0
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace

@@ -1,5 +1,8 @@
 
 <%- contentFor('body') %>
+<% if(Rol.length==1 && Rol[0].rol==4 ){ %>
+  <h5  > Panel Administrador de ELAISS</h5>
+ <% }else{ %>
 <link type="text/css" rel="stylesheet" href="/stylesheets/jsgrid.min.css" />
 <link type="text/css" rel="stylesheet" href="/stylesheets/jsgrid-theme.min.css" />
     
@@ -30,7 +33,8 @@
     function entregoOk(data){
       if(!data.err){
         $('#retiroModal').modal('hide');
-        location.reload(); 
+        window.location.href = "/";
+        //location.reload(true); 
       }else{
         alert(data.err);
       }
@@ -84,6 +88,7 @@
         $('#descripcionProducto').html(data.orden[0].productoEntrga[0].nombre);
         $('#codBar').html(data.orden[0].productoEntrga[0].codbar);
         $('#cantidadDisponible').html(data.orden[0].productoEntrga[0] .cantDisp);
+        $('#cantidadRetiro').html(data.orden[0].cantidad);
         idEntrega = data.orden[0].idEntrega;
 
 
@@ -221,8 +226,8 @@
     -->
     </tr>
     <tr>
-        <td style="width: 300px">
-          <table>
+        <td style="width: 300px;vertical-align: top" >
+          <table >
             <tr>
               <td style="width: 500px">
                  
@@ -241,13 +246,71 @@
 
 
 
-                         <h5 class="card-title"><h1 class="display-1 text-center"><%=pendientes%></h1></h5>
-                        <p class="card-text text-center" ><strong><%= new Date().toLocaleString() %></strong></p>
+                        <h5 class="card-title"><h1 class="display-1 text-center"><%=pendientes%></h1></h5>
+                        <p class="card-text text-center" ><strong><%
+                          var f = new Date();
+                          var fecha = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+                          %><%=fecha%></strong></p>
                       </div>
                     
                   </div>
               </td>
             </tr>
+            <tr>
+                <td style="width: 500px">
+                   
+                    <div class="card border-primary mb-3" style="max-width: 18rem;">
+                        <div class="card-header text-center"><b>Productos</b></div>
+                        <div class="card-body text-primary">
+                         <!--
+                         <%= JSON.stringify(productosStock)%>
+                         <%= JSON.stringify(retiroDia)%>
+                         -->
+                          <% 
+
+                          for(var k=0; k < productosStock.length; k++){
+                            var idproducto =productosStock[k].id;
+                            var descProducto = productosStock[k].nombre;
+                            var cantidad=productosStock[k].cantDisp;
+                            console.log(productosStock[k].cantDisp);
+                            var pendientes = 0;
+                            for(var i=0; i < retiroDia.length; i++) {
+                              if(retiroDia[i].idproducto ==idproducto){
+                                
+                                cantidad=cantidad - retiroDia[i].cantidadEntrgar;
+                                console.log(cantidad);
+                              }
+
+
+                            }
+                            var background = "success";
+                            if(cantidad<1){
+                                background="danger";
+                               }
+                     
+                              %>
+                              <div class="p-1 mb-2 bg-<%=background%> text-white"><%=descProducto %><br> - Stock: <%=productosStock[k].cantDisp %> <br> - Disponible: <%=cantidad%><br> - Reservadas para hoy: <%=productosStock[k].cantDisp-cantidad%></div>
+                            <%
+                           
+
+                          }
+                            
+                 
+
+                            %>
+  
+  
+  
+                          <h5 class="card-title"><h1 class="display-1 text-center"></h1></h5>
+       <!--                   <p class="card-text text-center" ><strong><%
+                            var f = new Date();
+                            var fecha = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+                            %><%=fecha%></strong></p>-->
+                        </div>
+                      
+                    </div>
+                </td>
+              </tr>            
           </table>
         </td>
         <td style="vertical-align: top;"  >
@@ -258,15 +321,15 @@
 
                 <table>
                   <tr>
-                      <td>
-                          <h5>Nombre: <%= retiroDia[i].beneficiario.nombre %> <br>
-                            Apellido: <%= retiroDia[i].beneficiario.apellido %> <br> 
-                            Telefono: <%= retiroDia[i].beneficiario.telefono %><br>
-                            DNI: <%=retiroDia[i].beneficiario.dni %>  <br><br>
-                            Tratamiento: <%=retiroDia[i].descripcion %>  <br>
-                            Estado: <%=retiroDia[i].entregaEstado %></h5>
+                      <td style="width: 800px">
+                          <h5>Beneficiario <br>
+                            Nombre y Apellido: <%= retiroDia[i].beneficiario.nombre %> <%= retiroDia[i].beneficiario.apellido %>  Telefono: <%= retiroDia[i].beneficiario.telefono %> DNI: <%=retiroDia[i].beneficiario.dni %>  <br>
+                            Producto: <%=retiroDia[i].productoNombre %> Cantidad: <%= retiroDia[i].cantidadEntrgar %> 
+
+                           <!-- Tratamiento: <%=retiroDia[i].descripcion %>  <br>-->
+                            
                       </td>
-                      <td style="vertical-align: top;padding-left: 40px">
+                      <td style="vertical-align: top;padding-left:30%">
                         <button type="button" class="btn btn-info" onclick="javascript:verEntrega(<%= retiroDia[i].idEntrega%>)" style="height: 70px;width: 100px;">Ver detalle</button>
                             
                       </td>
@@ -280,33 +343,7 @@
            <% }  %>
 
         </td>
-        <!--
-        <td>
-              <div class="alert alert-warning" role="alert">
-                  Beneficiario: Florencia de la Vega - Producto: Pastillas anticonceptivas
-                </div>
-                <div class="alert alert-warning" role="alert">
-                  Beneficiario: Florencia de la Vega - Producto: Pastillas anticonceptivas
-                </div>
-                <div class="alert alert-warning" role="alert">
-                  Beneficiario: Florencia de la Vega - Producto: Pastillas anticonceptivas
-                </div>
-                <div class="alert alert-warning" role="alert">
-                  Beneficiario: Florencia de la Vega - Producto: Pastillas anticonceptivas
-                </div>
-        </td>
-        <td>
-            <div class="alert alert-success" role="alert">
-                Producto: Pastillas anticonceptivas - Nivel: Ok
-              </div>
-              <div class="alert alert-warning" role="alert">
-                Producto: Pastillas anticonceptivas - Nivel: Ok Demanda cubierta 
-              </div>
-              <div class="alert alert-danger" role="alert">
-                Producto: Pastillas anticonceptivas - Nivel: Insuficiente stock para cubrir la demanda
-              </div>
-        </td>-->
-  
+
       </tr>
 
 
@@ -359,7 +396,7 @@ $(document).ready(function() {
                 <tr>
                   <th scope="row">Numero Orden</th>
                   <td><div id="idOrden"></div></td>
-                  <th scope="row">Descripcion</th>
+                  <th scope="row">Observacion</th>
                   <td ><div id="descripcionOrden"></div></td> 
                   <th scope="row">Estado</th>
                   <td colspan="4"><div id="estadoEntrega"></div></td>                   
@@ -380,8 +417,11 @@ $(document).ready(function() {
                     <td><div id="descripcionProducto"></div></td> 
                     <th scope="row">codBar</th>
                     <td><div id="codBar"></div></td>
+                    <!--
                     <th scope="row">Catidad Disponible</th>
-                    <td colspan="4"><div id="cantidadDisponible"></div></td>          
+                    <td colspan="4"><div id="cantidadDisponible"></div></td>      -->
+                    <th scope="row">Catidad Retiro</th>
+                    <td colspan="4"><div id="cantidadRetiro"></div></td>     
                                            
                   </tr>                
             </tbody>
@@ -403,3 +443,4 @@ $(document).ready(function() {
       </div>
     </div>
   </div>
+  <% } %>

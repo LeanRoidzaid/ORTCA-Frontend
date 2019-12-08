@@ -24,7 +24,10 @@ exports.insertarMovimiento = function(movimiento){
 exports.egreso = async function(codbar,cantidad){
 
     let producto = await this.buscarProducto(codbar);
-    producto.cantDisp = producto.cantDisp - cantidad;
+    producto.cantDisp = producto.cantDisp + cantidad;
+    if(producto.cantDisp<0){
+        throw (new Error("Stock Insuficiente."))
+    }
     
     result = await this.updateDisponible(producto)
  
@@ -40,7 +43,7 @@ exports.egreso = async function(codbar,cantidad){
                          cantUnidades: cantidad,
                          idUsuario: 1}
 
-    return this.insertarMovimiento(movimiento)
+    return await this.insertarMovimiento(movimiento)
 
 }
 
@@ -57,4 +60,7 @@ exports.buscarProducto = async function(codbar){
         where: {codbar: codbar}}
 
     )
+}
+exports.obtenerProductos = async function(){
+    return await PRODUCTOS.findAll();
 }

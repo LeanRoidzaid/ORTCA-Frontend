@@ -1,113 +1,508 @@
-<%- contentFor('body') %> 
+<%- contentFor('body') %>
+<style>
+  .container {
+
+    padding-top: 20px !important;
+    padding-right: 0px !important;
+    padding-left: 60px !important;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    padding-bottom: 0px !important;
+
+  }
+
+  .dahsboard {
+    width: 1600px !important;
+
+  }
+</style>
 <script type="text/javascript" src="../javascripts/ordenes/funciones.js"></script>
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid.min.css" />
+<link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid-theme.min.css" />
+
+<script type="text/javascript" src="../javascripts/jsgrid/jsgrid.min.js"></script>
+
+<h2>Ordenes</h2>
+
+<p style="padding-left: 1400px">
+  <button type="button" class="btn-primary" value="Nueva Orden" onclick="javascript:DetalleOrden(0);"
+    style="width: 100px;height:30px ">Nueva </button>
+</p>
+  
+<p>
+  <input type="text" id="buscarOrden" name="buscarOrden" class="form-control"    placeholder="Nombre, Apellido o DNI del Beneficiario">
+</p>
+
+
+
+<div id="jsGrid"></div>
+
+<!--MODAL DE EDIT Y VER USUARIO-->
+<div class="modal fade" id="DetalleModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog  modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="RolesModalLabel">Detalle de la Orden</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="recipient-name" class="col-form-label"><h5> Nro Orden</h5></label>
+              <input type="text" class="form-control" id="id">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="recipient-name" class="col-form-label"><h5>Vigencia</h5></label>
+              <input type="text" class="form-control" id="vigencia">
+            </div>
+            <div class="form-group col-md-4">
+              &nbsp;
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label"><h5>Producto</h5></label>
+            <input type="text" class="form-control" id="producto">
+          </div>
+
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="recipient-name" class="col-form-label"><h5> Datos del Beneficiario</h5></label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+
+              <label for="recipient-name" class="col-form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="recipient-name" class="col-form-label">Apellido</label>
+              <input type="text" class="form-control" id="apellido">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="recipient-name" class="col-form-label"> DNI</label>
+              <input type="text" class="form-control" id="dni">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="recipient-name" class="col-form-label"><h5>Autorizados</h5></label>
+              <div id="jsGridAutorizados"></div>
+            </div>
+          </div>
+
+
+
+
+
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label"><h5> Entergas</h5></label>
+            <div id="jsGridEntregas"></div>
+
+
+
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label"><h5> Observaciones</h5></label>
+            <input type="text" class="form-control" id="tratamiento">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
+  function crearOrden() {
+    var validacion = "";
+    var idBeneficiario = $('#beneficiarioSelect').val();
+    var idProducto = $('#productoSelect').val();
+    var tratamiento = $('#tratamientoAlta').val();
+
+    if (idBeneficiario == -1) {
+      validacion+= "Debe seleccionar un Beneficiario. \n";
+
+    }
+    if (idProducto == -1) {
+      validacion+= "Debe seleccionar un Producto. \n";
+
+    }
+
+      var fechaAnt;
+      var fecharArray = [];
+      var date = new Date();
+      var fechaEntrega = $("input[id='fechaEntrega']").map(function () {
+        if ($(this).val() != '') {
+
+          var fecha = $(this).val().split('-');
+
+          fecharArray.push(new Date(fecha[0], fecha[1] - 1, fecha[2]));
+          fechaAnt=fecha;
+          return $(this).val();
 
 
-    $(document).ready(function() {  
+
+
+        } else {
+          validacion += "Debe completar todos los campos fecha \n"
+        }
+      }).get();
+
+
+    var setDate = new Date()
+    var date = new Date(setDate.getFullYear(), setDate.getMonth(), setDate.getDate());
+    var tienePasadas = false;
+    var tieneNoCorrelativa = false;
+    for (var j = 0; fecharArray.length > j; j++) {
+
+      if (fecharArray[j] < date) {
+
+        tienePasadas = true;
+      }
+      for (var k = j + 1; fecharArray.length > k; k++) {
+        if (fecharArray[j] >= fecharArray[k]) {
+          tieneNoCorrelativa = true;
+
+        }
+      }
+    }
+
+
+    if (tieneNoCorrelativa) {
+      validacion += "Las fechas deben ser correlativas y no se pueden repetir."
+   
+    }
+    if (tienePasadas) {
+      validacion += "No pueden elegir fechas pasadas."
+    }
+
+
+
+    var cantidadEntrega = $("input[id='cantidadEntrega']").map(function () {
+      if ($(this).val() == '') {
+        validacion += "Debe completar todas las cantidades. \n"
+      }
+      return $(this).val();
+    }).get();
+
+
+      
+
+
+
+
+
+
+
+
+
+
+    if (validacion == "") {
+      var maximumDate = max_date(fecharArray);
+      var minimumDate = min_date(fecharArray);
+      var orden = {idBeneficiario:idBeneficiario, fechaInicio:minimumDate,fechaFin:maximumDate ,idProducto:idProducto,descTratamiento:tratamiento,fechasEntregas:fechaEntrega,cantidadEntregas:cantidadEntrega};
+      $.ajax({
+
+        url: 'http://localhost:3000/ordenes/alta',
+        type: 'POST',
+        data: {
+          'Orden': JSON.stringify(orden)
+        },
+        dataType: 'json',
+        success: altaOrdenResponse,
+        error: function (request, error) {
+          alert("Error: " +request.responseText);
+        }
+      });
+
+      
+
+
+    }
+    else {
+      alert(validacion);
+    }
+
+
+
+
+  }
+
+function limpiarForm(){
+  $('#beneficiarioSelect').val('-1');
+  $('#productoSelect').val('-1');
+  $('#tratamientoAlta').val('');
+  $('#buscarBeneficiario').val('');
+  $("#beneficiario").html("");
+
+  var html = '<div>';
+      html +='<p><div>Fecha : <input type="date" id="fechaEntrega" name="fechaEntrega[]" value=""/>Cantidad : <input type="number" id="cantidadEntrega" name="cantidadEntrega[]" value=""/></div></p>';
+      html +='</div>';
+  $('.field_wrapper').html(html);
+}
+
+function altaOrdenResponse(data){
+  limpiarForm();
+  $('#InsertModal').modal('hide');
+  generarGrilla();
+
+
+}
+
+
+
+  function min_date(all_dates) {
+    var min_dt = all_dates[0],
+      min_dtObj = new Date(all_dates[0]);
+    all_dates.forEach(function (dt, index) {
+      if (new Date(dt) < min_dtObj) {
+        min_dt = dt;
+        min_dtObj = new Date(dt);
+      }
+    });
+    return min_dt;
+  }
+  function max_date(all_dates) {
+    var min_dt = all_dates[0],
+      min_dtObj = new Date(all_dates[0]);
+    all_dates.forEach(function (dt, index) {
+      if (new Date(dt) > min_dtObj) {
+        min_dt = dt;
+        min_dtObj = new Date(dt);
+      }
+    });
+    return min_dt;
+  }
+</script>
+<style>
+
+</style>
+<!--MODAL DE ALTA-->
+<div class="modal fade" id="InsertModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="RolesModalLabel">Nueva Orden</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+              <input type="hidden" class="form-control" id="idAlta">
+              <div class="form-group"  >
+                  <label for="recipient-name" class="col-form-label"><h4>1 - Seleccione el Beneficiario</h4></label>
+                  <input type="text" id="buscarBeneficiario" name="buscarBeneficiario" class="form-control"    placeholder="Nombre, Apellido o DNI del Beneficiario" >
+
+                  <div id="beneficiariosList" style="position: absolute;">
+
+                  </div>
+                  <br>
+                  
+                  <h4 id="beneficiario"></h4>
+                  <hr/>
+                  <input type="hidden" id="beneficiarioSelect">
+                  <!--
+                    <select id="beneficiarioSelect">
+                      <option value="-1" selected>Debe seleccionar un Beneficiario  </option>
+                  </select>-->
+                </div>
+  
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label"><h4>2 - Seleccione el producto</h4></label><br>
+                  <select id="productoSelect" >
+                    <option value="-1" selected>Debe seleccionar un producto --------------------------------------------------------------------------------------->                           </option>
+                  </select>
+                </div>
+  
+
+
+                <hr/>
+              <div class="form-group">
+              <label for="recipient-name" class="col-form-label"> <h4>3 - Entergas</h4> <a href="javascript:void(0);" class="add_button" title="Agregar">(+)</a> </label> 
+              <div class="field_wrapper">
+                  <div>
+                      <p><div>Fecha : <input type="date" id="fechaEntrega" name="fechaEntrega[]" value=""/>Cantidad : <input type="number" id="cantidadEntrega" name="cantidadEntrega[]" value=""/></div></p>
+                      
+                  </div>
+              </div>
+                <div id="entegasAlta">
+
+                </div>
+                <hr/>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label"><h4> Observaciones</h4></label>
+                  <input type="text" class="form-control" id="tratamientoAlta" >
+                </div>
+    
+              </div>
+            </form>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="crearOrden();">Crear</button>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  
+  </div>
+  <script>
+
+    var productosAlta = <%-JSON.stringify(productos) %>;
+    var beneficiariosAlta = <%-JSON.stringify(beneficiarios) %>;
+    
+
+    
+      $(document).ready(function () {
+    
+        $(document).on('focus', '#buscarOrden', function () {
+
+          $(this).autocomplete({
+            //source have a url of a service
+            source: 'getOrdenByBusqueda',
+            select: function (event, ui) {
+            event.preventDefault();
+            // alert(ui.item.value); // start an alert which contains the value of proposal
+            //this.value = ui.item.label;
+            generarGrillaByBenef(ui.item.value);
+            $(this).val(ui.item.label);
+            },
+            minLength: 1//min = 2 characters
+          });
+        });        
+   
+appendTo: "#someElem"
+        $(document).on('focus', '#buscarBeneficiario', function () {
+
+          $(this).autocomplete({
+            appendTo: "#beneficiariosList",
+            //source have a url of a service
+            source: 'getOrdenByBusqueda',
+            select: function (event, ui) {
+              event.preventDefault();
+              $("#beneficiarioSelect").val(ui.item.value);
+              $("#buscarBeneficiario").val("");
+              $("#beneficiario").html(ui.item.label);
+              // alert(ui.item.value); // start an alert which contains the value of proposal
+              //this.value = ui.item.label;
+              //generarGrillaByBenef(ui.item.value);
+              //$(this).val(ui.item.label); con esto seteo que se quede o no el label en el campo
+            },
+            minLength: 1//min = 2 characters
+          });
+        });           
+        
+
+        for(var i= 0;i<productosAlta.length;i++ ){
+    
+          $('#productoSelect').append('<option value="'+productosAlta[i].id+'">Producto: '+productosAlta[i].nombre+' - CODBAR: '+ productosAlta[i].codbar +'  </option>'); 
+        } 
+        for(var i= 0;i<beneficiariosAlta.length;i++ ){
+    
+          $('#beneficiarioSelect').append('<option value="'+beneficiariosAlta[i].id+'">Nombre: '+beneficiariosAlta[i].nombre+' - Apellido: '+ beneficiariosAlta[i].nombre+'  DNI: '+beneficiariosAlta[i].dni+' </option>'); 
+        } 
+    
+        $("#InsertModal").on("show.bs.modal", function () {
+            limpiarForm();
+        });
+    
+       
     
     
+        generarGrilla();
     
-        /*
     
+        var maxField = 10; //Input fields increment limitation
+        var addButton = $('.add_button'); //Add button selector
+        var wrapper = $('.field_wrapper'); //Input field wrapper
+        var fieldHTML = '<p><div>Fecha : <input type="date" id="fechaEntrega"  name="fechaEntrega[]" value=""/>'; //New input field html 
+        fieldHTML += ' Cantidad : <input type="number" name="cantidadEntrega[]" id="cantidadEntrega" value=""/><a href="javascript:void(0);" class="remove_button">(-)</a></div></p>'; //New input field html 
+        //alert(fieldHTML);
+        var x = 1; //Initial field counter is 1
+        
+        //Once add button is clicked
+        $(addButton).click(function(){
+            //Check maximum number of input fields
+            if(x < maxField){ 
+                x++; //Increment field counter
+                $(wrapper).append(fieldHTML); //Add field html
+            }
+        });
+        
+        //Once remove button is clicked
+        $(wrapper).on('click', '.remove_button', function(e){
+            e.preventDefault();
+            $(this).parent('div').remove(); //Remove field html
+            x--; //Decrement field counter
+        });
+    
+      });
+      function generarGrilla(){
         $.ajax({
     
-                url : 'http://localhost:3000/usuarios/all',
-                type : 'GET',
-                data : {
-                    'numberOfWords' : 10
-                },
-                dataType:'json',
-                success : bindData,
-                error : function(request,error)
-                {
-                    alert("Request: "+JSON.stringify(request));
-                }
-            });
+          url: 'http://localhost:3000/ordenes/all',
+          type: 'GET',
+          data: {
+            'numberOfWords': 10
+          },
+          dataType: 'json',
+          success: bindData,
+          error: function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+          }
+        });
     
-        */
-
-
-        var ordenes = [
-            { "Beneficiario": "Ruiz Pablo", "medico": "Otto Clay", "Estado": "Activa" , "Producto": "Leche la Serenisima", "FVigencia": "10/09/2019 al 10/03/2020"},
-            { "Beneficiario": "D. A Maradona", "medico": "Connor Johnston","Estado": "Activa" , "Producto": "Pastillas Anticonceptivas", "FVigencia": "10/09/2019 al 10/03/2020"},
-            { "Beneficiario": "G Suller", "medico": "Lacey Hess","Estado": "Activa" , "Producto": "Leche la Serenisima", "FVigencia": "10/09/2019 al 10/03/2020"},
-            { "Beneficiario": "M Botana", "medico": "Timothy Henson","Estado": "Activa" , "Producto": "Pastillas Anticonceptivas", "FVigencia": "10/09/2019 al 10/03/2020"},
-            { "Beneficiario": "R Arias","medico": "Ramona Benton", "Estado": "Activa" , "Producto": "Leche la Serenisima", "FVigencia": "10/09/2019 al 10/03/2020"},
-        ];
-        
-        bindData(ordenes);
-       
-    });
-        </script>
-        
-        
-       
-        
-        <link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid.min.css" />
-        <link type="text/css" rel="stylesheet" href="../stylesheets/jsgrid-theme.min.css" />
-            
-        <script type="text/javascript" src="../javascripts/jsgrid/jsgrid.min.js"></script>
-        
-        <h2>Ordenes</h2>
-        <br>
-        <div id="jsGrid" ></div>
-        
-<!--MODAL DE EDIT Y VER USUARIO-->
-<div class="modal fade" id="DetalleModal" tabindex="-1" role="dialog" aria-labelledby="RolesModalLabel" aria-hidden="true">
-                <div class="modal-dialog  modal-xl" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="RolesModalLabel">Detalle de la Orden</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form>
-                            <input type="hidden" class="form-control" id="id" >
-                        <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Beneficiario:</label>
-                          <input type="text" class="form-control" id="beneficiario" value="Beneficiario 1">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Medico:</label>
-                                <input type="text" class="form-control" id="medico" value="Medico 1">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Estado:</label>
-                                <input type="text" class="form-control" id="estado" value="Pendiente">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Producto:</label>
-                                <input type="text" class="form-control" id="producto" value="Leche">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Fecha de Vigencia desde:</label>
-                                <input type="text" class="form-control" id="fdesde" value="21/10/2019">
-                        </div>
-                        <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Fecha de Vigencia hasta:</label>
-                                <input type="text" class="form-control" id="fhasta" value="21/11/2019">
-                        </div>
-                        <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Entergas</label>
-                        <div id="jsGridEntregas" ></div>
-
-                                
-        
-                        </div>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                      <button type="button" class="btn btn-primary" onclick="actualizar();">Actualizar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        
-        <script>
-        
-        </script>
-        
-        
+      }
+      function generarGrillaByBenef(id){
+        $.ajax({
+    
+          url: 'http://localhost:3000/ordenes/byIdBeneficiario',
+          type: 'GET',
+          data: {
+            'idBeneficiario': id
+          },
+          dataType: 'json',
+          success: bindData,
+          error: function (request, error) {
+            alert("Request: " + JSON.stringify(request));
+          }
+        });
+    
+      }
+    </script>

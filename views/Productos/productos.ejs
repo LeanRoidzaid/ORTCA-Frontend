@@ -1,0 +1,168 @@
+<%- contentFor('body') %>
+
+<script>
+function crearMovimiento(idproducto){
+    $('#MovimientoModal').modal();
+    $('#tipoMovimiento').val(0);
+    $('#id').val(idproducto);
+
+    $('#cantidad').val("");
+
+}
+function gererarMovimiento(idproducto){
+   
+    var coef = $('#tipoMovimiento').val();
+    var cant = $('#cantidad').val();
+    var idproducto = $('#id').val();
+    var cantidadMovimiento = parseInt(coef)*parseInt(cant);
+    if(coef==0||cant ==""||cant<1 ){
+        alert("Debe seleccionar un tipo de movimiento, e ingresar una cantidad valida mayor a cero")
+    }else{
+
+        $.ajax({
+
+            url: 'http://localhost:3000/productos/generarMovimiento',
+            type: 'POST',
+            data: {
+                'idproducto': idproducto,
+                'cantidad': cantidadMovimiento,
+
+            },
+            dataType: 'json',
+            success: function (data) {
+               
+                    alert("Movimiento relizado de forma exitosa.");
+                    location.reload(true);
+              
+
+
+                
+
+
+
+            },
+            error: function (request, error) {
+                //alert("Request: "+JSON.stringify(request.responseText)+"  "+error+"  "+request);
+                if (typeof  request.responseJSON.error === undefined) {
+                alert("Error al genear movimiento de producto");
+                }
+                else{
+                    alert(request.responseJSON.error);
+                    location.reload(true);
+                }
+
+
+            }
+        });
+
+
+
+    }
+
+
+
+
+
+}
+</script>
+<style>
+        .container {
+      
+          padding-top: 20px !important;
+          padding-right: 0px !important;
+          padding-left: 60px !important;
+          margin-right: 0px !important;
+          margin-left: 0px !important;
+          padding-bottom: 0px !important;
+      
+        }
+      
+        .dahsboard {
+          width: 1600px !important;
+      
+        }
+</style>
+
+<div id="contenedor">
+
+  <p>  <h4>Gestion de Productos</h4></p>
+        <% 
+
+        for(var k=0; k < productosStock.length; k++){
+          var idproducto =productosStock[k].id;
+          var descProducto = productosStock[k].nombre;
+          var cantidad=productosStock[k].cantDisp;
+          console.log(productosStock[k].cantDisp);
+          var pendientes = 0;
+          
+      
+
+   
+            %>
+            <div class="p-1 mb-2 bg-info text-white">
+                <table>
+                    <tr>
+                        <td style="width: 900px;"><%=descProducto %><br>
+                            Codigo de origen :<%=productosStock[k].codOrigen %><br>
+                            N° Serie: <%=productosStock[k].nSerie %> 
+                        </td>
+                        
+                        
+                    </tr>
+                    <tr>
+                        <td colspan="2">Stock: <%=productosStock[k].cantDisp %> </td>
+                        
+                        <td><button type="button" class="btn btn-secondary" onclick="javascritp:crearMovimiento(<%=productosStock[k].codbar%>);">Generar Movimiento</button></td>
+                    </tr>
+                </table>
+                
+          
+                </div>
+          <%
+         
+
+        }
+          
+
+
+          %>
+
+
+</div>
+
+<div class="modal fade" id="MovimientoModal" tabindex="-1" role="dialog" aria-labelledby="MovimientoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="MovimientoModalLabel">Crear Movimiento</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                    <input type="hidden" class="form-control" id="id" >
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Tipo:</label>
+                  <select id="tipoMovimiento">
+                      <option value="0">Seleccione un tipo de movimiento</option>
+                      <option value="-1">Egreso</option>
+                      <option value="1">Ingreso</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">cantidad:</label>
+                        <input type="number" class="form-control" id="cantidad">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              
+              <button type="button" class="btn btn-primary" onclick="gererarMovimiento();">Generar Movimiento</button>
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+

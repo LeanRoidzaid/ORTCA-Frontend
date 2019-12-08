@@ -106,6 +106,53 @@ function actualizarRolUsuario(idusuario,rol,asigna,jwt){
       });    
   }
 }
+
+
+
+
+
+
+router.post('/recuperar', auth,async function(req, res,next) {
+  await request.post({
+    "headers": { "content-type": "application/json" },
+    "url":  config.Protocol + config.URLUsuarios+"/api/usuarios/cambiarPass/?token="+req.cookies['jwt'],
+    "body": JSON.stringify( req.body )
+    }, (error, response, body) => {
+        if(error) {
+            return console.dir(error);
+        }
+        else
+        {
+          console.log(body);
+          console.log(response);
+
+          res.send(response.body);
+        }
+
+    });
+
+});
+
+router.post('/eliminar', auth,async function(req, res,next) {
+  await request.post({
+    "headers": { "content-type": "application/json" },
+    "url":  config.Protocol + config.URLUsuarios+"/api/usuarios/eliminar/?token="+req.cookies['jwt'],
+    "body": JSON.stringify( req.body.id )
+    }, (error, response, body) => {
+        if(error) {
+            return console.dir(error);
+        }
+        else
+        {
+          console.log(body);
+          console.log(response);
+
+          res.send(response.body);
+        }
+
+    });
+
+});
 router.post('/actualizar', auth,async function(req, res,next) {
 
   req.body.pass='ABC!@#';
@@ -203,7 +250,7 @@ router.post('/insertar', auth,async function(req, res,next) {
  // res.cookie('jwt' ,'');
   //res.redirect('/');
   req.body.pass='ABC!@#';
-  req.body.fh_alta=Date.now();
+   req.body.fh_alta=Date.now();
   req.body.idCentro=1;
 
   await request.post({

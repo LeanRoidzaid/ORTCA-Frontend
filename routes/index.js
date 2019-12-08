@@ -1,7 +1,7 @@
 var express = require('express');
 var auth = require('../middlewares/session');
 var ordenes = require('../api/controllers/controller_ordenes');
-
+var productos = require('../api/controllers/controllers_productos');
 var router = express.Router();
 var jwt='asda';
 
@@ -9,9 +9,10 @@ var jwt='asda';
 router.get('/',auth, async function(req, res, next) {
   jwt=req.cookies['jwt'];
   var retiros = await ordenes.obtenerEntregasDia();
+  var productosList = await productos.obtenerProductos();
   
   console.log( JSON.stringify(retiros));
-  res.render('index', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol, retiroDia: retiros});
+  res.render('index', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol, retiroDia: retiros,  productosStock: productosList});
 });
 
 
@@ -48,9 +49,11 @@ router.get('/beneficiarios', auth,function(req, res, next) {
   res.render('Beneficiarios/beneficiarios', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol});
 });
 
-router.get('/ordenes', auth,function(req, res, next) {
+router.get('/ordenes', auth,async function(req, res, next) {
+  var productoList = await productos.obtenerProductos();
+  var beneficiariosList = await ordenes.obtenerBeneficiarios();
 
-  res.render('Ordenes/ordenes', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol});
+  res.render('Ordenes/ordenes', { title: 'Express',token: jwt,usuario:res.sessionUser.usuario,roles:res.sessionUser.roles.Rol, productos:productoList,beneficiarios: beneficiariosList});
 });
 
 

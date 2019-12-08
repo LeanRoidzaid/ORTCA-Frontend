@@ -5,29 +5,33 @@
   <meta charset="UTF-8">
   <title>ELAISS</title>
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-  
+  <link rel="stylesheet" type="text/css" href="/javascripts/jquery-validation/src/jquery-ui-1.12.1/jquery-ui.css">
   <script src="/js/jquery.min.js"></script>
   <script src="/js/jquery.js"></script>
   <script src="/js/bootstrap.min.js"></script>
- 
+  <script src="/javascripts/jquery-validation/src/jquery-ui-1.12.1/jquery-ui.js" ></script>
 
 </head>
 
 <body>
   <header>
+  <!--
+    ITEMS NO IMPLEMENTADOS AUN
+                        {NameItem: "Suspender Ordenes", url: "/",roles:"1"},
+                    {NameItem: "Realizar Entrega", url: "/",roles:"2"},
+                    {NameItem: "Suspender Ordenes", url: "/",roles:"3"},
+                    {NameItem: "Productos", url: "/",roles:"1,2,3,4"}
+
+  -->
   <%if (typeof token != 'undefined') {  %>
     <%if (token.length > 0) { 
       
       
     var DataMenu = [{NameItem: "Gestion de Usuarios", url: "/usuarios",roles:"4"},
-                    {NameItem: "Gestion de Beneficiarios", url: "/beneficiarios/",roles:"1,2,3,4"},
+                    {NameItem: "Gestion de Beneficiarios", url: "/beneficiarios/",roles:"1,2"},
+                    {NameItem: "Gestion de Productos", url: "/productos/",roles:"2"},
+                    {NameItem: "Gestion de Ordenes", url: "/ordenes/",roles:"2"}
                     
-                    {NameItem: "Gestion de Ordenes", url: "/ordenes/",roles:"2"},
-                    
-                    {NameItem: "Suspender Ordenes", url: "/",roles:"1"},
-                    {NameItem: "Realizar Entrega", url: "/",roles:"2"},
-                    {NameItem: "Suspender Ordenes", url: "/",roles:"3"},
-                    {NameItem: "Productos", url: "/",roles:"1,2,3,4"}
                     ];  
     
 
@@ -178,8 +182,11 @@
   </header>
 
   <main>
-    <div class="container">
-      <%- body %>
+    <div class="container" >
+        
+
+        <%- body %>
+
     </div>
   </main>
 

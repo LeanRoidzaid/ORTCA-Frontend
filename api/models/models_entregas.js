@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../../config/dbConnection');
 const Ordenes = require('./models_ordenes');
+const Producto = require('./models_productos');
 
 const Entregas = sequelize.define('entregas', {
      id: {type: Sequelize.INTEGER, primaryKey: true},
@@ -13,5 +14,6 @@ const Entregas = sequelize.define('entregas', {
      },{timestamps: false,freezeTableName: true
   });
 
-Entregas.hasOne(Ordenes, { foreignKey: 'id' })
+Entregas.belongsTo(Ordenes, { foreignKey: 'idOrden' })
+Entregas.belongsTo(Producto, { foreignKey: 'idProducto' })
 module.exports = Entregas; 
