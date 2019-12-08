@@ -11,6 +11,7 @@ var usersRouter = require('./routes/usuarios');
 var benefRouter = require('./routes/beneficiarios');
 var homeRouter  = require('./routes/home');
 var ordenesRouter  = require('./routes/ordenes');
+var productosRouter = require('./routes/productos');
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/usuarios', usersRouter);
 app.use('/beneficiarios',benefRouter);
 app.use('/home',homeRouter);
 app.use('/ordenes',ordenesRouter);
+app.use('/productos',productosRouter);
 
 app.use(exppress_session({
   secret: 'elaiss',

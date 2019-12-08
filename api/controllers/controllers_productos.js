@@ -40,7 +40,7 @@ exports.egreso = async function(codbar,cantidad){
                          cantUnidades: cantidad,
                          idUsuario: 1}
 
-    return this.insertarMovimiento(movimiento)
+    return await this.insertarMovimiento(movimiento)
 
 }
 

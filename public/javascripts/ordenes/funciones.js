@@ -387,7 +387,7 @@ function bindData(json){
         sorting: true,
         paging: true,
         autoload: true,
- 
+        
         pageSize: 10,
         pageButtonCount: 5,
         
