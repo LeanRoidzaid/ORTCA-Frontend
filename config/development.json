@@ -13,7 +13,7 @@
         "user": "elaiss_app",
         "password": "123456"
     },
-    "EnvioNotificaciones" : true
+    "EnvioNotificaciones" : false
 
 
 

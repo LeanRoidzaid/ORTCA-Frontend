@@ -25,6 +25,9 @@ exports.egreso = async function(codbar,cantidad){
 
     let producto = await this.buscarProducto(codbar);
     producto.cantDisp = producto.cantDisp + cantidad;
+    if(producto.cantDisp<0){
+        throw (new Error("Stock Insuficiente."))
+    }
     
     result = await this.updateDisponible(producto)
  

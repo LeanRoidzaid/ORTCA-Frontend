@@ -14,6 +14,7 @@ function gererarMovimiento(idproducto){
     var coef = $('#tipoMovimiento').val();
     var cant = $('#cantidad').val();
     var idproducto = $('#id').val();
+    var cantidadMovimiento = parseInt(coef)*parseInt(cant);
     if(coef==0||cant ==""||cant<1 ){
         alert("Debe seleccionar un tipo de movimiento, e ingresar una cantidad valida mayor a cero")
     }else{
@@ -24,15 +25,15 @@ function gererarMovimiento(idproducto){
             type: 'POST',
             data: {
                 'idproducto': idproducto,
-                'cantidad': cant,
+                'cantidad': cantidadMovimiento,
 
             },
             dataType: 'json',
             success: function (data) {
-                if (data.error != "") {
-                    alert("Error al genear movimiento de producto");
-                }
-
+               
+                    alert("Movimiento relizado de forma exitosa.");
+                    location.reload(true);
+              
 
 
                 
@@ -42,8 +43,14 @@ function gererarMovimiento(idproducto){
             },
             error: function (request, error) {
                 //alert("Request: "+JSON.stringify(request.responseText)+"  "+error+"  "+request);
+                if (typeof  request.responseJSON.error === undefined) {
                 alert("Error al genear movimiento de producto");
-                
+                }
+                else{
+                    alert(request.responseJSON.error);
+                    location.reload(true);
+                }
+
 
             }
         });

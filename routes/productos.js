@@ -23,7 +23,7 @@ router.get('/',auth, async function(req, res, next) {
       res.json({});
     }catch(error)
     {
-      res.status(401).json({});
+      res.status(401).json({error:"No se pudo generar el movimiento. "+error.message});
     }
     
    

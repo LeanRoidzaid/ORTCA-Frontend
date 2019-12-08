@@ -165,7 +165,7 @@ exports.obtenerProductos = async function (idProducto){
 exports.generarEntrega = async function(idEntrega){
     var entrega = await this.obtenerEntregasId(idEntrega);
     var d = new Date();
-    var fecha = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+(d.getDay()+1);
+    var fecha = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+(d.getDate());
 
 
 
