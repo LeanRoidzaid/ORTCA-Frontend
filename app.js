@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/usuarios');
 var benefRouter = require('./routes/beneficiarios');
 var homeRouter  = require('./routes/home');
+var reportRouter  = require('./routes/reportes');
 var ordenesRouter  = require('./routes/ordenes');
 var productosRouter = require('./routes/productos');
 
@@ -33,6 +34,7 @@ app.use('/', indexRouter);
 app.use('/usuarios', usersRouter);
 app.use('/beneficiarios',benefRouter);
 app.use('/home',homeRouter);
+app.use('/reportes',reportRouter);
 app.use('/ordenes',ordenesRouter);
 app.use('/productos',productosRouter);
 
