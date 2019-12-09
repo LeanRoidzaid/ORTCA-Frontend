@@ -34,11 +34,9 @@ router.get('/vencidas', auth, async function(req, res, next) {
 router.get('/no-retirado', auth, async function(req, res, next) {
     const fecha = req.query.fecha
     const reportData = await Controller.noRetirado(fecha)
-    const retiradosVsNoRetirados = await Controller.retiradosVsNoRetirados(fecha)
 
     res.render('Reportes/noRetirado', {
         reportData,
-        retiradosVsNoRetirados, 
         title: 'Exprbbess',
         fecha,
         token: jwt,

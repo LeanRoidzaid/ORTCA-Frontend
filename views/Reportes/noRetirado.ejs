@@ -27,11 +27,6 @@
 	</tbody>
 </table>
 <br/>
-<h1>Entregado vs No entregado</h1>
-<canvas  class="grafico" id="myChart" ></canvas>
-
-
-
 <script>
 	document.querySelector('#fecha').onchange = () => {
 		const date = event.target.value
@@ -40,19 +35,4 @@
 
 		window.location.replace(url)
 	}
-	var ctx = document.getElementById('myChart');
-	var data =  <%- JSON.stringify(retiradosVsNoRetirados) %>
-	const myChart = new Chart(document.getElementById("myChart"), {
-		"type": "doughnut",
-		"data": {
-			"labels": data.map(d => d.estado),
-			"datasets":[
-				{
-					"data": data.map(d => d.cantidad),
-					"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]
-				}
-			]
-		}
-	});
-
 </script>

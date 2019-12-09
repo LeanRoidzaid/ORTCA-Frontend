@@ -45,31 +45,6 @@ exports.vencidas = async () => {
     }))
 }
 
-exports.retiradosVsNoRetirados = async (day) => {
-    if (!day) {
-        day = moment().format('YYYY-MM-DD')
-    }
-
-    const from = moment(day).set({ hour: 0 }).subtract(1, 'm')
-    const to = moment(day).set({ hour: 0 }).add(1, 'd')
-
-    const query = `
-        SELECT SUM(e.id) as cantidad, e.estadoEntrega
-        FROM entregas e
-        WHERE e.fechaEntrega > '${from.format()}' and e.fechaEntrega < '${to.format()}'
-        GROUP BY e.estadoEntrega
-    `
-    
-    return connection.query(query).then(data => (Array.isArray(data) && data.length > 0) ? data[0] : []).then(items => items.map(i => {
-        const estado = i.estadoEntrega === 'E' ? 'Entregado' : 'Pendiente'
-
-        return {
-            cantidad: i.cantidad,
-            estado
-        }
-    }))
-}
-
 exports.noRetirado = async (day) => {
     if (!day) {
         day = moment().format('YYYY-MM-DD')
@@ -84,7 +59,7 @@ exports.noRetirado = async (day) => {
         INNER JOIN orden o on e.idOrden = o.id
         INNER JOIN beneficiarios b on b.id = o.idBeneficiario
         INNER JOIN producto p on p.id = e.idproducto
-        WHERE e.estadoEntrega = 'P' AND e.fechaEntrega > '${from.format()}' and e.fechaEntrega < '${to.format()}'
+        WHERE e.estadoEntrega = 'P' AND e.fechaEntrega > '${from.format('YYYY-MM-DD HH:mm:ss')}' and e.fechaEntrega < '${to.format('YYYY-MM-DD HH:mm:ss')}'
     `
     
     const noRetirado = await connection.query(query).then(data => (Array.isArray(data) && data.length > 0) ? data[0] : []).then(items => items.map(i => {
