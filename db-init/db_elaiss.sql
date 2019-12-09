@@ -162,7 +162,7 @@ CREATE TABLE `orden` (
   `idproducto` int(11) NOT NULL,
   `fechaInicio` date DEFAULT NULL,
   `fechaFin` date DEFAULT NULL,
-  `DescTratamiento` varchar(45) DEFAULT NULL,
+  `DescTratamiento` varchar(4000) DEFAULT NULL,
   `observaciones` varchar(4000) DEFAULT NULL,
   `estado` varchar(1) NOT NULL,
   `tipo` varchar(45) DEFAULT NULL

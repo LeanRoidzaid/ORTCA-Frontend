@@ -86,6 +86,7 @@ function gererarMovimiento(idproducto){
 <div id="contenedor">
 
   <p>  <h4>Gestion de Productos</h4></p>
+  <table class="table table-striped">
         <% 
 
         for(var k=0; k < productosStock.length; k++){
@@ -94,40 +95,33 @@ function gererarMovimiento(idproducto){
           var cantidad=productosStock[k].cantDisp;
           console.log(productosStock[k].cantDisp);
           var pendientes = 0;
-          
-      
-
-   
-            %>
-            <div class="p-1 mb-2 bg-info text-white">
-                <table>
+        %>
+              
                     <tr>
-                        <td style="width: 900px;"><%=descProducto %><br>
-                            Codigo de origen :<%=productosStock[k].codOrigen %><br>
-                            N° Serie: <%=productosStock[k].nSerie %> 
+                        <td style="width: 900px;" colspan="2"><b>Producto: </b><%=descProducto %><br>
+                          <b>Codigo de origen :</b> <%=productosStock[k].codOrigen %><br>
+                            <b>N° Serie:</b> <%=productosStock[k].nSerie %> 
                         </td>
                         
+
                         
-                    </tr>
-                    <tr>
-                        <td colspan="2">Stock: <%=productosStock[k].cantDisp %> </td>
                         
+                        
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary  btn-lg"  aria-haspopup="true" aria-expanded="false">
+                                    Stock <span class="badge badge-light"><%=productosStock[k].cantDisp %></span>
+                                    <span class="sr-only"></span>
+                                  </button>
+                              </div>
+                          
+                        </td>
                         <td><button type="button" class="btn btn-secondary" onclick="javascritp:crearMovimiento(<%=productosStock[k].codbar%>);">Generar Movimiento</button></td>
                     </tr>
-                </table>
-                
-          
-                </div>
           <%
-         
-
         }
-          
-
-
-          %>
-
-
+        %>
+</table>
 </div>
 
 <div class="modal fade" id="MovimientoModal" tabindex="-1" role="dialog" aria-labelledby="MovimientoModalLabel" aria-hidden="true">

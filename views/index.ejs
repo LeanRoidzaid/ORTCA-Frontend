@@ -81,7 +81,7 @@
         this.alto  = "300";
 
         $('#idOrden').html(data.orden[0].idOrden);
-        $('#descripcionOrden').html(data.orden[0].descripcion);
+        //$('#descripcionOrden').html(data.orden[0].descripcion);
         $('#descripcionBenenficiarios').html(data.orden[0].beneficiario.nombre +" "+data.orden[0].beneficiario.apellido);
         $('#descripcionDocumento').html(data.orden[0].beneficiario.dni);
         $('#BenenficiarioTelefono').html(data.orden[0].beneficiario.telefono);
@@ -396,10 +396,11 @@ $(document).ready(function() {
                 <tr>
                   <th scope="row">Numero Orden</th>
                   <td><div id="idOrden"></div></td>
-                  <th scope="row">Observacion</th>
-                  <td ><div id="descripcionOrden"></div></td> 
                   <th scope="row">Estado</th>
-                  <td colspan="4"><div id="estadoEntrega"></div></td>                   
+                  <td colspan="4"><div id="estadoEntrega"></div></td>   
+                  <th scope="row">&nbsp;</th>
+                  <td ><div id="descripcionOrden"></div></td> 
+                
                                            
                 </tr>
                 <tr>
