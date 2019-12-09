@@ -12,6 +12,20 @@ const request = require('request');
 var config = require('../../config/config');
 exports.insertarOrden = async function(orden){
 
+    var fechaInicio=orden.fechaInicio.split('T')[0];
+    var sql = "SELECT * FROM db_elaiss.orden where idBeneficiario="+orden.idBeneficiario+" and fechaFin >= '"+fechaInicio+"'";
+    var autocur = await sequelize.query(sql, { type: Sequelize.QueryTypes.SELECT});
+      var ordenes="";
+
+      if(autocur.length>0){
+          for(var i =0; i<autocur.length;i++){
+            ordenes+="Orden Nro: "+autocur[i].id+" vigente del "+autocur[i].fechaInicio+" hasta "+autocur[i].fechaFin+" \n";
+
+          }
+          throw new Error(" El beneficiario tiene ordenes activas, \n "+ordenes);
+      }
+
+
     return  ORDENES.create({
         idUsuarioMedico: orden.idUsuarioMedico,  
         idCentro: orden.idCentro,
@@ -166,7 +180,11 @@ exports.generarEntrega = async function(idEntrega){
     var entrega = await this.obtenerEntregasId(idEntrega);
     var d = new Date();
     var fecha = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+(d.getDate());
-
+    var fechaStr = entrega.orden[0].fechaEntrega.split('-');
+    var fechaEntrega = new Date(fechaStr[0],fechaStr[1]-1,fechaStr[2]);
+    if(d<fechaEntrega){
+        throw Error("Aun no se cumplio la fecha de entrega.");
+    }
 
 
         
@@ -243,7 +261,7 @@ exports.obtenerEntregasId= async function(idEntrega){
     for(const entrega of entregas ) {
             var orden = await  exports.obtenerOrdenesById(entrega.idOrden);
             var producto = await exports.obtenerProductos(orden[0].idProducto)
-            entregaRet.orden.push({idEntrega:entrega.id,idOrden:entrega.idOrden, descripcion:orden[0].descTratamiento,beneficiario:orden[0].beneficiario,cantidad: entrega.cantidad,productoEntrga: producto,entregaEstado: entrega.estadoEntrega});
+            entregaRet.orden.push({idEntrega:entrega.id,idOrden:entrega.idOrden, descripcion:orden[0].descTratamiento,beneficiario:orden[0].beneficiario,cantidad: entrega.cantidad,productoEntrga: producto,entregaEstado: entrega.estadoEntrega, fechaEntrega: entrega.fechaEntrega});
     };
 
 

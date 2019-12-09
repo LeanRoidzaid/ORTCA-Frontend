@@ -32,7 +32,7 @@ router.get('/Entregar', async function(req, res, next) {
         
         return res.send(response);
     }catch(error){
-        return res.status(201).send({err:error.message});
+        return res.status(400).send({err:error.message});
     }
     
 

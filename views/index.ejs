@@ -82,7 +82,7 @@
 
         $('#idOrden').html(data.orden[0].idOrden);
         $('#descripcionOrden').html(data.orden[0].descripcion);
-        $('#descripcionBenenficiarios').html(data.orden[0].beneficiario.nombre);
+        $('#descripcionBenenficiarios').html(data.orden[0].beneficiario.nombre +" "+data.orden[0].beneficiario.apellido);
         $('#descripcionDocumento').html(data.orden[0].beneficiario.dni);
         $('#BenenficiarioTelefono').html(data.orden[0].beneficiario.telefono);
         $('#descripcionProducto').html(data.orden[0].productoEntrga[0].nombre);
@@ -323,8 +323,8 @@
                   <tr>
                       <td style="width: 800px">
                           <h5>Beneficiario <br>
-                            Nombre y Apellido: <%= retiroDia[i].beneficiario.nombre %> <%= retiroDia[i].beneficiario.apellido %>  Telefono: <%= retiroDia[i].beneficiario.telefono %> DNI: <%=retiroDia[i].beneficiario.dni %>  <br>
-                            Producto: <%=retiroDia[i].productoNombre %> Cantidad: <%= retiroDia[i].cantidadEntrgar %> 
+                           <b> Nombre y Apellido:</b> <%= retiroDia[i].beneficiario.nombre %> <%= retiroDia[i].beneficiario.apellido %>  <b>Telefono:</b> <%= retiroDia[i].beneficiario.telefono %> <b>DNI:</b> <%=retiroDia[i].beneficiario.dni %>  <br>
+                            <b>Producto:</b> <%=retiroDia[i].productoNombre %> <b>Cantidad:</b> <%= retiroDia[i].cantidadEntrgar %> 
 
                            <!-- Tratamiento: <%=retiroDia[i].descripcion %>  <br>-->
                             

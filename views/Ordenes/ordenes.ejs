@@ -212,8 +212,8 @@
 
 
     var cantidadEntrega = $("input[id='cantidadEntrega']").map(function () {
-      if ($(this).val() == '') {
-        validacion += "Debe completar todas las cantidades. \n"
+      if ($(this).val() == ''||$(this).val() <1) {
+        validacion += "Debe completar todas las cantidades y las cantidades tienen que ser numeros positivos. \n"
       }
       return $(this).val();
     }).get();
@@ -244,7 +244,7 @@
         dataType: 'json',
         success: altaOrdenResponse,
         error: function (request, error) {
-          alert("Error: " +request.responseText);
+          alert("Error: " +request.responseJSON.msg);
         }
       });
 
@@ -407,7 +407,7 @@ function altaOrdenResponse(data){
           });
         });        
    
-appendTo: "#someElem"
+
         $(document).on('focus', '#buscarBeneficiario', function () {
 
           $(this).autocomplete({

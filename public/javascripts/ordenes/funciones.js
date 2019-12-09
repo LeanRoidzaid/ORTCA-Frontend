@@ -142,7 +142,7 @@ function entregoOk(data){
     if(!data.err){
         $('#DetalleModal').modal('hide');
         alert("Entrega realizada correctamente!");
-        location.reload(); 
+        generarGrilla();
       }else{
         alert(data.err);
       }
@@ -155,7 +155,8 @@ function Entregar(idEntrega){
               success : entregoOk,
               error : function(request,error)
               {
-                  alert("Request: "+JSON.stringify(error));
+                  alert(request.responseJSON.err);
+                  generarGrilla(); 
               }
         });
     
