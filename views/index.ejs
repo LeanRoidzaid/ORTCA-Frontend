@@ -1,6 +1,27 @@
 
 <%- contentFor('body') %>
-<% if(Rol.length==1 && ( Rol[0].rol==4 || Rol[0].rol==3|| Rol[0].rol==1 )){ %>
+
+
+<%
+
+var puedeVer=false;
+for(var rol of Rol){
+  %>
+ 
+
+  <%
+
+    if(rol.rol==2){
+
+      puedeVer=true;
+    }
+
+}
+
+
+%>
+
+<% if(!puedeVer){ %>
   <h5  > Sistema de ELAISS</h5>
  <% }else{ %>
 <link type="text/css" rel="stylesheet" href="/stylesheets/jsgrid.min.css" />
@@ -53,7 +74,7 @@
               success : entregoOk,
               error : function(request,error)
               {
-                  alert("Request: "+JSON.stringify(error));
+                  alert(request.responseJSON.err);
               }
         });
     }
