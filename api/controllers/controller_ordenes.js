@@ -197,7 +197,7 @@ exports.generarEntrega = async function(idEntrega){
         await request.post({
             "headers": { "content-type": "application/json" },
             "url": config.Protocol + config.URLNotificaciones+"/api/notificaciones/retiro",
-            "body": JSON.stringify({"destinatario": "+"+entrega.orden[0].beneficiario.telefono, "mensaje": "Estimada/o "+entrega.orden[0].beneficiario.nombre +" fue realizada la entrega del producto: "+entrega.orden[0].productoEntrga[0].nombre+" muchas gracias, y no olvides hacer tus controles con periodicidad. Saludos!!"
+            "body": JSON.stringify({"destinatario": "+"+entrega.orden[0].beneficiario.telefono, "mensaje": "Estimada/o "+entrega.orden[0].beneficiario.nombre +", fue realizada la entrega del producto: "+entrega.orden[0].productoEntrga[0].nombre+" muchas gracias, y no olvides hacer tus controles con periodicidad. Saludos!!"
           })
               }, 
                 (error, response, body) => 
