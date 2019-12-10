@@ -27,7 +27,7 @@ exports.demanda = async () => {
 
 exports.vencidas = async () => {
     const query = `
-        SELECT b.nombre as nombre, b.apellido as apellido, b.telefono as telefono FROM beneficiarios b WHERE id NOT IN (
+        SELECT b.nombre as nombre, b.apellido as apellido, b.DNI as DNI, b.telefono as telefono FROM beneficiarios b WHERE id NOT IN (
             SELECT b.id
             FROM beneficiarios b
             INNER JOIN orden o on o.idBeneficiario = b.id
@@ -40,6 +40,7 @@ exports.vencidas = async () => {
         return {
             nombre: i.nombre,
             apellido: i.apellido,
+            DNI: i.DNI,
             telefono: i.telefono
         }
     }))

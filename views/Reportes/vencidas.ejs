@@ -3,18 +3,20 @@
 <script src="../javascripts/chart/chart.js/dist/util.js"></script>
 <link rel="stylesheet" type="text/css" href="../javascripts/chart/chart.js/dist/Chart.css" />
 <link rel="stylesheet" href="/stylesheets/reportes.css">
-<h1>Reporte de beneficiarios que se le venció la orden y no hicieron un control de salud</h1>
+<h1 style="text-align:center; color:blue">Reporte de beneficiarios sin control de salud vigente</h1>
+<br/>
 
-
-<table class="report-table">
+<table class="table table-striped">
 	<thead>
 		<td>Apellido y Nombre</td>
+		<td>DNI</td>
 		<td>Telefono</td>
 	</thead>
 	<tbody>
 		<% for (var i = 0; i < reportData.length;  i++) { %>
 			<tr>
 				<td><%= reportData[i].apellido %>, <%= reportData[i].nombre %></td>
+				<td><%= reportData[i].DNI %></td>
 				<td><%= reportData[i].telefono %></td>
 			</tr>    
 		<% } %>
