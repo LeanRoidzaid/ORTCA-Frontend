@@ -3,6 +3,7 @@ var router = express.Router();
 const request = require('request');
 var auth = require('../middlewares/session');
 var config = require('../config/config');
+var controllerUsuario = require("../api/controllers/controller_usuario")
 
 
 
@@ -64,12 +65,11 @@ router.get('/salir', function(req, res,next) {
 
 });
 
-function actualizarRolUsuario(idusuario,rol,asigna,jwt){
+function actualizarRolUsuario(msg,jwt){
 
-  var msg = {"idUsuario":idusuario,"idRol":rol};
   
-  if(asigna)
-  { 
+  
+ 
      request.post({
       "headers": { "content-type": "application/json" },
       "url":  config.Protocol + config.URLUsuarios+"/api/roles/asignarRoles/?token="+jwt,
@@ -85,26 +85,10 @@ function actualizarRolUsuario(idusuario,rol,asigna,jwt){
           }
 
       });
-  }
-  else
 
-  {
-    request.post({
-      "headers": { "content-type": "application/json" },
-      "url":  config.Protocol + config.URLUsuarios+"/api/roles/quitarRol/?token="+jwt,
-      "body": JSON.stringify(msg)
-      }, (error, response, body) => {
-          if(error) {
-              return console.dir(error);
-          }
-          else
-          {
 
-            return;
-          }
 
-      });    
-  }
+
 }
 
 
@@ -159,6 +143,8 @@ router.post('/actualizar', auth,async function(req, res,next) {
   req.body.fh_alta=Date.now();
   req.body.idCentro=1;
 
+  var msg = [];
+
   await request.post({
     "headers": { "content-type": "application/json" },
     "url":  config.Protocol + config.URLUsuarios+"/api/usuarios/actualizar/?token="+req.cookies['jwt'],
@@ -171,46 +157,32 @@ router.post('/actualizar', auth,async function(req, res,next) {
         {
           if(req.body.medico=="true")
           {
-            actualizarRolUsuario(req.body.id,1,true,req.cookies['jwt']) 
-          }
-          else{
-            actualizarRolUsuario(req.body.id,1,false,req.cookies['jwt']) 
+            msg.push({"idUsuario":req.body.id,"idRol":1});
           }
 
 
           if(req.body.administrativo=="true")
           {
-            actualizarRolUsuario(req.body.id,2,true,req.cookies['jwt']) 
+            msg.push({"idUsuario":req.body.id,"idRol":2});
+         
           }
-          else
-          {
-             actualizarRolUsuario( req.body.id,2,false,req.cookies['jwt']) 
-          
-          }
+
 
 
           if(req.body.auditor=="true")
           {
-            actualizarRolUsuario(req.body.id,3,true,req.cookies['jwt']) 
+            msg.push({"idUsuario":req.body.id,"idRol":3});
           }
-          else
-          {
-             actualizarRolUsuario( req.body.id,3,false,req.cookies['jwt']) 
-          
-          }
+
 
 
           if(req.body.administrador=="true")
           {
-            actualizarRolUsuario(req.body.id,4,true,req.cookies['jwt']) 
-          }
-          else
-          {
-             actualizarRolUsuario( req.body.id,4,false,req.cookies['jwt']) 
-          
+            msg.push({"idUsuario":req.body.id,"idRol":4});
           }
 
-  
+
+          actualizarRolUsuario(msg,req.cookies['jwt']) 
   
 
           res.send(response.body);
@@ -301,5 +273,26 @@ router.get('/all',auth,async function(req, res,next) {
 
 
 });
+
+
+
+
+
+router.get('/getUsuario', auth, async function (req, res, next) {
+
+
+
+  var usuarios = await controllerUsuario.ObtenerUsuarioId(req.query.idUsuario);
+
+  res.json(usuarios);
+
+
+
+
+
+});
+
+
+
 
 module.exports = router;

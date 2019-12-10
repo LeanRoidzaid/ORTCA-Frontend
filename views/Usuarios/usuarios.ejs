@@ -62,12 +62,16 @@ function getBooleanCkecked(staus){
         var usuario = $('#usuario').val();
 
 
+
         var administrativo = $('#administrativo').prop('checked');
         var medico = $('#medico').prop('checked');
         var administrador = $('#administrador').prop('checked');
         var auditor = $('#auditor').prop('checked');
 
         var mensajeValidacion = "";
+
+
+
         if (typeof nombre == "undefined" || !(nombre.length > 1 && nombre.length < 45)) {
             mensajeValidacion += "El largo del nombre debe se mayor a 1 y menor a 45 \n ";
         }
@@ -83,7 +87,14 @@ function getBooleanCkecked(staus){
             mensajeValidacion += "El mail debe ser una direccion de correo valida. \n ";
         }
 
+
+        if( administrativo==false && medico==false &&administrador==false &&auditor==false){
+            mensajeValidacion += "Debe seleccionar al menos un rol para el usuario. \n ";
+        }
+
         if (mensajeValidacion == "") {
+
+            /*
             $.ajax({
 
                 url: 'http://localhost:3000/usuarios/actualizar',
@@ -121,17 +132,50 @@ function getBooleanCkecked(staus){
                     alert("Request: " + JSON.stringify(request.responseText));
                 }
             });
+            */
+
+
+
+
+            $.ajax({
+
+                url: 'http://localhost:3000/usuarios/actualizar',
+                type: 'POST',
+                data: {
+                    'id': id,
+                    'nombre': nombre,
+                    'apellido': apellido,
+                    'usuario': usuario,
+                    'dni': dni,
+                    'mail': mail,
+                    'administrativo': administrativo,
+                    'medico': medico,
+                    'administrador': administrador,
+                    'auditor': auditor
+                },
+                dataType: 'json',
+                success: function (data) {
+
+                    llenarFilas();
+                    $('#RolesModal').modal('hide')
+                },
+                error: function (request, error) {
+                    alert("Request: " + JSON.stringify(request.responseText));
+                }
+            });
         }
         else {
             alert(mensajeValidacion);
+            llenarFilas();
             //llenarFilas();
             //$('#RolesModal').modal('hide')
             return false;
         }
 
-
+       
+        //llenarFilas();
         return;
-
+       
 
     }
 
@@ -226,50 +270,72 @@ function limpiarModal(){
     $('#usuario').val('');
 
 
-    $('#medico').attr('checked',false);
+    $('#medico').prop('checked',false);
 
-    $('#administrativo').attr('checked',false);
+    $('#administrativo').prop('checked',false);
 
-    $('#auditor').attr('checked',false);
+    $('#auditor').prop('checked',false);
 
-    $('#administrador').attr('checked',false);
+    $('#administrador').prop('checked',false);
 
 
 }
-function editarUsuario(args){
-    limpiarModal();
-    $('#id').val(args.item.id);
-    $('#nombre').val(args.item.nombre);
-    $('#apellido').val(args.item.apellido);
-    $('#dni').val(args.item.dni);
-    $('#mail').val(args.item.mail);
-    $('#usuario').val(args.item.usuario);
 
 
-    args.item.usuario_roles.forEach(rol => {
-     
-        switch(rol.idRol){
+function completarFormulario(data){
+    $('#id').val(data.Id);
+    $('#nombre').val(data.Nombre);
+    $('#apellido').val(data.Apellido);
+    $('#dni').val(data.Dni);
+    $('#mail').val(data.Mail);
+    $('#usuario').val(data.Usuario);
+
+
+    for(var rol of data.roles){
+        switch(rol){
             case 1:
-                $('#medico').attr('checked','checked');
+                $('#medico').prop('checked',true);
                 break;
             case 2:
-                $('#administrativo').attr('checked','checked');
+                $('#administrativo').prop('checked',true);
                 break;
             case 3:
-                $('#auditor').attr('checked','checked');
+                $('#auditor').prop('checked',true);
                 break;
             case 4:
-                $('#administrador').attr('checked','checked');
+                $('#administrador').prop('checked',true);
                 break;
         }
-        
+    }
+
+
+
+     $('#RolesModal').modal();
+}
+
+function editarUsuario(args){
+
+
+
     
-        
+    limpiarModal();
+
+    $.ajax({
+
+        url: 'http://localhost:3000/usuarios/getUsuario',
+        type: 'GET',
+        data: {
+            'idUsuario': args.item.id,
+        },
+        dataType: 'json',
+        success: completarFormulario,
+        error: function (request, error) {
+
+
+        }
     });
 
-    $('#RolesModal').modal();
 
-    //alert("Specify asdaad name of the item!");
 
 }
 
