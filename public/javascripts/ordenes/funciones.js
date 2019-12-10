@@ -202,6 +202,7 @@ $("#jsGridEntregas").jsGrid({
     inserting: false,
     //editing: true,
    // rowDoubleClick: verRetiro,
+    invalidMessage: "No supera la validacion",
     sorting: false,
     paging: true,
     selecting: false,

@@ -368,6 +368,7 @@ function bindData(json){
         inserting: true,
         //editing: true,
         rowDoubleClick: editarUsuario,
+        invalidMessage: "No supera la validacion ",
         sorting: true,
         paging: true,
         selecting: true,
@@ -454,7 +455,7 @@ function bindData(json){
                 message: function(value, item) {
                     return "El largo del campo mail debe ser entre 5 y 45";
                 },
-                param: [5, 45]
+                param: [5, 80]
             }
             },
             { name: "usuario",title:"Usuario", type: "text", width: 25, 
@@ -463,7 +464,7 @@ function bindData(json){
                 message: function(value, item) {
                     return "El largo del campo usuario debe ser entre 5 y 45";
                 },
-                param: [5, 45]
+                param: [5, 20]
             }
             },
             //{ name: "usuario_roles",visible:true, type: "select", items: usuario_roles, valueField: "idRol", textField: "Name" },
