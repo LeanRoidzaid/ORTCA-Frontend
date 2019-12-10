@@ -3,12 +3,13 @@
 <script src="../javascripts/chart/chart.js/dist/util.js"></script>
 <link rel="stylesheet" type="text/css" href="../javascripts/chart/chart.js/dist/Chart.css" />
 <link rel="stylesheet" href="/stylesheets/reportes.css">
-<h1>Reporte de beneficiarios que no retiraron en el día</h1>
+<h1 style="text-align:center; color:blue">Reporte de beneficiarios con retiros pendientes</h1>
+<br/>
 
-
+<label for="fecha" style="font-size:160%">Ingrese la fecha: </label>
 <input type="date" id="fecha" value="<%= fecha %>">
 
-<table class="report-table">
+<table class="table table-striped">
 	<thead>
 		<td>Apellido y Nombre</td>
 		<td>Telefono</td>
