@@ -22,8 +22,22 @@
         
         url : '/beneficiarios/all',
         type : 'GET',
+        dataType:'json',
+        success : ejecutarLlenadoGrilla,
+        error : function(request,error)
+        {
+            alert("Request: "+JSON.stringify(request));
+        }
+        });
+
+    }
+    function popularBeneficiariosByID(id){
+        $.ajax({
+        
+        url : '/beneficiarios/getBEneficiarioById',
+        type : 'GET',
         data : {
-            'numberOfWords' : 10
+            'idBeneficiario' : id
         },
         dataType:'json',
         success : ejecutarLlenadoGrilla,
@@ -215,6 +229,8 @@
                     }
                 }
             });
+        
+            location.reload(true);
 
     }
     function editaAutorizado(arg){
@@ -319,7 +335,6 @@
 
 
     }
-
 
 
 
@@ -431,6 +446,14 @@
 
 
     $(document).ready(function() {  
+
+
+        $('#AutorizadoModal').on('hidden.bs.modal', function (e) {
+            // do something...
+            
+           location.reload(true);
+        });
+
         
         grilla.crear("#jsGrid","900","1200",null,null,null,null);
         grilla.popular();
@@ -467,7 +490,28 @@
 
 
 
+        $(document).on('focus', '#buscarOrden', function () {
 
+            $(this).autocomplete({
+                //source have a url of a service
+                source: '../ordenes/getOrdenByBusqueda',
+                select: function (event, ui) {
+                    event.preventDefault();
+                    // alert(ui.item.value); // start an alert which contains the value of proposal
+                    //this.value = ui.item.label;
+                    //generarGrillaByBenef(ui.item.value);
+                    popularBeneficiariosByID(ui.item.value);
+                    //alert("ui.item.value: "+ui.item.value+" ui.item.label:"+ui.item.label);
+                    $(this).val(ui.item.label);
+                },
+                minLength: 1//min = 2 characters
+            });
+        }); 
+        
+        function limpiarGrilla(){
+            $("#buscarOrden").val("");
+            popularBeneficiarios();
+        }
 
     </script>
         
@@ -480,6 +524,15 @@
         <script type="text/javascript" src="../javascripts/jsgrid/jsgrid.min.js"></script>
         
         <h2>Beneficiarios</h2>
+        <p>
+            <table>
+                <td width="700px"  ><input type="text" id="buscarOrden" name="buscarOrden" class="form-control"  placeholder="Nombre, Apellido o DNI del Beneficiario"></td>
+                <td> &nbsp;<input type="image" width="30px" height="30px" id="limpiarGrilla" name="limpiarGrilla"  onclick="javascritp:limpiarGrilla()"  value="Recargar"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAgVBMVEX///8AAADPz88+Pj75+fn19fWOjo6urq78/PyBgYH4+PixsbHe3t57e3ucnJzLy8unp6fn5+fY2NhDQ0Pt7e2UlJRSUlLDw8OGhoYpKSmioqJMTExubm7W1tYYGBjj4+M2NjZdXV0eHh5ZWVknJye8vLwQEBBISEgxMTFwcHBlZWXMixn6AAAJ5ElEQVR4nO1daVcqOxC87KCsigvPHQW9/v8f+C6ggjCprs7SCedQHz3OTIpJeu+eP39OOOGEE0444YQTTjjhhBOOA82LxXjY+7yczZfLWq22XM5nl5+94XjR7+ZeWijOpqPhoFFDaPSG9elZ7oV6ofXw3+cHJLfFx+f4opV7wTr0x3ePJLtvPN6N+7mXTaI76inJbdEbFX8ym/XB0pvf+lX26s3cJACe2uzJQ/i4espNxIHFdQR6G1zf5CZziNZ/0eitsRyXpUIm7bj81hzbk9y0ftC6jc9vjdsylGQyfiu08+/V7jghvxXGmQnePCcm+M9yzSlXp6/J+a3wku04RlYQAHm2av/SjGCt9p7BzLF7gRtYv8ZWPAuNxavpabwx57fCyI5gAhuNwpURv6aNjqjCi4mD3A9zccPwaCBT8xzBLZIfxtRmqIxOWoK5ZMwuksqbQW52a/TSEfybm9sXBqkI3vuvaXk3aA/Pbx76k8mk/zA6H7YHdwEy+W9RBGe3nXq1GuvWO7ezgij6bNHL9kiyJlujto+TkmCj6oXMyzkbLJucv6jvHl3caNVEozNV3X/awVm4Q0RWGkpFP/BJI/WV2ySq6leZam9DX0+uNXzTPCiiAddXPHbeCckdNTtzxbOimeFNheb6L/hpivDIPJYzxfuDtzFyf00+iP4S4XF/FGL0NdaueaKjQFEEKi1lzmM87Qvn7EMjSJsW+ajIobAWezTCH0tumHAJsw9S4rzaPOcjRaHIBWeVB4aKOU14nSYE1uT2T5h8o8z+dGEFSozfhTyB2qMxZeg+OswCAgzUKXP/tOE9Slf5y1NGYtcj0qlCnVjDp+/Nid9veRGTTSUuCKvYcx91iRx9eoL/KMrLaPjdmfB6U2/RDYiN6iVsCHPNKqFHHBcfp0b2YVKqid+QlYaHTpZfYTs+Eydk1a/XGOIrvE5AxA3RgFP/3hPpjh+29cpN0QzXRS+JbWFddi7qDOVJFE9hfH9QgmQjP+rEqXS7YL/TA9JR1OlE6RXmqKWT9tWj5mYL4WZ2mnAXklbUlGkKG8JWUdDLUkRPn4QfK1c/hBRT4UvfBVVxm5AEhtBvNGTv0xQ6X/K17ZzhhT2zVojgrdirwi0ELfZA3gZnKudJKUjATX/k+enisEHiqisB2C0nf/0RvMlb3ua5M5xB5YIOWGDR8ioRruDquG0Kb5HFXtsFjuEumVtgtZqspIwGloOM0sdnOX83MnYUGTl4h27wnHj5DKA9Qrh1Lahx8qqKDeAmm8vtfA/oenUwJAWwrJGj8NAuilTdEQiYMJJ32Se6PI/nuw/oCd9LV5/Bc1xG7zF0XxuSfwE3uWeKJzpgoaYkKqBRahnHR4DxeMmDGqKLDZvHIGAuSnJfoU2U2yb9BjxKkvGNtvibyfIZIBdKKj5Bv07CXhUl4E7DlzbRpSWYbBtAww1fCg13m6w9AyjxcTQXhvPLGf4Do4o4uB/w+k2BlokPE1KH70arZ4BEPlaIKAqVP4CxBWrCwpYX8ixKsdlWQJkV7F2getLcccRdoNOEc3+o4qEcdYgl4jO8EplDJU0YQ1ptBq9EKYtyFD5W+Th5gRhaVFqyQPEyXLEALiwgGLwFCszjyD5iWEaQZgMYqoFXHgtDmFyBV6ILS9qlyAfCuxRJGjZJbgFUaoAlDUpalKQPUSwKB1uQTVNGwHsD1J/4DK/090psgexSHIpCSY9j8S1wBw0KYpXkH6J14oCpv1diC1SliE8T8kpUFaqJgbQa9vJgrK2caeJdtEys1WCOuxyVD5eJbS8YiCxHIcJ2fWGroUvzVc7uAxamCdeiUNSHyeoZINNLEvlHkT+EfQlShuwocsAwMSMZl0eRx4cVmFLADCaQL03WLwPOQZBqMZqwvbmMQAbsHBTraXBNlNMgMpVBUBuKNVF+dW33pjIIvgR51IlPbWLPNB4eWpvYgsXwldu0Zxvxh5t0TqTiYYPYc8UFKxPKkiGUpEzrp7bOe20FGTLEjXVMClBZq78xgg0Z4nYQqnEQ3mHfNv16nh1D3CtL9VsIswZ+57q/DXU7hrh7jbMrcXPe224x/I8nYsZQmDzAhSG6uANuR6Vuj4QZQzyMj+0cxGf5ser/zBjiV8hGIbBZ83MSd51lK4bCVCA2ES+NT9qcxF9v2oghjCJqKu1xj98mTvB7KxsxFJrM+ZomqR+/fxDPsWEorUvhvgqD2u4OAlY2DIVlaXqWcCvwP4r7fzBhKI1tVTmpmonMVgyl2Sa6Nnrtp0gsGEozDnWVhWfKz/kaMJR+dOWMIUlh2DOMPSeKG+xpyLArfYd3qW5v1X0MITlDcV6bfugeO+XahmGKmXu6k5iYoTzA3GeWsWDlWjIkZl961RjQk99TMyTml3om4BVfuEnJkJhB65sUk6xTG4YEQf/ULf+Fp3QMmVnQcr7JBV5jJGOYeJ43NxI9JcPUM9npbz+kYkh9jyWsolAcRZuS4Rn3+wam3sl9yjFsTforTLhz88B9/Cm44QymlBUMJ4vB+/eS394HC/GXJ79REj5QhjPeBIbN8WEBeWOMLK0pKwHkmUIShHGTDMOpS2Dcun06NowSLgA4guhBXeT5XDnfI/cOw/taSYKAYR3nUmauK6kgg/eHLX5Af6/PyVB2XV1JTUKK425RBuwbdDLsMl85eXXsVPna4CI0nqCDYYvzvy6r9aNobQRLGQXB6oc12Q9vNqpDnYI8DS47V30zs5Ih70E7PFg44DC4DUvzBqsZan6i6o4jtE+Dy+p1BKsYasI8ri3n3qfB8460X/89ZKgMmjuqHl16P7jLTPkGqxhyFvsW1crbsU/tCR4yZMIrwi3WqNynwVtUT/BwefpvbTsG/Lwf/mdwy4D+C9yHDIWSnEpUV2wd7tNga9vjDR4y9PnSvCMmuL9PgxW9F8F9hlpBusbSEdz4rfeDTTWfLXr4XOkbJ9VYVC9pd5/Ogo3tq1nDB7O9M+SzSWu1v45FbfdpuD8YCbjxxolnV63B9z4tZ1KV1zGsuVuWvqq9ChpypEha/YKTwiqy+BIeVYsHbb3RN9wdPe9FTRpTF+P8wJ2Mf8r1eSIH+A/c/0Y5rdQSTgxPDMtHfElTGujk+B7KGUshgSkQqUJJcwsxYlttBaIi9ECgpEHFEvzc6HJmvsvwM71LGbvBoKvtZlhhXs6UJgK6GuoNSpkrwsFHmh6RJF1BH6lxRWlKBVsudrSvUG+bHo9N+g2pEXUP9GdgC4LOOD0ek3QHGg+jrDgTDd4RPh7Xdw9sEqSkyahKcBSPmKAw4O4L5WQjvHAjNaM+HpNHUYkptt/uS5nFGIK6u7ytUVA6KQg31YU/1yVNeQ9F/2q//OTyqqQvEUTBdDG8b6x8/3njfriw8yT+B9v1gVKAUhVDAAAAAElFTkSuQmCC"></td>
+            </table>
+                
+                
+        </p>
+
         <br>
         <div id="jsGrid" ></div>
         

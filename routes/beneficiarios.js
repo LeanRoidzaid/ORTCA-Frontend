@@ -101,12 +101,31 @@ router.get('/all',auth,async function(req, res,next) {
 
 });
 
-
-
-
-
-
 });
+
+  router.get('/getBEneficiarioById', auth, async function (req, res, next) {
+
+
+
+    await request.get({
+      "headers": { "content-type": "application/json" },
+      "url": config.Protocol + config.URLBeneficiarios + "/api/beneficiarios/obtenerBeneficiario/?token=" + req.cookies['jwt']+"&idBeneficiario="+req.query.idBeneficiario,
+      //"data": {idBeneficiario: req.query.idBeneficiario}
+    }, (error, response, body) => {
+      if (error) {
+        return console.dir(error);
+      }
+      else {
+
+        res.send(response.body);
+      }
+
+    });
+
+
+
+
+  });
 
 
 
