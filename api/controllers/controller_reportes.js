@@ -4,7 +4,7 @@ const EntregasModel = require('../models/models_entregas')
 const connection = require('../../config/dbConnection')
 
 exports.demanda = async () => {
-    const query = "SELECT SUM(e.idProducto) as cantidad, p.nombre FROM entregas e INNER JOIN producto p on p.id = e.idproducto GROUP BY e.idProducto"
+    const query = "SELECT SUM(e.cantidad) as cantidad, p.nombre FROM entregas e INNER JOIN producto p on p.id = e.idproducto GROUP BY e.idProducto"
     const data = await connection.query(query).then(data => {
         if (Array.isArray(data) && data.length > 0) {
             return data[0]
